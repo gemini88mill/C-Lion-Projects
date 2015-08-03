@@ -1,35 +1,73 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <assert.h>
+#include <stdlib.h>
 #include <string.h>
 
-/*Linked Lists in C
- *
- * Linked Lists are a way to store data with structures so that the programmer can automatically create a new place to
- * store data whenever necessary. Specifically, the programmer writes a struct definition that contains variables
- * holding information about something and that has a pointer to a struct of its same type (must be a pointer, other-
- * wise it would create an infinite loop). Each of these individual structs or classes in the list is commonly known as
- * a node or element of the list.
- *
- * source: http://www.cprogramming.com/tutorial/c/lesson15.html*/
-
-struct Book{
-    char title[50];
-    char author[50];
-    char subject[50];
-    int book_id;
+struct Person {
+    char *name;
+    int age;
+    int height;
+    int weight;
 };
 
-int main(){
-    printf("hello, world");
+struct Person *Person_create(char *name, int age, int height, int weight)
+{
+    struct Person *who = (Person *) malloc(sizeof(struct Person));
+    assert(who != NULL);
 
-    struct Book book1;
-    struct Book book2;
+    who->name = strdup(name);
+    who->age = age;
+    who->height = height;
+    who->weight = weight;
 
-    strcpy(book1.author, "C Programming");
-    strcpy(book2.author, "the book");
+    return who;
+}
 
-    
+void Person_destroy(struct Person *who)
+{
+    assert(who != NULL);
+
+    free(who->name);
+    free(who);
+}
+
+void Person_print(struct Person *who)
+{
+    printf("Name: %s\n", who->name);
+    printf("\tAge: %d\n", who->age);
+    printf("\tHeight: %d\n", who->height);
+    printf("\tWeight: %d\n", who->weight);
+}
+
+int main(int argc, char *argv[])
+{
+    // make two people structures
+    struct Person *joe = Person_create(
+            (char *) "Joe Alex", 32, 64, 140);
+
+    struct Person *frank = Person_create(
+            (char *) "Frank Blank", 20, 72, 180);
+
+    // print them out and where they are in memory
+    printf("Joe is at memory location %p:\n", joe);
+    Person_print(joe);
+
+    printf("Frank is at memory location %p:\n", frank);
+    Person_print(frank);
+
+    // make everyone age 20 years and print them again
+    joe->age += 20;
+    joe->height -= 2;
+    joe->weight += 40;
+    Person_print(joe);
+
+    frank->age += 20;
+    frank->weight += 20;
+    Person_print(frank);
+
+    // destroy them both so we clean up
+    Person_destroy(joe);
+    Person_destroy(frank);
 
     return 0;
 }
