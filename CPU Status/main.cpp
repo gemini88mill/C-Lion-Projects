@@ -6,6 +6,11 @@
 #include <glib.h>
 #include <glib/gprintf.h>
 
+void print_msg(GtkWidget *widget, gpointer window) {
+
+    g_printf("Button clicked\n");
+}
+
 GdkPixbuf *create_pixbuf(const gchar * filename){
 
     /*The gdk_pixbuf_new_from_file() function creates a new pixbuf by loading an image from a file.
@@ -40,7 +45,9 @@ int main(int argc, char *argv[])
     gtk_window_set_default_size(GTK_WINDOW(window), 230, 150);
     gtk_container_set_border_width(GTK_CONTAINER(window), 15);
 
-    button = gtk_button_new_with_label("button");
+    button = gtk_button_new_with_mnemonic("_Button");
+
+    g_signal_connect(button, "clicked", G_CALLBACK(print_msg), NULL);
     gtk_widget_set_tooltip_text(button, "Button Widget");
 
     hailgn = gtk_alignment_new(0,0,0,0);
