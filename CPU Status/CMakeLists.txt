@@ -31,9 +31,6 @@ INCLUDE(FindGLEW REQUIRED)
 
 add_definitions(${GTK3_CFLAGS_OTHER})
 
-
-add_executable(CPU_Status ${SOURCE_FILES} Physics.h)
-target_link_libraries(CPU_Status ${CURSES_LIBRARIES})
 target_link_libraries(CPU_Status ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
 target_link_libraries(CPU_Status ${GLEW_LIBRARIES})
 target_link_libraries(CPU_Status ${GTK3_LIBRARIES})
