@@ -32,6 +32,11 @@ int main(int argc, char *argv[]) {
     GtkWidget *fileMi;
     GtkWidget *quitMi;
 
+    GtkWidget *button;
+    GtkWidget *table;
+
+
+
     GdkPixbuf *icon;
 
     //initializes the gtk+ gui
@@ -43,15 +48,24 @@ int main(int argc, char *argv[]) {
     gtk_window_set_default_size(GTK_WINDOW(window), height, width);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
-    vbox = gtk_vbox_new(FALSE, 0); //deprecated find alternative
-    gtk_container_add(GTK_CONTAINER(window), vbox);
+    //vbox = gtk_vbox_new(FALSE, 0); //deprecated find alternative
+    //gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    gtk_container_set_border_width(GTK_CONTAINER(window), 5);
+
+    table = gtk_table_new(4, 4, TRUE);
+    gtk_table_set_row_spacings(GTK_TABLE(table), 2);
+    gtk_table_set_col_spacings(GTK_TABLE(table), 2);
+    button = gtk_button_new_with_label("hello");
+
+
 
     // creates a new menubar
     menubar = gtk_menu_bar_new();
     //creates a new gtk menu
     fileMenu = gtk_menu_new();
 
-    
+
     fileMi = gtk_menu_item_new_with_label("File");
     quitMi = gtk_menu_item_new_with_label("Quit");
 
@@ -65,6 +79,8 @@ int main(int argc, char *argv[]) {
 
     g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit), NULL);
     g_signal_connect(G_OBJECT(quitMi), "activate", G_CALLBACK(gtk_main_quit), NULL);
+
+    gtk_container_add(GTK_CONTAINER(window), table);
 
     gtk_widget_show_all(window);
 
