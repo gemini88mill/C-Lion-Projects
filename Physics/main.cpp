@@ -3,25 +3,27 @@
 
 #include "physics.h"
 
-double newtons_laws(int i);
+float find_force(int i);
 
 int main(int argc, char *argv[]) {
     int mass = 5;
 
-    int forca = mass * ACCELERATION;
+   // printf("%d", ACCELERATION);
 
-    double result = newtons_laws(mass);
+    //int forca = mass * ACCELERATION;
 
-    printf("Force = %d\n", &result);
-    printf("Forca = %d\n", forca);
+    float result = find_force(mass);
+
+    printf("Force = %0.2f m/s", result);
+   // printf("Forca = %i\n", forca);
     return 0;
 }
 
-double newtons_laws(int i) {
-    double f;
+float find_force(int i) {
+    float f;
 
-    f = ACCELERATION;
-    printf("%d\n", f);
+    f = ACCELERATION * i;
+    //printf("%f\n", f);
 
     return f;
 }
