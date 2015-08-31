@@ -35,6 +35,7 @@ int main() {
     int k;
     int l;
     int m;
+    int n;
     //------------------------ row level --------------------------------
     int prepared_row[SIZE];
     for (j = 0; j < SIZE; j++) {
@@ -48,7 +49,7 @@ int main() {
     //-------------------------------------------------------------------
 
 
-    //--------------------- Coloumn level -------------------------------
+    //--------------------- Column level -------------------------------
     printf("\n\n");
 
     for ( j = 0; j < SIZE; j++) {
@@ -67,25 +68,25 @@ int main() {
 
 
     for (l = 0; l < SIZE; l = l + 3) {
-        for (i = 0; i < 3; i++) {
-            prepared_row[i] = solution[l][i];
-        }
-        for (k = 3; k < 6; k++) {
-            prepared_row[k] = solution[l + 1][k - 3];
-        }
-        for (j = 6; j < SIZE; j++) {
-            prepared_row[j] = solution[l + 2][j - 6];
-        }
 
-        for (m = 0; m < SIZE; m++) {
-            printf("%d ", prepared_row[m]);
-        }
-        printf("\n");
+            for (i = 0; i < 3; i++) {
+                prepared_row[i] = solution[l][i];
+            }
+            for (k = 3; k < 6; k++) {
+                prepared_row[k] = solution[l + 1][k - 3];
+            }
+            for (j = 6; j < SIZE; j++) {
+                prepared_row[j] = solution[l + 2][j - 6];
+            }
+
+            for (m = 0; m < SIZE; m++) {
+                printf("%d ", prepared_row[m]);
+            }
+            row_check = check_row_logic(prepared_row);
+            printf("%s", row_check ? "true\n" : "false\n");
+
+
     }
-        row_check = check_row_logic(prepared_row);
-        printf("%s", row_check ? "true\n" : "false\n");
-
-
 
     //------------------------------------------------------------------
 
