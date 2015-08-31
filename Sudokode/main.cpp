@@ -5,7 +5,7 @@
 #define SUBGRID_SIZE 3
 
 
-bool check_row(int pInt[]);
+bool check_row_logic(int pInt[]);
 
 void check_coloumn();
 
@@ -16,33 +16,36 @@ int *take_element();
 
 int main() {
 
-    int line1[SIZE][SIZE] = {{3,5,7,6,4,8,9,1,2},
-                             {2,1,6,5,3,9,7,4,8},
-                             {9,4,8,7,1,2,5,3,6},
-                             {5,2,1,4,8,6,3,9,7},
-                             {4,6,3,1,9,7,2,8,5},
-                             {7,8,9,3,2,5,1,6,4},
-                             {6,3,2,9,7,4,8,5,1},
-                             {1,7,4,8,5,3,6,2,9},
-                             {8,9,5,2,6,1,4,7,3}};
+    int solution[SIZE][SIZE] = {{3,5,7,6,4,8,9,1,2},
+                                {2,1,6,5,3,9,7,4,8},
+                                {9,4,8,7,1,2,5,3,6},
+                                {5,2,1,4,8,6,3,9,7},
+                                {4,6,3,1,9,7,2,8,5},
+                                {7,8,9,3,2,5,1,6,4},
+                                {6,3,2,9,7,4,8,5,1},
+                                {1,7,4,8,5,3,6,2,9},
+                                {8,9,5,2,6,1,4,7,3}};
 
 
-    //function to put line in sudoku
-    bool first_check;
 
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++){
-            first_check = check_row(&line1[i][j]);
-            if(first_check == true){
-                break;
-            }
+    bool row_check; //boolean value to check store value of test.
 
 
+    //------------------------ row level --------------------------------
+    int prepared_row[SIZE];
+    for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            prepared_row[i] = solution[j][i];
+            printf("%d ", prepared_row[i]);
+            row_check = check_row_logic(prepared_row);
         }
-        printf("%d", line1[1][i]);
-
+        printf("%s", row_check ? "true\n" : "false\n");
     }
-    printf("%s", first_check ? "true\n" : "false\n");
+    //-------------------------------------------------------------------
+
+
+
+
 
     return 0;
 }
@@ -62,7 +65,7 @@ void check_coloumn() {
 
 }
 
-bool check_row(int pInt[]) {
+bool check_row_logic(int pInt[]) {
     //check to see if any numbers in the "row" array are equal to each other
     bool result = true;
     int i, j;
