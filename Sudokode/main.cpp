@@ -66,27 +66,69 @@ int main() {
 
     //----------------------subgrid level-------------------------------
 
-
+    
     for (l = 0; l < SIZE; l = l + 3) {
+        //solution[column][row]
 
-            for (i = 0; i < 3; i++) {
-                prepared_row[i] = solution[l][i];
-            }
-            for (k = 3; k < 6; k++) {
-                prepared_row[k] = solution[l + 1][k - 3];
-            }
-            for (j = 6; j < SIZE; j++) {
-                prepared_row[j] = solution[l + 2][j - 6];
-            }
-
-            for (m = 0; m < SIZE; m++) {
+        for (i = 0; i < 3; i++) {
+            prepared_row[i] = solution[i][l];
+        }
+        for (k = 3; k < 6; k++) {
+            prepared_row[k] = solution[k - 3][l + 1];
+        }
+        for (j = 6; j < SIZE; j++) {
+            prepared_row[j] = solution[j - 6][l + 2];
+        }
+        for (m = 0; m < SIZE; m++) {
                 printf("%d ", prepared_row[m]);
-            }
+        }
             row_check = check_row_logic(prepared_row);
             printf("%s", row_check ? "true\n" : "false\n");
-
-
     }
+
+
+    for (l = 0; l < SIZE; l = l + 3) {
+        //solution[column][row]
+
+        for (i = 0; i < 3; i++) {
+            prepared_row[i] = solution[i + 3][l];
+        }
+        for (k = 3; k < 6; k++) {
+            prepared_row[k] = solution[k][l + 1];
+        }
+        for (j = 6; j < SIZE; j++) {
+            prepared_row[j] = solution[j - 3][l + 2];
+        }
+        for (m = 0; m < SIZE; m++) {
+            printf("%d ", prepared_row[m]);
+        }
+        row_check = check_row_logic(prepared_row);
+        printf("%s", row_check ? "true\n" : "false\n");
+    }
+
+
+    for (l = 0; l < SIZE; l = l + 3) {
+        //solution[column][row]
+
+        for (i = 0; i < 3; i++) {
+            prepared_row[i] = solution[i + 6][l];
+        }
+        for (k = 3; k < 6; k++) {
+            prepared_row[k] = solution[k + 3][l + 1];
+        }
+        for (j = 6; j < SIZE; j++) {
+            prepared_row[j] = solution[j][l + 2];
+        }
+        for (m = 0; m < SIZE; m++) {
+            printf("%d ", prepared_row[m]);
+        }
+        row_check = check_row_logic(prepared_row);
+        printf("%s", row_check ? "true\n" : "false\n");
+    }
+
+
+
+
 
     //------------------------------------------------------------------
 
