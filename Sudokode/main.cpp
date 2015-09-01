@@ -7,12 +7,11 @@
 
 bool check_row_logic(int pInt[]);
 
-void check_coloumn();
+bool row_level(int prepared_row[], int solution[][SIZE], bool row_check);
 
-void check_subgrid();
+bool column_level(int prepared_row[], int solution[][SIZE], bool row_check);
 
-
-int *take_element();
+bool subgrid_level(int prepared_row[], int solution[][SIZE], bool row_check);
 
 int main() {
 
@@ -27,49 +26,38 @@ int main() {
                                 {8,9,5,2,6,1,4,7,3}};
 
 
-
-    bool row_check; //boolean value to check store value of test.
-
-    int j;
-    int i;
-    int k;
-    int l;
-    int m;
-    int n;
-    //------------------------ row level --------------------------------
     int prepared_row[SIZE];
-    for (j = 0; j < SIZE; j++) {
-        for ( i = 0; i < SIZE; i++) {
-            prepared_row[i] = solution[j][i];
-            printf("%d ", prepared_row[i]);
-            row_check = check_row_logic(prepared_row);
-        }
-        printf("%s", row_check ? "true\n" : "false\n");
-    }
-    //-------------------------------------------------------------------
+    bool row_check = false; //boolean value to check store value of test.
+    bool final_check[3] = {false, false, false};
+    int i, j, k, l, m;
 
+
+    //------------------------ row level --------------------------------
+    final_check[0] = row_level(prepared_row, solution, row_check);
+    //-------------------------------------------------------------------
 
     //--------------------- Column level -------------------------------
     printf("\n\n");
-
-    for ( j = 0; j < SIZE; j++) {
-        for (i = 0; i < SIZE; i++) {
-            prepared_row[i] = solution[i][j];
-            printf("%d ", prepared_row[i]);
-            row_check = check_row_logic(prepared_row);
-        }
-        printf("%s", row_check ? "true\n" : "false\n");
-    }
+    final_check[1] = column_level(prepared_row, solution, row_check);
     //------------------------------------------------------------------
 
-    printf("\n\n");
-
     //----------------------subgrid level-------------------------------
+    printf("\n\n");
+    final_check[2] = subgrid_level(prepared_row, solution, row_check);
+    //------------------------------------------------------------------
 
-    
+    printf("%s", final_check[2] ? "true\n" : "false\n");
+    printf("%s", final_check[1] ? "true\n" : "false\n");
+    printf("%s", final_check[0] ? "true\n" : "false\n");
+
+    return 0;
+}
+
+bool subgrid_level(int prepared_row[], int solution[][SIZE], bool row_check) {
+    int i, j, k, l, m;
+
     for (l = 0; l < SIZE; l = l + 3) {
         //solution[column][row]
-
         for (i = 0; i < 3; i++) {
             prepared_row[i] = solution[i][l];
         }
@@ -80,10 +68,14 @@ int main() {
             prepared_row[j] = solution[j - 6][l + 2];
         }
         for (m = 0; m < SIZE; m++) {
-                printf("%d ", prepared_row[m]);
+            printf("%d ", prepared_row[m]);
         }
-            row_check = check_row_logic(prepared_row);
-            printf("%s", row_check ? "true\n" : "false\n");
+        row_check = check_row_logic(prepared_row);
+        printf("%s", row_check ? "true\n" : "false\n");
+        if (row_check == false){
+            break;
+        }
+
     }
 
 
@@ -104,6 +96,10 @@ int main() {
         }
         row_check = check_row_logic(prepared_row);
         printf("%s", row_check ? "true\n" : "false\n");
+        if (row_check == false){
+            break;
+        }
+
     }
 
 
@@ -124,32 +120,47 @@ int main() {
         }
         row_check = check_row_logic(prepared_row);
         printf("%s", row_check ? "true\n" : "false\n");
+        if (row_check == false){
+            break;
+        }
+
     }
-
-
-
-
-
-    //------------------------------------------------------------------
-
-
-
-    return 0;
+    //this is extremely lame code, but it works... and im tired :(
+    return row_check;
 }
 
-int *take_element() {
-    int result[SIZE];
+bool column_level(int prepared_row[], int solution[][SIZE], bool row_check) {
+    int i, j;
 
-    return result;
+    for ( j = 0; j < SIZE; j++) {
+        for (i = 0; i < SIZE; i++) {
+            prepared_row[i] = solution[i][j];
+            printf("%d ", prepared_row[i]);
+            row_check = check_row_logic(prepared_row);
+        }
+        printf("%s", row_check ? "true\n" : "false\n");
+        if (row_check == false){
+            break;
+        }
+    }
+    return row_check;
 }
 
+bool row_level(int prepared_row[], int solution[][SIZE], bool row_check) {
+    int i, j;
 
-void check_subgrid() {
-
-}
-
-void check_coloumn() {
-
+    for (j = 0; j < SIZE; j++) {
+        for ( i = 0; i < SIZE; i++) {
+            prepared_row[i] = solution[j][i];
+            printf("%d ", prepared_row[i]);
+            row_check = check_row_logic(prepared_row);
+        }
+        printf("%s", row_check ? "true\n" : "false\n");
+        if (row_check == false){
+            break;
+        }
+    }
+    return row_check;
 }
 
 bool check_row_logic(int pInt[]) {
