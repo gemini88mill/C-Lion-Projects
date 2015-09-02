@@ -40,7 +40,7 @@ int main() {
     for(k = 0; k < number_of_solutions; k++) {
         for (i = 0; i < SIZE; i++) {
             scanf("%d", &value);
-
+        }
             while ( value > 0 )
             {
                 explode[count] = value % 10;
@@ -49,11 +49,12 @@ int main() {
             }
             for(j = 0; j < SIZE; j++) {
                 for (int i = SIZE - 1; i >= 0; i--) {
-                    solution[0][i] = explode[i];
-                    printf("%d", solution[j][i]); // work on this for file in :) 
+                    solution[j][i] = explode[i];
+                    //printf("%d", solution[j][i]); // work on this for file in :)
                 }
+
             }
-        }
+
     }
 
     while ( value > 0 )
@@ -64,7 +65,7 @@ int main() {
     }
     for(j = 0; j < SIZE; j++) {
         for (int i = SIZE - 1; i >= 0; i--) {
-            solution[0][i] = explode[i];
+            solution[j][i] = explode[i];
             printf("%d", solution[0][i]);
         }
     }
