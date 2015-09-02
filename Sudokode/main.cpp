@@ -2,8 +2,6 @@
 
 #define SIZE 9
 
-
-
 bool check_row_logic(int pInt[]);
 bool row_level(int prepared_row[], int solution[][SIZE], bool row_check);
 bool column_level(int prepared_row[], int solution[][SIZE], bool row_check);
@@ -45,13 +43,20 @@ int main() {
         final_check[2] = subgrid_level(prepared_row, solution, row_check);
         //------------------------------------------------------------------
 
-        printf(final_check[0] && final_check[1] && final_check[2] ? "YES" : "NO");
+        printf(final_check[0] && final_check[1] && final_check[2] ? "YES\n" : "NO\n");
+
+
     }
     return 0;
 }
 
 void feed_converter(int pInt[][SIZE]) {
-    int i, j, value, count;
+
+    /*feed_converter, (assuming that the lines from the linux box are coming into the scanf at the same time)
+     * takes the information from a line and converts to array.
+     * Conditions: Must be a integer value*/
+
+    int i = 0, j = 0, value = 0, count = 0;
     int feed_arr[SIZE];
 
     for (i = 0; i < SIZE; i++) {
@@ -65,14 +70,17 @@ void feed_converter(int pInt[][SIZE]) {
 
         for (j = 0; j < count; j++){
             pInt[i][j] = feed_arr[j];
-            // printf("%d ", feed_arr[j]);
+
         }
         count = 0;
     }
 }
 
 bool subgrid_level(int prepared_row[], int solution[][SIZE], bool row_check) {
-    int i, j, k, l, m;
+
+    /*subgrid_level - collects the 2d array and turns each "subgrid" into a row for the row checker to test if valid*/
+
+    int i = 0, j = 0, k = 0, l = 0, m = 0;
 
     for (l = 0; l < SIZE; l = l + 3) {
         //solution[column][row]
@@ -148,12 +156,14 @@ bool subgrid_level(int prepared_row[], int solution[][SIZE], bool row_check) {
 }
 
 bool column_level(int prepared_row[], int solution[][SIZE], bool row_check) {
-    int i, j;
+
+    /*column_level() - takes each column and organizes into an array that feeds into check_row_logic() */
+    int i = 0, j = 0;
 
     for ( j = 0; j < SIZE; j++) {
         for (i = 0; i < SIZE; i++) {
             prepared_row[i] = solution[i][j];
-            printf("%d ", prepared_row[i]);
+            //printf("%d ", prepared_row[i]);
             row_check = check_row_logic(prepared_row);
         }
         //printf("%s", row_check ? "true\n" : "false\n");
@@ -165,12 +175,15 @@ bool column_level(int prepared_row[], int solution[][SIZE], bool row_check) {
 }
 
 bool row_level(int prepared_row[], int solution[][SIZE], bool row_check) {
-    int i, j;
+
+    /*row_level() - takes each row and orgasnizes into an array that feeds into check_row_logic() */
+
+    int i = 0, j = 0;
 
     for (j = 0; j < SIZE; j++) {
         for ( i = 0; i < SIZE; i++) {
             prepared_row[i] = solution[j][i];
-            printf("%d ", prepared_row[i]);
+            //printf("%d ", prepared_row[i]);
             row_check = check_row_logic(prepared_row);
         }
         //printf("%s", row_check ? "true\n" : "false\n");
@@ -184,7 +197,7 @@ bool row_level(int prepared_row[], int solution[][SIZE], bool row_check) {
 bool check_row_logic(int pInt[]) {
     //check to see if any numbers in the "row" array are equal to each other
     bool result = true;
-    int i, j;
+    int i = 0, j = 0;
     int checked_val = 0;
     int count = 0;
 
