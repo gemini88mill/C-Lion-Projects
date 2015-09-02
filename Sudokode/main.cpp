@@ -40,35 +40,35 @@ int main() {
     for(k = 0; k < number_of_solutions; k++) {
         for (i = 0; i < SIZE; i++) {
             scanf("%d", &value);
-        }
-            while ( value > 0 )
-            {
+
+            while (value > 0) {
                 explode[count] = value % 10;
                 value = value / 10;
                 count++;
             }
-            for(j = 0; j < SIZE; j++) {
-                for (int i = SIZE - 1; i >= 0; i--) {
-                    solution[j][i] = explode[i];
-                    //printf("%d", solution[j][i]); // work on this for file in :)
-                }
 
+            for (j = 0; j < count; j++){
+                solution[i][j] = explode[j];
+                printf("%d ", explode[j]);
             }
-
-    }
-
-    while ( value > 0 )
-    {
-        explode[count] = value % 10;
-        value = value / 10;
-        count++;
-    }
-    for(j = 0; j < SIZE; j++) {
-        for (int i = SIZE - 1; i >= 0; i--) {
-            solution[j][i] = explode[i];
-            printf("%d", solution[0][i]);
+            count = 0;
         }
+
     }
+
+//    while ( value > 0 )
+//    {
+//        explode[count] = value % 10;
+//        value = value / 10;
+//        count++;
+//    }
+//    for(j = 0; j < SIZE; j++) {
+//        for (int i = SIZE - 1; i >= 0; i--) {
+//            solution[j][i] = explode[i];
+//            printf("%d", solution[i][i]);
+//        }
+//        printf("\n");
+//    }
 
 
     int prepared_row[SIZE];
@@ -78,22 +78,22 @@ int main() {
 
 
     //------------------------ row level --------------------------------
-    //final_check[0] = row_level(prepared_row, solution, row_check);
+    final_check[0] = row_level(prepared_row, solution, row_check);
     //-------------------------------------------------------------------
 
     //--------------------- Column level -------------------------------
     printf("\n\n");
-    //final_check[1] = column_level(prepared_row, solution, row_check);
+    final_check[1] = column_level(prepared_row, solution, row_check);
     //------------------------------------------------------------------
 
     //----------------------subgrid level-------------------------------
     printf("\n\n");
-    //final_check[2] = subgrid_level(prepared_row, solution, row_check);
+    final_check[2] = subgrid_level(prepared_row, solution, row_check);
     //------------------------------------------------------------------
 
-    printf("%s", final_check[2] ? "true\n" : "false\n");
-    printf("%s", final_check[1] ? "true\n" : "false\n");
-    printf("%s", final_check[0] ? "true\n" : "false\n");
+    //printf("%s", final_check[2] ? "true\n" : "false\n");
+    //printf("%s", final_check[1] ? "true\n" : "false\n");
+    //printf("%s", final_check[0] ? "true\n" : "false\n");
 
     if(final_check[0] == true && final_check[1] == true && final_check[2] == true){
         printf("YES");
