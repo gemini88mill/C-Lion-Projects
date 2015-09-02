@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define SIZE 9
 
@@ -20,6 +21,9 @@ int main() {
                                    {1,7,4,8,5,3,6,2,9},
                                    {8,9,5,2,6,1,4,7,3}};*/
 
+    int *mallc_solution = (int *) malloc(SIZE * SIZE * sizeof(int));
+    int *mallc_prepared_row = (int *) malloc(SIZE * sizeof(int));
+
     int prepared_row[SIZE];
     bool row_check = false; //boolean value to check store value of test.
     bool final_check[3] = {false, false, false};
@@ -32,21 +36,24 @@ int main() {
         feed_converter(solution);
 
         //------------------------ row level --------------------------------
-        final_check[0] = row_level(prepared_row, solution, row_check);
+        final_check[0] = row_level(mallc_prepared_row, solution, row_check);
         //-------------------------------------------------------------------
 
         //--------------------- Column level -------------------------------
-        final_check[1] = column_level(prepared_row, solution, row_check);
+        final_check[1] = column_level(mallc_prepared_row, solution, row_check);
         //------------------------------------------------------------------
 
         //----------------------subgrid level-------------------------------
-        final_check[2] = subgrid_level(prepared_row, solution, row_check);
+        final_check[2] = subgrid_level(mallc_prepared_row, solution, row_check);
         //------------------------------------------------------------------
 
         printf(final_check[0] && final_check[1] && final_check[2] ? "YES\n" : "NO\n");
 
 
     }
+
+    free(mallc_prepared_row);
+    free(mallc_solution);
     return 0;
 }
 
