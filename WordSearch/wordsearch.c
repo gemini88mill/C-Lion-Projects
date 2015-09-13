@@ -4,9 +4,7 @@
 #define TXT_FILE "/home/raphael/ClionProjects/WordSearch/dictionary.txt"
 #define CHUNK 1024
 
-int dictionary();
-
-void fill_array_dictionary();
+char** dictionary();
 
 int main() {
     //printf("hello, world");
@@ -25,15 +23,22 @@ int main() {
      *
      *  ...*/
 
+    //--local variables-------------------------------------------------
+    int test_cases, rows, columns;
+    //------------------------------------------------------------------
+
     //initialize dictionary function.
-    int dictionary_valid;
+    char **dictionary_arr = malloc(sizeof(char*) * sizeof(char));
+    dictionary_arr = dictionary();
+    //collects the 2d array with all words in the dictionary and places it in a local variabel to main.
+
+    //collect number of test cases...
 
 
-    dictionary_valid = dictionary();
-    return dictionary_valid;
+    return 0;
 }
 
-int dictionary() {
+char** dictionary() {
     /*
      * Dictionary function:
      * initializes the dictionary to be used in the program.
@@ -42,7 +47,7 @@ int dictionary() {
     //------------------variable declaration-----------------------------
     FILE *txt_file;                                                 //file
 
-    char *word_str = malloc(sizeof(char *) * sizeof(char));
+    char **word_str = malloc(sizeof(char *) * sizeof(char));
     char tester[1024];
     int index = 0, rows = 0 ;
     int buff_size = 64;
@@ -59,18 +64,17 @@ int dictionary() {
 
     if (txt_file) {
         while ((nread = fread(word_str, 1, sizeof buff_size, txt_file)) > 0) {
-            //fwrite(word_str, 1, nread, stdout);
-            fgets(word_str, sizeof nread, txt_file);
+            fwrite(word_str, 1, nread, stdout);
+            //fgets(word_str, sizeof nread, txt_file);
         }
         if (ferror(txt_file)) {
             /* deal with error */
+            perror("un unexplained error has occured, please dismantle all incrimidating evidence!");
         }
         fclose(txt_file);
+
+
     }
+    return word_str;
 }
 
-void fill_array_dictionary() {
-    //fills array with dictionary.txt file to terminal...
-
-
-}
