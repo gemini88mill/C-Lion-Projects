@@ -29,9 +29,10 @@ int main() {
 
     FILE *txt_file = fopen(TXT_FILE, "r");
     Entries word;
-    int i, j;
-    char line[64];
-    char *buff;
+    int i, j = 0;
+    char line[32];
+    char buff[32][BUFSIZ];
+    char *p = line;
     size_t len = 0;
     ssize_t read;
 
@@ -44,21 +45,33 @@ int main() {
     i = atoi(line);
     printf("%d\n", i);
 
-    for(j = 0; j < i; j++) {
-        buff = read_line(txt_file);
-        insertEntries(&word, buff);
+    while(j < sizeof(buff) && fgets(buff[j], sizeof(buff[0]), txt_file)) {
+        p = strdup(buff);
+        insertEntries(&word, p);
     }
 
+    fclose(txt_file);
+
+    printf("element 0:%s\n", word.words[0]);
+    printf("element 1:%s\n", word.words[1]);
+    printf("element 2:%s\n", word.words[2]);
+    printf("element 3: %s\n", word.words[3]);
+    printf("space used: %lu\n", word.used);
 
 
-    printf("%s\n", word.words[1]);
-    printf("%lu\n", word.used);
 
     return 0;
 }
 
+char *strdup (const char *s) {
+    char *d = malloc (strlen (s) + 1);   // Allocate memory
+    if (d != NULL) strcpy (d,s);         // Copy string if okay
+    return d;                            // Return new memory
+}
+
 char *read_line(FILE *pFILE) {
-    char buff[32];
+    char buff[32] = {};
+
     fgets(buff, sizeof(buff), pFILE);
 
     return buff;
