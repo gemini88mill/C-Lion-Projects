@@ -1,80 +1,75 @@
+/*Created by Raphael Miller and a dangerous amount of coffee
+ *
+ * 09/14/15
+ * NID: ra677877
+ * COP3502 - guha
+ *
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define TXT_FILE "/home/raphael/ClionProjects/WordSearch/dictionary.txt"
-#define CHUNK 1024
+#define TEST_FILE "/home/raphael/ClionProjects/WordSearch/hello.txt"
 
-char** dictionary();
+typedef struct{
+    size_t used;
+    size_t size;
+    char **words;
+} Entries;
+
+void initDictionary(Entries *a, size_t initial_size);
+void insertEntries(Entries *a, char *element);
+void freeEntries(Entries *a);
 
 int main() {
-    //printf("hello, world");
 
-    /*
-     * Word Search - allows the user to input test cases for a word_str search and outputs solutions to the terminal.
-     *  Patent Pending TM 2015
-     *
-     *  Uses dictionary file that has every word_str in the english dictionary, gathered from a pre-web2.0 website
-     *  Source: http://www.angelfire.com/extreme4/safer_sephiroth/EVERY_WORD_EVER.htm
-     *
-     *  first input line: int - for number of test cases
-     *  second input line: int x 2 - for number of rows and columns
-     *  next input lines: chars(rows)(columns) - for the actual letters for the word_str search
-     *  rinse and repeat
-     *
-     *  ...*/
+    FILE *txt_file = fopen(TXT_FILE, "r");
+    Entries word;
+    int i;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-    //--local variables-------------------------------------------------
-    int test_cases, rows, columns;
-    //------------------------------------------------------------------
+    initDictionary(&word, 5);
 
-    //initialize dictionary function.
-    char **dictionary_arr = malloc(sizeof(char*) * sizeof(char));
-    dictionary_arr = dictionary();
-    //collects the 2d array with all words in the dictionary and places it in a local variabel to main.
+    insertEntries(&word, "the book");
 
-    //collect number of test cases...
+    while ((read = getline(&line, &len, txt_file)) != -1) {
+        char str[sizeof(line)];
+        //printf("Retrieved line of length %zu :\n", read);
+        //printf("%s", line);
+        //strncpy(str, line, sizeof(line));
+        //printf("%s\n", str);
+        insertEntries(&word, line);
+    }
 
+    printf("%s\n", word.words[1]);
+    printf("%lu\n", word.used);
 
     return 0;
 }
 
-char** dictionary() {
-    /*
-     * Dictionary function:
-     * initializes the dictionary to be used in the program.
-     * */
-
-    //------------------variable declaration-----------------------------
-    FILE *txt_file;                                                 //file
-
-    char **word_str = malloc(sizeof(char *) * sizeof(char));
-    char tester[1024];
-    int index = 0, rows = 0 ;
-    int buff_size = 64;
-    int txt_file_length;
-    size_t nread;
-    //-------------------------------------------------------------------
-
-
-
-    txt_file = fopen(TXT_FILE, "r");
-    if (txt_file == NULL){
-        return 1;
-    }
-
-    if (txt_file) {
-        while ((nread = fread(word_str, 1, sizeof buff_size, txt_file)) > 0) {
-            fwrite(word_str, 1, nread, stdout);
-            //fgets(word_str, sizeof nread, txt_file);
-        }
-        if (ferror(txt_file)) {
-            /* deal with error */
-            perror("un unexplained error has occured, please dismantle all incrimidating evidence!");
-        }
-        fclose(txt_file);
-
-
-    }
-    return word_str;
+void initDictionary(Entries *a, size_t initial_size){
+    a->words = malloc(initial_size * sizeof(char*));
+    a->used = 0;
+    a->size = initial_size;
 }
 
+void insertEntries(Entries *a, char *element){
+    char *str = NULL;
+    if(a->used == a->size ){
+        a->size *= 2;
+        a->words = (char **)realloc(a->words, a->size * sizeof(char*));
+    }
+    printf("%s", element);
+    str = memcpy(str, element, (size_t) 255);
+    a->words[a->used++] = str;
+}
+
+void freeEntries(Entries *a){
+    free(a->words);
+    a->words = NULL;
+    a->used = a->size = 0;
+}
