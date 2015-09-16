@@ -19,31 +19,37 @@ typedef struct{
     char **words;
 } Entries;
 
-void initDictionary(Entries *a, size_t initial_size);
+void initEntries(Entries *a, size_t initial_size);
 void insertEntries(Entries *a, char *element);
 void freeEntries(Entries *a);
+
+char *read_line(FILE *pFILE);
 
 int main() {
 
     FILE *txt_file = fopen(TXT_FILE, "r");
     Entries word;
-    int i;
-    char *line = NULL;
+    int i, j;
+    char line[64];
+    char *buff;
     size_t len = 0;
     ssize_t read;
 
-    initDictionary(&word, 5);
+    initEntries(&word, 5);
 
-    insertEntries(&word, "the book");
+    fgets(line, 32, txt_file);
 
-    while ((read = getline(&line, &len, txt_file)) != -1) {
-        char str[sizeof(line)];
-        //printf("Retrieved line of length %zu :\n", read);
-        //printf("%s", line);
-        //strncpy(str, line, sizeof(line));
-        //printf("%s\n", str);
-        insertEntries(&word, line);
+    puts(line);
+
+    i = atoi(line);
+    printf("%d\n", i);
+
+    for(j = 0; j < i; j++) {
+        buff = read_line(txt_file);
+        insertEntries(&word, buff);
     }
+
+
 
     printf("%s\n", word.words[1]);
     printf("%lu\n", word.used);
@@ -51,21 +57,27 @@ int main() {
     return 0;
 }
 
-void initDictionary(Entries *a, size_t initial_size){
+char *read_line(FILE *pFILE) {
+    char buff[32];
+    fgets(buff, sizeof(buff), pFILE);
+
+    return buff;
+}
+
+void initEntries(Entries *a, size_t initial_size){
     a->words = malloc(initial_size * sizeof(char*));
     a->used = 0;
     a->size = initial_size;
 }
 
 void insertEntries(Entries *a, char *element){
-    char *str = NULL;
+
     if(a->used == a->size ){
         a->size *= 2;
         a->words = (char **)realloc(a->words, a->size * sizeof(char*));
     }
-    printf("%s", element);
-    str = memcpy(str, element, (size_t) 255);
-    a->words[a->used++] = str;
+
+    a->words[a->used++] = element;
 }
 
 void freeEntries(Entries *a){
