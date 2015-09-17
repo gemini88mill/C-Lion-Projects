@@ -22,19 +22,29 @@ typedef struct{
 void initEntries(Entries *a, size_t initial_size);
 void insertEntries(Entries *a, char *element);
 void freeEntries(Entries *a);
+char *strdup (const char *s);
 
-char *read_line(FILE *pFILE);
+
 
 int main() {
 
+    //dictionary level variables ------------------------------------------------
     FILE *txt_file = fopen(TXT_FILE, "r");
     Entries word;
-    int i, j = 0;
-    char line[32];
+    int j = 0;
     char buff[32][BUFSIZ];
-    char *p = line;
-    size_t len = 0;
-    ssize_t read;
+    char *p;
+    //---------------------------------------------------------------------------
+
+    //*.in read variables -------------------------------------------------------
+    unsigned int input_cases;
+    unsigned int rows;
+    unsigned int colomns;
+    char **puzzle_block;
+    char puzzle_values;
+    int k, l;
+    //---------------------------------------------------------------------------
+
 
     initEntries(&word, 5); //initialize char array for dictionary
 
@@ -46,11 +56,33 @@ int main() {
     fclose(txt_file);
     //-----------------------------------------------------------------------------------------
 
-    printf("element 0:%s\n", word.words[0]);
-    printf("element 1:%s\n", word.words[1]);
-    printf("element 2:%s\n", word.words[2]);
+    //check if values are there (debug)------------------------------
+    printf("element 0:%s\n", word.words[10]);
+    printf("element 1:%s\n", word.words[34534]);
+    printf("element 2:%s\n", word.words[114877]);
+    //---------------------------------------------------------------
 
-    
+    //accept in file arguements----
+    scanf("%d", &input_cases);
+    scanf("%d", &rows);
+    scanf("%d", &colomns);
+    //-----------------------------
+
+    puzzle_block = malloc(sizeof(char*)* rows * colomns);
+
+    for(k = 0; k < rows; k++){
+        for(l = 0; l < colomns; l++){
+            scanf("%c", &puzzle_values);
+            puzzle_block[k][l] = puzzle_values;
+        }
+    }
+
+    for(k = 0; k < rows; k++){
+        for(l = 0; l < colomns; l++){
+            printf("%c", puzzle_block[l][k]);
+        }
+        printf("\n");
+    }
 
     return 0;
 }
