@@ -28,6 +28,11 @@ char *strdup (const char *s);
 
 char *get_puzzle_string();
 
+unsigned int get_larger_val_for_grid(unsigned int i, unsigned int i1);
+
+
+Entries parse_dictionary_word_length(unsigned int length, Entries word);
+
 int main() {
 
     //dictionary level variables ------------------------------------------------
@@ -47,6 +52,10 @@ int main() {
     char *puzzle_values;
 
     int k, l;
+    //---------------------------------------------------------------------------
+
+    //parse and binary search variable-------------------------------------------
+    int max_size_word_length;
     //---------------------------------------------------------------------------
 
 
@@ -72,15 +81,46 @@ int main() {
     scanf("%d", &colomns);
     //-----------------------------
 
+    max_size_word_length = get_larger_val_for_grid(rows, colomns);
 
-    //exit code 139 here
+    //debug
+    //printf("%d", max_size_word_length);
+
+    parse_dictionary_word_length(max_size_word_length, word);
+
+    //exit code 139 here-------------------------------
     //puzzle_block = malloc(rows * colomns);
     //puzzle_values = malloc(rows);
 
     //puzzle_values = get_puzzle_string();
-
+    //-------------------------------------------------
 
     return 0;
+}
+
+Entries parse_dictionary_word_length(unsigned int length, Entries word) {
+    /*checks each array for the length of the array.
+     * then takes those elements from that array and stores them in new struct Entries
+     * then sends the struct back with all the words...*/
+    Entries results;
+    initEntries(&results, 5); //initialize string array for words.
+
+    //first find the number of elements of an array
+
+
+    return results; //return Entries
+}
+
+
+unsigned int get_larger_val_for_grid(unsigned int i, unsigned int i1) {
+    unsigned int larger_val;
+    if(i > i1){
+        larger_val = i;
+    }else{
+        larger_val = i1;
+    }
+
+    return larger_val;
 }
 
 char *get_puzzle_string(){
