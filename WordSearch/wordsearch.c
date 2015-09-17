@@ -25,6 +25,7 @@ void freeEntries(Entries *a);
 char *strdup (const char *s);
 
 
+char *get_puzzle_string();
 
 int main() {
 
@@ -40,8 +41,10 @@ int main() {
     unsigned int input_cases;
     unsigned int rows;
     unsigned int colomns;
+
     char **puzzle_block;
-    char puzzle_values;
+    char *puzzle_values;
+
     int k, l;
     //---------------------------------------------------------------------------
 
@@ -68,24 +71,22 @@ int main() {
     scanf("%d", &colomns);
     //-----------------------------
 
-    puzzle_block = malloc(sizeof(char*)* rows * colomns);
+    puzzle_block = malloc(rows * colomns);
+    puzzle_values = malloc(rows);
 
-    for(k = 0; k < rows; k++){
-        for(l = 0; l < colomns; l++){
-            scanf("%c", &puzzle_values);
-            puzzle_block[k][l] = puzzle_values;
-        }
-    }
+    puzzle_values = get_puzzle_string();
 
-    for(k = 0; k < rows; k++){
-        for(l = 0; l < colomns; l++){
-            printf("%c", puzzle_block[l][k]);
-        }
-        printf("\n");
-    }
 
     return 0;
 }
+
+char *get_puzzle_string(){
+    char *pStr = NULL;
+    pStr = fgets(pStr, 64, stdin);
+
+    return pStr;
+}
+
 
 char *strdup (const char *s) {
     char *d = malloc (strlen (s) + 1);   // Allocate memory

@@ -44,13 +44,12 @@
       <file leaf-file-name="wordsearch.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wordsearch.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6516129">
-              <caret line="81" column="42" selection-start-line="81" selection-start-column="42" selection-end-line="81" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.8451613">
+              <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
               <folding>
                 <element signature="e#121#139#0" expanded="true" />
-                <element signature="e#2656#2908#0" expanded="false" />
-                <element signature="e#2910#3124#0" expanded="false" />
-                <element signature="e#3126#3225#0" expanded="false" />
+                <element signature="e#2526#2778#0" expanded="false" />
+                <element signature="e#2780#2994#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -259,9 +258,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#121#139#0" expanded="true" />
-            <element signature="e#2656#2908#0" expanded="false" />
-            <element signature="e#2910#3124#0" expanded="false" />
-            <element signature="e#3126#3225#0" expanded="false" />
+            <element signature="e#2526#2778#0" expanded="false" />
+            <element signature="e#2780#2994#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -308,13 +306,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wordsearch.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6516129">
-          <caret line="81" column="42" selection-start-line="81" selection-start-column="42" selection-end-line="81" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.8451613">
+          <caret line="84" column="34" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
           <folding>
             <element signature="e#121#139#0" expanded="true" />
-            <element signature="e#2656#2908#0" expanded="false" />
-            <element signature="e#2910#3124#0" expanded="false" />
-            <element signature="e#3126#3225#0" expanded="false" />
+            <element signature="e#2526#2778#0" expanded="false" />
+            <element signature="e#2780#2994#0" expanded="false" />
           </folding>
         </state>
       </provider>
