@@ -16,6 +16,7 @@
 
 typedef struct{
     size_t used;
+    size_t length; //to get length of string
     size_t size;
     char **words;
 } Entries;
@@ -31,7 +32,7 @@ char *get_puzzle_string();
 unsigned int get_larger_val_for_grid(unsigned int i, unsigned int i1);
 
 
-Entries parse_dictionary_word_length(unsigned int length, Entries word);
+Entries parse_dictionary_word_length(int length, Entries word);
 
 int main() {
 
@@ -98,7 +99,7 @@ int main() {
     return 0;
 }
 
-Entries parse_dictionary_word_length(unsigned int length, Entries word) {
+Entries parse_dictionary_word_length(int length, Entries word) {
     /*checks each array for the length of the array.
      * then takes those elements from that array and stores them in new struct Entries
      * then sends the struct back with all the words...*/
