@@ -36,29 +36,21 @@ int main() {
     size_t len = 0;
     ssize_t read;
 
-    initEntries(&word, 5);
+    initEntries(&word, 5); //initialize char array for dictionary
 
-    fgets(line, 32, txt_file);
-
-    puts(line);
-
-    i = atoi(line);
-    printf("%d\n", i);
-
+    //block dealing with dictionary value allocation-------------------------------------------
     while(j < sizeof(buff) && fgets(buff[j], sizeof(buff[0]), txt_file)) {
         p = strdup(buff);
         insertEntries(&word, p);
     }
-
     fclose(txt_file);
+    //-----------------------------------------------------------------------------------------
 
     printf("element 0:%s\n", word.words[0]);
     printf("element 1:%s\n", word.words[1]);
     printf("element 2:%s\n", word.words[2]);
-    printf("element 3: %s\n", word.words[3]);
-    printf("space used: %lu\n", word.used);
 
-
+    
 
     return 0;
 }
@@ -69,14 +61,7 @@ char *strdup (const char *s) {
     return d;                            // Return new memory
 }
 
-char *read_line(FILE *pFILE) {
-    char buff[32] = {};
-
-    fgets(buff, sizeof(buff), pFILE);
-
-    return buff;
-}
-
+//------------functions pertaining to dictionary mem block-------------------------------------------
 void initEntries(Entries *a, size_t initial_size){
     a->words = malloc(initial_size * sizeof(char*));
     a->used = 0;
@@ -98,3 +83,4 @@ void freeEntries(Entries *a){
     a->words = NULL;
     a->used = a->size = 0;
 }
+//---------------------------------------------------------------------------------------------------
