@@ -10,7 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TXT_FILE "/home/raphael/ClionProjects/WordSearch/dictionary.txt"
+//need to change to directory independent directory.
+#define TXT_FILE "/home/raphael/ClionProjects/C-Lion-Projects/WordSearch/dictionary.txt"
 #define TEST_FILE "/home/raphael/ClionProjects/WordSearch/hello.txt"
 
 typedef struct{
@@ -71,10 +72,12 @@ int main() {
     scanf("%d", &colomns);
     //-----------------------------
 
-    puzzle_block = malloc(rows * colomns);
-    puzzle_values = malloc(rows);
 
-    puzzle_values = get_puzzle_string();
+    //exit code 139 here
+    //puzzle_block = malloc(rows * colomns);
+    //puzzle_values = malloc(rows);
+
+    //puzzle_values = get_puzzle_string();
 
 
     return 0;
