@@ -28,6 +28,9 @@ char *strdup (const char *s);
 
 char *get_puzzle_string();
 
+
+int binary_search(char **pString, char *search_ptr, int low, int size);
+
 int main() {
 
     //dictionary level variables ------------------------------------------------
@@ -51,7 +54,11 @@ int main() {
 
     //binary search variables ---------------------------------------------------
     char search_string[32]; //testing search string.
-    char *search_ptr; //ptr to binary search string.
+    char *search_ptr = search_string; //ptr to binary search string.
+
+
+
+    int i = 0,result, x = 0;
     //---------------------------------------------------------------------------
 
 
@@ -66,7 +73,7 @@ int main() {
     //-----------------------------------------------------------------------------------------
 
     //check if values are there (debug)------------------------------
-    printf("element 0:%s\n", word.words[10]);
+    printf("element 0:%s\n", word.words[1]);
     printf("element 1:%s\n", word.words[34534]);
     printf("element 2:%s\n", word.words[114877]);
     //---------------------------------------------------------------
@@ -78,12 +85,41 @@ int main() {
     //-----------------------------
 
     //binary search ------------------------------------------------
-    
+    scanf("%s", search_ptr);
+
+    if((result = binary_search(word.words, search_ptr, x, (int) word.used)) != 0){
+        printf("%d", result);
+
+       printf("found %s at position %d", search_ptr, result);
+    } else{
+        printf("%d", result);
+        printf("%s not found", search_ptr);
+    }
     //--------------------------------------------------------------
 
 
     return 0;
 }
+
+int binary_search(char **pString, char *search_ptr, int low, int size) {
+    int mid, high, result;
+
+    high = (size - 1);
+
+    mid = (high + low) / 2;
+
+    result = strcmp(pString[mid], search_ptr);
+
+    if (result < 0){
+        return binary_search(&pString[mid], search_ptr, mid + 1,  high);
+    } else if (result > 0){
+        return binary_search(&pString[mid], search_ptr, low,  (mid - 1));
+    } else if (result == 0){
+        return mid;
+    }
+    return -1;
+}
+
 
 char *get_puzzle_string(){
     char *pStr = NULL;
