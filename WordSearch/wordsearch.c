@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 #define TXT_FILE "/home/raphael/ClionProjects/WordSearch/dictionary.txt"
 #define TEST_FILE "/home/raphael/ClionProjects/WordSearch/hello.txt"
 
@@ -48,6 +49,11 @@ int main() {
     int k, l;
     //---------------------------------------------------------------------------
 
+    //binary search variables ---------------------------------------------------
+    char search_string[32]; //testing search string.
+    char *search_ptr; //ptr to binary search string.
+    //---------------------------------------------------------------------------
+
 
     initEntries(&word, 5); //initialize char array for dictionary
 
@@ -71,10 +77,9 @@ int main() {
     scanf("%d", &colomns);
     //-----------------------------
 
-    puzzle_block = malloc(rows * colomns);
-    puzzle_values = malloc(rows);
-
-    puzzle_values = get_puzzle_string();
+    //binary search ------------------------------------------------
+    
+    //--------------------------------------------------------------
 
 
     return 0;
