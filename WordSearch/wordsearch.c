@@ -29,7 +29,7 @@ char *strdup (const char *s);
 char *get_puzzle_string();
 
 
-int binary_search(char **pString, char *search_ptr, int low, int size);
+int binary_search(char **pString, char *search_ptr, int low, int high, size_t length);
 
 int main() {
 
@@ -87,7 +87,7 @@ int main() {
     //binary search ------------------------------------------------
     scanf("%s", search_ptr);
 
-    if((result = binary_search(word.words, search_ptr, x, (int) word.used)) != 0){
+    if((result = binary_search(word.words, search_ptr, 0, (int) word.used - 1, sizeof(search_ptr))) == 0){
         printf("%d", result);
 
        printf("found %s at position %d", search_ptr, result);
@@ -101,23 +101,32 @@ int main() {
     return 0;
 }
 
-int binary_search(char **pString, char *search_ptr, int low, int size) {
-    int mid, high, result;
+int binary_search(char **pString, char *search_ptr, int low, int high, size_t length) {
 
-    high = (size - 1);
+    char key_string[16];
+    char dictionary_string[16];
 
-    mid = (high + low) / 2;
 
-    result = strcmp(pString[mid], search_ptr);
+    if (high < low) {
+        return -1;
+    }
+    int mid = (low + high) / 2;
+    int result;
 
-    if (result < 0){
-        return binary_search(&pString[mid], search_ptr, mid + 1,  high);
-    } else if (result > 0){
-        return binary_search(&pString[mid], search_ptr, low,  (mid - 1));
-    } else if (result == 0){
+    strcpy(dictionary_string, pString[mid]);
+    strcpy(key_string, search_ptr);
+
+    printf("%s", dictionary_string);
+    result = strcmp(dictionary_string, key_string);
+    if (result > 0) {
+        return binary_search(pString, key_string, low, mid - 1, length);
+    } else if (result < 0) {
+        return binary_search(pString, key_string, mid + 1, high, length);
+    } else if (result == 0)  {
         return mid;
     }
-    return -1;
+
+
 }
 
 
