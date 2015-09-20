@@ -108,7 +108,7 @@ int main() {
     Entries solutions;
     char grid_buff[32];
     char *pp;
-    int k;
+    int k, l;
 
     init_Entries(&grid, 5);
     init_Entries(&solutions, 5);
@@ -125,9 +125,11 @@ int main() {
     //function find_horizontally
     /*start position*/
     check = find_horizontal(dictionary.words, grid.words, rows, colomns, dictionary.used - 1, solutions);
-    printf("check val: %i", check);
+    printf("check val: %i\n", check);
 
-    printf("solutions: %s", solutions.words[0]);
+    for(l = 0; l < solutions.size; l++) {
+        printf("solutions: %s\n", solutions.words[l]);
+    }
     //--------------------------------------------------------------
 
     return 0;
@@ -142,33 +144,36 @@ int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned 
     int k;
     int check = 0;
     size_t high = i;
+    int count = 0;
 
     memset(section_test, '\0', sizeof(section_test));
     strcpy(grid_section, *grid);
 
     for(t = 3; t < sizeof(grid_section); t++) {
         strncpy(section_test, grid_section, t);
-        //printf("%s\n", section_test);
+        printf("%s\n", section_test);
         check = binary_search(dictionary, section_test, 0, (int) (high - 1), sizeof(section_test));
         if (check != 0){
-            check = TRUE;
             insertEntries(&solutions, section_test);
+            check = TRUE;
+            count++;
             return check;
         }
         for(k = 1; k < sizeof(section_test); k++) {
             memmove(section_test, section_test + 1, strlen(section_test) );
-            //printf("%s\n", section_test);
+            printf("%s\n", section_test);
             check = binary_search(dictionary, section_test, 0, (int) (high - 1), sizeof(section_test));
             if (check != 0){
-                check = TRUE;
                 insertEntries(&solutions, section_test);
+                check = TRUE;
+                count++;
                 return check;
             }
         }
 
     }
 
-
+    printf("count: %d\n", count);
     return check;
 }
 
