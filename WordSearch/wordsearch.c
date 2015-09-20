@@ -33,7 +33,7 @@ char *get_puzzle_string();
 
 int binary_search(char **pString, char *search_ptr, int low, int high, size_t length);
 
-int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned int colomns, size_t i);
+int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned int colomns, size_t i, Entries solutions);
 
 int main() {
 
@@ -105,11 +105,13 @@ int main() {
 
     //grid level----------------------------------------------------
     Entries grid;
+    Entries solutions;
     char grid_buff[32];
     char *pp;
     int k;
 
     init_Entries(&grid, 5);
+    init_Entries(&solutions, 5);
 
     for(k = 0; k < rows; k++){
         scanf("%s", grid_buff);
@@ -122,14 +124,17 @@ int main() {
 
     //function find_horizontally
     /*start position*/
-    check = find_horizontal(dictionary.words, grid.words, rows, colomns, dictionary.used - 1);
+    check = find_horizontal(dictionary.words, grid.words, rows, colomns, dictionary.used - 1, solutions);
     printf("check val: %i", check);
+
+    printf("solutions: %s", solutions.words[0]);
     //--------------------------------------------------------------
 
     return 0;
 }
 
-int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned int colomns, size_t i) {
+int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned int colomns, size_t i,
+                    Entries solutions) {
     //finds all horizontal values in grid.
     char grid_section[32];
     char section_test[32];
@@ -147,14 +152,16 @@ int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned 
         check = binary_search(dictionary, section_test, 0, (int) (high - 1), sizeof(section_test));
         if (check != 0){
             check = TRUE;
+            insertEntries(&solutions, section_test);
             return check;
         }
         for(k = 1; k < sizeof(section_test); k++) {
             memmove(section_test, section_test + 1, strlen(section_test) );
-            printf("%s\n", section_test);
+            //printf("%s\n", section_test);
             check = binary_search(dictionary, section_test, 0, (int) (high - 1), sizeof(section_test));
             if (check != 0){
                 check = TRUE;
+                insertEntries(&solutions, section_test);
                 return check;
             }
         }

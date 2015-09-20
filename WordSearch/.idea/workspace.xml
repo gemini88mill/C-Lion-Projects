@@ -44,8 +44,8 @@
       <file leaf-file-name="wordsearch.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wordsearch.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17419355">
-              <caret line="135" column="4" selection-start-line="135" selection-start-column="4" selection-end-line="135" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.3483871">
+              <caret line="129" column="48" selection-start-line="129" selection-start-column="48" selection-end-line="129" selection-end-column="48" />
               <folding>
                 <element signature="e#121#139#0" expanded="true" />
               </folding>
@@ -265,17 +265,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/wordsearch.c</url>
-          <line>144</line>
+          <line>149</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/wordsearch.c</url>
-          <line>149</line>
+          <line>155</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/wordsearch.c</url>
-          <line>157</line>
+          <line>164</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
@@ -447,8 +447,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wordsearch.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17419355">
-          <caret line="135" column="4" selection-start-line="135" selection-start-column="4" selection-end-line="135" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.3483871">
+          <caret line="129" column="48" selection-start-line="129" selection-start-column="48" selection-end-line="129" selection-end-column="48" />
           <folding>
             <element signature="e#121#139#0" expanded="true" />
           </folding>
