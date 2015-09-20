@@ -123,6 +123,7 @@ int main() {
     //function find_horizontally
     /*start position*/
     check = find_horizontal(dictionary.words, grid.words, rows, colomns, dictionary.used - 1);
+    printf("check val: %i", check);
     //--------------------------------------------------------------
 
     return 0;
@@ -133,25 +134,35 @@ int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned 
     char grid_section[32];
     char section_test[32];
     size_t t;
-    int check;
+    int k;
+    int check = 0;
     size_t high = i;
 
     memset(section_test, '\0', sizeof(section_test));
     strcpy(grid_section, *grid);
 
-    for(t = 2; t < sizeof(grid_section); t++) {
+    for(t = 3; t < sizeof(grid_section); t++) {
         strncpy(section_test, grid_section, t);
         //printf("%s\n", section_test);
         check = binary_search(dictionary, section_test, 0, (int) (high - 1), sizeof(section_test));
-        if(check != 0){
-            printf("found word\n");
-        } else {
-            printf("did not find word\n");
+        if (check != 0){
+            check = TRUE;
+            return check;
         }
+        for(k = 1; k < sizeof(section_test); k++) {
+            memmove(section_test, section_test + 1, strlen(section_test) );
+            printf("%s\n", section_test);
+            check = binary_search(dictionary, section_test, 0, (int) (high - 1), sizeof(section_test));
+            if (check != 0){
+                check = TRUE;
+                return check;
+            }
+        }
+
     }
 
 
-    return FALSE;
+    return check;
 }
 
 int binary_search(char **pString, char *search_ptr, int low, int high, size_t length) {
