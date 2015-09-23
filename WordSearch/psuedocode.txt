@@ -1,0 +1,26 @@
+
+dictionary_parse(Entries *a, grid[][]){
+    start with first letter of grid[0][0].
+    check first letter if it exists in a.word(from Entries)
+    if (a.word == grid[][]){
+        check if next letter and first letter exists in dictionary
+    } else return false
+    if()
+
+}
+
+a s d f
+s d f g
+c a r e
+x c d e     <--- car and care
+
+left to right(){
+    start at a (a = grid[][])
+    if (a == 0th element of word){
+        grid[+1][];
+        return true;
+    } else{
+        grid[+1];
+        return false
+    }
+}

@@ -26,14 +26,9 @@ void init_Entries(Entries *a, size_t initial_size);
 void insertEntries(Entries *a, char *element);
 void freeEntries(Entries *a);
 char *strdup (const char *s);
-
-
 char *get_puzzle_string();
-
-
 int binary_search(char **pString, char *search_ptr, int low, int high, size_t length);
-
-int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned int colomns, size_t i, Entries solutions);
+int find_word(char **dictionary, char *grid, unsigned int rows, unsigned int colomns, size_t i, char *solutions);
 
 int main() {
 
@@ -84,14 +79,10 @@ int main() {
     //printf("element 2:%s\n", dictionary.words[114877]);
     //---------------------------------------------------------------
 
-    //accept in file arguements----
-    scanf("%d", &input_cases);
-    scanf("%d", &rows);
-    scanf("%d", &colomns);
-    //-----------------------------
+
 
     //binary search ------------------------------------------------
-    scanf("%s", search_ptr);
+    /*scanf("%s", search_ptr);
 
     if((result = binary_search(dictionary.words, search_ptr, 0, (int) dictionary.used - 1, sizeof(search_ptr))) != 0){
         //printf("%d", result);
@@ -100,80 +91,104 @@ int main() {
     } else{
         printf("%d", result);
         printf("%s not found", search_ptr);
-    }
+    }*/
     //--------------------------------------------------------------
 
     //grid level----------------------------------------------------
     Entries grid;
     Entries solutions;
+    char solutions_buff[32];
+    char *solutions_ptr = solutions_buff;
     char grid_buff[32];
     char *pp;
-    int k, l;
+    char *ppp;
+    int k, l, m, n, o;
 
     init_Entries(&grid, 5);
     init_Entries(&solutions, 5);
+    //-------------------------------------------------------------
 
-    for(k = 0; k < rows; k++){
-        scanf("%s", grid_buff);
-        pp = strdup(grid_buff);
-        insertEntries(&grid, pp);
-        //printf("%s\n", grid.words[k]);
+
+    //accept in file arguements----
+    scanf("%d", &input_cases);
+
+    for(o = 0; o < input_cases; o++) {
+        scanf("%d", &rows);
+        scanf("%d", &colomns);
+        //-----------------------------
+
+        for (k = 0; k < rows; k++) {
+            scanf("%s", grid_buff);
+            pp = strdup(grid_buff);
+            insertEntries(&grid, pp);
+            //printf("%s\n", grid.words[k]);
+        }
     }
+        //function find_horizontally
+        /*start position*/
+        for (n = 0; n < rows; n++) {
+            memset(solutions_ptr, '\0', sizeof(solutions_ptr));
+            find_word(dictionary.words, grid.words[n], rows, colomns, dictionary.used - 1, solutions_buff);
+            ppp = strdup(solutions_buff);
+            insertEntries(&solutions, ppp);
+        }
 
-    int check;
+    //printf("check val: %i\n", check);
 
-    //function find_horizontally
-    /*start position*/
-    check = find_horizontal(dictionary.words, grid.words, rows, colomns, dictionary.used - 1, solutions);
-    printf("check val: %i\n", check);
+    //output --------------------------------------------------------
 
-    for(l = 0; l < solutions.size; l++) {
-        printf("solutions: %s\n", solutions.words[l]);
+    for(m = 0; m < input_cases; m++) {
+        printf("Words Found Grid #%d:\n", m + 1);
+        for (l = 0; l < solutions.size; l++) {
+            if (solutions.words != NULL) {
+                printf(" %s\n", solutions.words[l]);
+            }
+        }
     }
     //--------------------------------------------------------------
 
     return 0;
 }
 
-int find_horizontal(char **dictionary, char **grid, unsigned int rows, unsigned int colomns, size_t i,
-                    Entries solutions) {
+int find_word(char **dictionary, char *grid, unsigned int rows, unsigned int colomns, size_t i,
+              char *solutions) {
     //finds all horizontal values in grid.
-    char grid_section[32];
-    char section_test[32];
-    size_t t;
-    int k;
-    int check = 0;
-    size_t high = i;
-    int count = 0;
+    char str_segment[32]; char section_test[32];
+    size_t t = 0; size_t high = i;
+    int k; int check = 0; int count = 0;
 
     memset(section_test, '\0', sizeof(section_test));
-    strcpy(grid_section, *grid);
+    strcpy(str_segment, grid);
 
-    for(t = 3; t < sizeof(grid_section); t++) {
-        strncpy(section_test, grid_section, t);
-        printf("%s\n", section_test);
+    //printf("%s\n", str_segment);
+
+    //str_segment[sizeof(char)* sizeof(grid)] = '\0';
+    for(t = 3; t < sizeof(str_segment); t++) {
+        strncpy(section_test, str_segment, t);
+        //section_test[sizeof(char)* sizeof(grid)] = '\0';
+        //printf("%s\n", section_test);
         check = binary_search(dictionary, section_test, 0, (int) (high - 1), sizeof(section_test));
         if (check != 0){
-            insertEntries(&solutions, section_test);
-            check = TRUE;
-            count++;
-            return check;
+            strcpy(solutions, section_test);
+            //check = TRUE;
+            //count++;
+            return TRUE;
         }
-        for(k = 1; k < sizeof(section_test); k++) {
+        for(k = 0; k < sizeof(section_test); k++) {
             memmove(section_test, section_test + 1, strlen(section_test) );
-            printf("%s\n", section_test);
+            //section_test[sizeof(char)* sizeof(grid)] = '\0';
+            //printf("%s\n", section_test);
             check = binary_search(dictionary, section_test, 0, (int) (high - 1), sizeof(section_test));
             if (check != 0){
-                insertEntries(&solutions, section_test);
-                check = TRUE;
-                count++;
-                return check;
+                strcpy(solutions, section_test);
+                //check = TRUE;
+                //count++;
+                return TRUE;
             }
         }
 
     }
-
-    printf("count: %d\n", count);
+    //printf("count: %d\n", count);
     return check;
 }
 
