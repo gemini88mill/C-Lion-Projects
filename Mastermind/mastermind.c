@@ -47,9 +47,15 @@ int main (){
     collect_values(test_case_ptr, meta_ptr, data);
 
     //debug variables go here-----------------------------
-    int i;
+    int i, m, l;
     //----------------------------------------------------
 
+    for(m = 0; m < meta_ptr[0]; m++) {
+        for (l = 0; l < (meta_ptr[2] + 2); l++) {
+            printf("%d\t", data.moves[m][l]);
+        }
+        printf("\n");
+    }
 
     //8:44pm completed storage of the first two values
     //printf("%d", *data.moves[0]);
@@ -63,7 +69,7 @@ void collect_values(int *cases, int pInt[], Game_Data val) {
     int i = 0;
     int j = 0, k = 0, l = 0, m = 4;
     int test[3] = {8,4,3};
-    int hold[sizeof(pInt[2])];
+    int hold[sizeof(pInt[2] + 2)];
     int *hold_ptr = hold;
 
 
@@ -74,57 +80,26 @@ void collect_values(int *cases, int pInt[], Game_Data val) {
         i++;
     //-------------------------------------------------------
 
-    int *element = malloc(sizeof(int) * pInt[2]);
-
-    //printf("%d\t", pInt[0]);
-    //printf("%d\t", pInt[2]);
-
+    int *element = malloc(sizeof(int) * (pInt[2] + 2));
 
     for(k = 0; k < pInt[0]; k++) {
         j = 0;
-        while (j < pInt[2] && scanf("%d", &element[j]) == 1) {
+        while (j < (pInt[2] + 2) && scanf("%d", &element[j]) == 1) {
+            hold_ptr = intdup(element, sizeof(element));
             j++;
         }
-        hold_ptr = intdup(element, sizeof(pInt[2]));
+
+
+
         insert_Game_Data(&val, hold_ptr);
-
-
     }
 
-
-
-
-//    printf("%d\t", element[0]);
-//    printf("%d\t", element[1]);
-//    printf("%d\t", element[2]);
-
-
-    printf("%d\t", val.moves[0][0]);
-    printf("%d\t", val.moves[0][1]);
-    printf("%d\n", val.moves[0][2]);
-    printf("%d\t", val.moves[1][0]);
-    printf("%d\t", val.moves[1][1]);
-    printf("%d\n", val.moves[1][2]);
-    printf("%d\t", val.moves[2][0]);
-    printf("%d\t", val.moves[2][1]);
-    printf("%d\t", val.moves[2][2]);
-
-
-
-
-
-    //collect past gameplay data-----------------------------
-    /*  first value: number of slots to fill in
-     *  second val: number of possible colors
-     *  third val: number of moves that have been played*/
-
-    //number of moves "rows" 3rd val
-    //number of slots "columns" 1st val
-
-    //printf("%d\t", pInt[0]);
-    //printf("%d\t", pInt[2]);
-
-
+//    for(m = 0; m < pInt[0]; m++) {
+//        for (l = 0; l < (pInt[2] + 2); l++) {
+//            printf("%d\t", val.moves[m][l]);
+//        }
+//        printf("\n");
+//    }
 
 }
 
