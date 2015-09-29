@@ -44,11 +44,11 @@
       <file leaf-file-name="mastermind.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mastermind.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36774194">
-              <caret line="61" column="35" selection-start-line="61" selection-start-column="35" selection-end-line="61" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.67741936">
+              <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="110" selection-end-column="0" />
               <folding>
                 <element signature="e#80#99#0" expanded="true" />
-                <element signature="e#2467#2622#0" expanded="false" />
+                <element signature="e#3144#3299#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -148,6 +148,9 @@
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="477fbdf7-259c-4f3e-b249-9e477b288823" name="Default" comment="" />
@@ -181,19 +184,20 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/mastermind.c</url>
-          <line>77</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="5" />
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -208,11 +212,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mastermind.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36774194">
-          <caret line="61" column="35" selection-start-line="61" selection-start-column="35" selection-end-line="61" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.67741936">
+          <caret line="101" column="4" selection-start-line="101" selection-start-column="4" selection-end-line="110" selection-end-column="0" />
           <folding>
             <element signature="e#80#99#0" expanded="true" />
-            <element signature="e#2467#2622#0" expanded="false" />
+            <element signature="e#3144#3299#0" expanded="false" />
           </folding>
         </state>
       </provider>

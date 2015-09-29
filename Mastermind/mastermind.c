@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define METADATA_ELEMS 3
 
@@ -27,6 +28,7 @@ void collect_values(int *cases, int pInt[], Game_Data val);
 void init_Game_Data(Game_Data *a, size_t initial_size);
 void insert_Game_Data(Game_Data *a, int *element);
 void free_Game_Data(Game_Data *a);
+int * intdup(int const * src, size_t len);
 
 int main (){
 
@@ -59,7 +61,10 @@ int main (){
 void collect_values(int *cases, int pInt[], Game_Data val) {
     //collect the values from the *.in file
     int i = 0;
-    int j = 0, k = 0, l = 0, m = 0;
+    int j = 0, k = 0, l = 0, m = 4;
+    int test[3] = {8,4,3};
+    int hold[sizeof(pInt[2])];
+    int *hold_ptr = hold;
 
 
 
@@ -71,19 +76,38 @@ void collect_values(int *cases, int pInt[], Game_Data val) {
 
     int *element = malloc(sizeof(int) * pInt[2]);
 
-    for(l = 0; l < pInt[0]; l++) {
-        while (j < pInt[2] && scanf("%d", element) == 1) {
-            for (k = 0; k < pInt[2]; k++) {
-                m = element[k];
-                insert_Game_Data(&val, &m);
-            }
+    //printf("%d\t", pInt[0]);
+    //printf("%d\t", pInt[2]);
+
+
+    for(k = 0; k < pInt[0]; k++) {
+        j = 0;
+        while (j < pInt[2] && scanf("%d", &element[j]) == 1) {
             j++;
         }
+        hold_ptr = intdup(element, sizeof(pInt[2]));
+        insert_Game_Data(&val, hold_ptr);
+
+
     }
 
-    printf("%d\t", *val.moves[0]);
-    printf("%d\t", *val.moves[1]);
-    printf("%d\t", *val.moves[2]);
+
+
+
+//    printf("%d\t", element[0]);
+//    printf("%d\t", element[1]);
+//    printf("%d\t", element[2]);
+
+
+    printf("%d\t", val.moves[0][0]);
+    printf("%d\t", val.moves[0][1]);
+    printf("%d\n", val.moves[0][2]);
+    printf("%d\t", val.moves[1][0]);
+    printf("%d\t", val.moves[1][1]);
+    printf("%d\n", val.moves[1][2]);
+    printf("%d\t", val.moves[2][0]);
+    printf("%d\t", val.moves[2][1]);
+    printf("%d\t", val.moves[2][2]);
 
 
 
@@ -97,11 +121,17 @@ void collect_values(int *cases, int pInt[], Game_Data val) {
     //number of moves "rows" 3rd val
     //number of slots "columns" 1st val
 
-    printf("%d", pInt[0]);
-    printf("%d", pInt[2]);
+    //printf("%d\t", pInt[0]);
+    //printf("%d\t", pInt[2]);
 
 
 
+}
+
+int * intdup(int const * src, size_t len) {
+    int * p = malloc(len * sizeof(int));
+    memcpy(p, src, len * sizeof(int));
+    return p;
 }
 
 void init_Game_Data(Game_Data *a, size_t initial_size){
