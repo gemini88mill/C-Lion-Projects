@@ -30,16 +30,25 @@ void insert_Game_Data(Game_Data *a, int *element);
 void free_Game_Data(Game_Data *a);
 int * intdup(int const * src, size_t len);
 
+int mastermind_engine(Game_Data data, int *pInt);
+
+int genetic_algo(Game_Data *data_ptr);
+
+void permute(int *data, int first, int last);
+
+void swap(int *pInt, int *pInt1);
+
 int main (){
 
 
 
     int test_cases = 0; //collects the number of test cases, first val
     int mastermind_meta_data[3]; //second input values 3 space separated values
-    int **mastermind_val = malloc(sizeof(int) * 10 * 10); //to store the rest of the values collected by the input
+    //int **mastermind_val = malloc(sizeof(int) * 10 * 10); //to store the rest of the values collected by the input
 
     int *test_case_ptr = &test_cases;
     int *meta_ptr = mastermind_meta_data;
+    int output;
     Game_Data data;
 
     init_Game_Data(&data, 5);
@@ -50,19 +59,106 @@ int main (){
     int i, m, l;
     //----------------------------------------------------
 
-    for(m = 0; m < meta_ptr[0]; m++) {
-        for (l = 0; l < (meta_ptr[2] + 2); l++) {
-            printf("%d\t", data.moves[m][l]);
-        }
-        printf("\n");
-    }
+//    for(m = 0; m < meta_ptr[0]; m++) {
+//        for (l = 0; l < (meta_ptr[2] + 2); l++) {
+//            printf("%d\t", data.moves[m][l]);
+//        }
+//        printf("\n");
+//    }
+    //debug
 
     //8:44pm completed storage of the first two values
     //printf("%d", *data.moves[0]);
 
 
+    /*  value key: mastermind_meta_data[0] = "columns" for 2d array, the number of slots to fill in.
+     *             mastermind_meta_data[1] = number of possible "colors"
+     *             mastermind_meta_data[2] = "rows" for 2d array, the number of moves that have been played
+     *             Game_Data data = stores the moves that were played.*/
+
+    //sample case 4 6 4
+    output = mastermind_engine(data, meta_ptr);
+
+    //printf("%d", output);
+
     return 0; //end of main
 }
+
+int mastermind_engine(Game_Data data, int *pInt) {
+    //debug vars---------------------------
+    int x,y,z;
+    //-------------------------------------
+
+    Game_Data *data_ptr = &data;
+
+    for(x = 0; x < pInt[0]; x++){
+        for(y = 0; y < pInt[2] + 2; y++){
+            printf("%d\t", data.moves[x][y]);
+        }
+        printf("\n");
+    }
+
+    int *c_and_w_correct = malloc(sizeof(int) * pInt[2]);
+    int *color_correct = malloc(sizeof(int) * pInt[2]);
+    int *acc_row = malloc(sizeof(int) * pInt[0]);
+    int no_of_colors = pInt[1];
+    int value[4];
+
+    for(x = 0; x < pInt[0]; x++){
+        c_and_w_correct[x] = data.moves[x][pInt[2]];
+        //printf("%d\t", c_and_w_correct[x]);
+    }
+
+    printf("\n");
+
+    for(x = 0; x < pInt[0]; x++){
+        color_correct[x] = data.moves[x][pInt[2] + 1];
+        //printf("%d\t", color_correct[x]);
+    }
+
+    for(z = 0; z < pInt[2]; z++){
+        acc_row[z] = data.moves[0][z];
+        //printf("%d ", acc_row[z]);
+    }
+
+    for(x = 0; x < pInt[2]; x++){
+        value[x] = pInt[1];
+    }
+
+    int *int_ptr = acc_row;
+    int n = pInt[2];
+
+    permute(acc_row, 0, 3);
+
+
+    return 0;
+}
+
+void permute(int *data, int first, int last) {
+    int i;
+    if (first == last){
+        int x;
+        for (x = 0; x < 4; x++) {
+            printf("%d ", data[x]);
+        }
+        printf("\n");
+    } else {
+        for(i = first; i <= last; i++){
+            swap((data + first), (data + i));
+            permute(data, first + 1, last);
+            swap( (data + first), (data + i));
+        }
+    }
+
+}
+
+void swap(int *pInt, int *pInt1) {
+    int temp;
+    temp = *pInt;
+    *pInt = *pInt1;
+    *pInt1 = temp;
+}
+
 
 void collect_values(int *cases, int pInt[], Game_Data val) {
     //collect the values from the *.in file
@@ -99,7 +195,7 @@ void collect_values(int *cases, int pInt[], Game_Data val) {
 //            printf("%d\t", val.moves[m][l]);
 //        }
 //        printf("\n");
-//    }
+//    } for debug
 
 }
 
