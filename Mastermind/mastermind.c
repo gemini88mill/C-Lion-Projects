@@ -38,6 +38,8 @@ void permute(int *data, int first, int last);
 
 void swap(int *pInt, int *pInt1);
 
+void combination(int pos, int *element, int *current);
+
 int main (){
 
 
@@ -101,63 +103,64 @@ int mastermind_engine(Game_Data data, int *pInt) {
     int *c_and_w_correct = malloc(sizeof(int) * pInt[2]);
     int *color_correct = malloc(sizeof(int) * pInt[2]);
     int *acc_row = malloc(sizeof(int) * pInt[0]);
+    int *color_list = malloc(sizeof(int) * pInt[1]);
     int no_of_colors = pInt[1];
+
     int value[4];
 
     for(x = 0; x < pInt[0]; x++){
         c_and_w_correct[x] = data.moves[x][pInt[2]];
         //printf("%d\t", c_and_w_correct[x]);
     }
-
     printf("\n");
-
     for(x = 0; x < pInt[0]; x++){
         color_correct[x] = data.moves[x][pInt[2] + 1];
         //printf("%d\t", color_correct[x]);
     }
-
     for(z = 0; z < pInt[2]; z++){
         acc_row[z] = data.moves[0][z];
         //printf("%d ", acc_row[z]);
     }
-
-    for(x = 0; x < pInt[2]; x++){
-        value[x] = pInt[1];
-    }
+//    for(x = 0; x < pInt[2]; x++){
+//        value[x] = pInt[1];
+//    }
 
     int *int_ptr = acc_row;
-    int n = pInt[2];
 
-    permute(acc_row, 0, 3);
+
+    for (z = 0; z < pInt[1]; z++){ //number of colors in the array.
+        color_list[z] = z;
+        printf("%d", color_list[z]);
+    }
+
+    int first = 0;
+    int r = pInt[1]; //max size
+    int n = sizeof(color_list)/ sizeof(color_list); // sample 6
+    int arr[4] = {0,0,0,0};
+
+    combination(0, color_list, acc_row);
 
 
     return 0;
 }
 
-void permute(int *data, int first, int last) {
-    int i;
-    if (first == last){
-        int x;
-        for (x = 0; x < 4; x++) {
-            printf("%d ", data[x]);
+void combination(int pos, int *element, int *current) {
+    int j;
+    if (pos == sizeof(element)){
+        for(j = 0; j < sizeof(current); j++) {
+            printf("%d", current[j]);
         }
         printf("\n");
-    } else {
-        for(i = first; i <= last; i++){
-            swap((data + first), (data + i));
-            permute(data, first + 1, last);
-            swap( (data + first), (data + i));
-        }
+        return;
+    }
+    for(j = 0; j < sizeof(element); j++){
+        current[pos] = element[j];
+        combination(pos + 1, element, current); //going through big numbers
     }
 
 }
 
-void swap(int *pInt, int *pInt1) {
-    int temp;
-    temp = *pInt;
-    *pInt = *pInt1;
-    *pInt1 = temp;
-}
+
 
 
 void collect_values(int *cases, int pInt[], Game_Data val) {
