@@ -44,11 +44,11 @@
       <file leaf-file-name="mastermind.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mastermind.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.67096776">
-              <caret line="157" column="75" selection-start-line="157" selection-start-column="75" selection-end-line="157" selection-end-column="75" />
+            <state vertical-scroll-proportion="0.92258066">
+              <caret line="185" column="66" selection-start-line="185" selection-start-column="66" selection-end-line="185" selection-end-column="66" />
               <folding>
                 <element signature="e#80#99#0" expanded="true" />
-                <element signature="e#4140#5133#0" expanded="false" />
+                <element signature="e#5163#6156#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -197,7 +197,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <option name="time" value="14" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -212,11 +212,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mastermind.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67096776">
-          <caret line="157" column="75" selection-start-line="157" selection-start-column="75" selection-end-line="157" selection-end-column="75" />
+        <state vertical-scroll-proportion="0.92258066">
+          <caret line="185" column="66" selection-start-line="185" selection-start-column="66" selection-end-line="185" selection-end-column="66" />
           <folding>
             <element signature="e#80#99#0" expanded="true" />
-            <element signature="e#4140#5133#0" expanded="false" />
+            <element signature="e#5163#6156#0" expanded="false" />
           </folding>
         </state>
       </provider>

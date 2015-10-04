@@ -38,7 +38,12 @@ void permute(int *data, int first, int last);
 
 void swap(int *pInt, int *pInt1);
 
-void combination(int pos, int *element, int *current);
+
+void allLexicographic(char charlist[]);
+
+int compare (const void * a, const void * b);
+
+void allLexicographicRecur(char charlist[], char *data, int last, int index);
 
 int main (){
 
@@ -133,35 +138,59 @@ int mastermind_engine(Game_Data data, int *pInt) {
         printf("%d", color_list[z]);
     }
 
-    int first = 0;
+    int pos = 0;
     int r = pInt[1]; //max size
     int n = sizeof(color_list)/ sizeof(color_list); // sample 6
-    int arr[4] = {0,0,0,0};
+    int length_of_val = pInt[2];
+    char charlist[] = "012345";
 
-    combination(0, color_list, acc_row);
+    allLexicographic(charlist);
 
 
     return 0;
 }
 
-void combination(int pos, int *element, int *current) {
-    int j;
-    if (pos == sizeof(element)){
-        for(j = 0; j < sizeof(current); j++) {
-            printf("%d", current[j]);
-        }
-        printf("\n");
-        return;
-    }
-    for(j = 0; j < sizeof(element); j++){
-        current[pos] = element[j];
-        combination(pos + 1, element, current); //going through big numbers
-    }
+void allLexicographic(char charlist[]) {
+    int len = strlen (charlist) ;
 
+    // Create a temp array that will be used by allLexicographicRecur()
+    char *data = (char *) malloc (sizeof(char) * (len + 1)) ;
+    data[len] = '\0';
+
+    // Sort the input string so that we get all output strings in
+    // lexicographically sorted order
+    qsort(charlist, len, sizeof(char), compare);
+
+    // Now print all permutaions
+    allLexicographicRecur (charlist, data, len-1, 0);
+
+    // Free data to avoid memory leak
+    free(data);
 }
 
+void allLexicographicRecur(char charlist[], char *data, int last, int index) {
+    int i, len = strlen(charlist);
 
+    // One by one fix all characters at the given index and recur for the
+    // subsequent indexes
+    for ( i=0; i<len; i++ )
+    {
+        // Fix the ith character at index and if this is not the last index
+        // then recursively call for higher indexes
+        data[index] = charlist[i] ;
 
+        // If this is the last index then print the string stored in data[]
+        if (index == last)
+            printf("%s\n", data);
+        else // Recur for higher indexes
+            allLexicographicRecur (charlist, data, last, index+1);
+    }
+}
+
+int compare (const void * a, const void * b)
+{
+    return ( *(char *)a - *(char *)b );
+}
 
 void collect_values(int *cases, int pInt[], Game_Data val) {
     //collect the values from the *.in file
