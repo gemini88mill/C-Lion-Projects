@@ -39,11 +39,13 @@ void permute(int *data, int first, int last);
 void swap(int *pInt, int *pInt1);
 
 
-void allLexicographic(char charlist[]);
+void lexi_Driver(char charlist[], int **row);
 
 int compare (const void * a, const void * b);
 
-void allLexicographicRecur(char charlist[], char *data, int last, int index);
+void lexicon(char charlist[], char *data, int last, int index, int **row);
+
+void compare_val(int value, int **row);
 
 int main (){
 
@@ -144,47 +146,55 @@ int mastermind_engine(Game_Data data, int *pInt) {
     int length_of_val = pInt[2];
     char charlist[] = "012345";
 
-    allLexicographic(charlist);
+    lexi_Driver(charlist, data.moves);
 
 
     return 0;
 }
 
-void allLexicographic(char charlist[]) {
+void lexi_Driver(char charlist[], int **row) {
     int len = strlen (charlist) ;
 
-    // Create a temp array that will be used by allLexicographicRecur()
     char *data = (char *) malloc (sizeof(char) * (len + 1)) ;
-    data[len] = '\0';
+    row[len] = '\0';
 
-    // Sort the input string so that we get all output strings in
-    // lexicographically sorted order
     qsort(charlist, len, sizeof(char), compare);
 
-    // Now print all permutaions
-    allLexicographicRecur (charlist, data, len-1, 0);
+    lexicon(charlist, row, len - 1, 0, row);
 
-    // Free data to avoid memory leak
-    free(data);
+    free(row);
 }
 
-void allLexicographicRecur(char charlist[], char *data, int last, int index) {
+void lexicon(char charlist[], char *data, int last, int index, int **row) {
     int i, len = strlen(charlist);
 
-    // One by one fix all characters at the given index and recur for the
-    // subsequent indexes
-    for ( i=0; i<len; i++ )
+    for (i = 0; i < len; i++ )
     {
-        // Fix the ith character at index and if this is not the last index
-        // then recursively call for higher indexes
-        data[index] = charlist[i] ;
+        data[index] = charlist[i];
 
-        // If this is the last index then print the string stored in data[]
-        if (index == last)
-            printf("%s\n", data);
-        else // Recur for higher indexes
-            allLexicographicRecur (charlist, data, last, index+1);
+        if (index == last) {
+            int value = 0;
+            //printf("%s\n", data);
+            //comparative function goes here
+            sscanf(data, "%d", &value);
+            compare_val(value, row);
+            if (value == 5555){
+                printf("%d", value);
+                break;
+            }
+        }
+        else {
+            lexicon(charlist, data, last, index + 1, NULL);
+        }
     }
+    return;
+}
+
+void compare_val(int value, int **row) {
+    printf("%d", value);
+
+    printf("%d", row[1][2]);
+
 }
 
 int compare (const void * a, const void * b)
