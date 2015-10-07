@@ -24,11 +24,8 @@
  *     the result for output.
  *
  *          In gather_input() -
- *              get_no_of_games() - gets the number of games jimmy's mom wants me to watch
- *              get_no_of_friends() - gets the number of friends that jimmy has before he starts playing
+ *              get_ints() - gets all ints from *.in file using scanf()
  *              get_names_of_friends() - gets the friends name
- *              get_rounds() - the number of the rounds for the games
- *              get_ducks() - the number of ducks
  *
  *         In manipulate_input() -
  *              move_jimmy() - moves jimmy for every "duck" being called
@@ -44,6 +41,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define NO_INPUT 1
+#define OK 0
+#define TOO_LONG 2
+
 
 void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks);
 
@@ -53,20 +54,33 @@ void output();
 
 void get_games(int **pInt);
 
-int get_ints(int **pInt);
+int get_ints(int **pInt, int limit);
+
+int get_name(char *buff, size_t size);
+
+char *strdup (const char *s);
 
 int main() {
     //----------------------------------------------
     int no_of_games = 0;
     int no_of_friends = 0;
-    char **friend_names = malloc((sizeof(char*) * 2000) * (sizeof(char) * 20));
+    char **friend_names = malloc(sizeof(char)* 25 * 2000);
     int rounds = 0;
     int ducks = 0;
     //----------------------------------------------
+
+    //----------------------------------------------
+    int i;
+    //----------------------------------------------
     gather_input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
 
-//    printf("%d", no_of_games);
-//    printf("%d", no_of_friends);
+    printf("%d", no_of_games);
+    printf("%d", no_of_friends);
+
+    for(i = 0; i < no_of_friends; i++)
+        printf("%s", friend_names[i]);
+
+
     manipulate_input();
     output();
     return 0;
@@ -82,25 +96,62 @@ void manipulate_input() {
 
 void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks) {
     int counter;
+    int rounds_and_ducks[2] = {0,0};
+    char buff[BUFSIZ];
+    char *temp;
+    int read_check;
 
     //scans in the number of games
     /*  gets the amount of games for jimmy the sadist to play. Put into a for loop so we can gather the information
      *  for the rest of the *.in file*/
-    get_ints(&games);
-    get_ints(&friends); //scans in the number of friends.
+    get_ints(&games, 1);
+    get_ints(&friends, 1); //scans in the number of friends.
+
+
 
 
     for (counter = 0; counter < *games; counter++){
         /*  for loop for the input data from the game. everything points outside for the loop because we need to bring
             the data to other parts of the program*/
+        fgets(buff, 20, stdin);
+        temp = strdup(buff);
+        friend_names[counter] = temp;
+    }
 
+}
 
+char *strdup (const char *s) {
+    char *d = malloc (strlen (s) + 1);   // Allocate memory
+    if (d != NULL) strcpy (d,s);         // Copy string if okay
+    return d;                            // Return new memory
+}
+
+int get_name(char *buff, size_t size) {
+    int ch, extra;
+
+    //get name with buffer overrun protection
+    if((fgets(buff, size, stdin)) == NULL)
+        return NO_INPUT;
+
+    if(buff[strlen(buff) - 1] != '\n'){
+        extra = 0;
+        while(((ch = getchar()) != '\n' && (ch != EOF))) {
+            extra = 1;
+        }
+            return (extra == 1) ? TOO_LONG : OK;
 
     }
+
+    return 0;
 }
 
 //function to pull ints from data
-int get_ints(int **pInt) {
-    return scanf("%d", *pInt);
+int get_ints(int **pInt, int limit) {
+    int i = 0;
+    int result;
+    while (i < limit && (result = scanf("%d *[^\n]", *pInt) == 1))
+        i++;
+
+    return result;
 }
 
