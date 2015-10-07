@@ -56,9 +56,12 @@ void get_games(int **pInt);
 
 int get_ints(int **pInt, int limit);
 
-int get_name(char *buff, size_t size);
 
 char *strdup (const char *s);
+
+void get_name(char **pString, int counter, char buff[]);
+
+int get_int_arr(int *pInt, int limit);
 
 int main() {
     //----------------------------------------------
@@ -74,13 +77,14 @@ int main() {
     //----------------------------------------------
     gather_input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
 
-    printf("%d", no_of_games);
-    printf("%d", no_of_friends);
+    printf("%d\n", no_of_games);
+    printf("%d\n", no_of_friends);
 
     for(i = 0; i < no_of_friends; i++)
         printf("%s", friend_names[i]);
 
-
+    printf("%d\n", rounds);
+    printf("%d\n", ducks);
     manipulate_input();
     output();
     return 0;
@@ -97,6 +101,7 @@ void manipulate_input() {
 void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks) {
     int counter;
     int rounds_and_ducks[2] = {0,0};
+    int *rd_ptr = rounds_and_ducks;
     char buff[BUFSIZ];
     char *temp;
     int read_check;
@@ -107,17 +112,39 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
     get_ints(&games, 1);
     get_ints(&friends, 1); //scans in the number of friends.
 
-
-
-
     for (counter = 0; counter < *games; counter++){
         /*  for loop for the input data from the game. everything points outside for the loop because we need to bring
             the data to other parts of the program*/
-        fgets(buff, 20, stdin);
-        temp = strdup(buff);
-        friend_names[counter] = temp;
-    }
+        get_name(friend_names, counter, buff);
 
+
+    }
+    //get_int_arr(rd_ptr, 1);
+
+    get_ints(&rounds, 1);
+    get_ints(&ducks, 1);
+//    *rounds = rounds_and_ducks[0];
+//    *ducks = rounds_and_ducks[1];
+//
+//    printf("%d", rounds_and_ducks[0]);
+//    printf("%d", rounds_and_ducks[1]);
+
+}
+
+int get_int_arr(int *pInt, int limit) {
+    int i = 0;
+    int result;
+    while (i < limit && (result = scanf("%d ", &pInt[i]) == 1))
+        i++;
+
+    return result;
+}
+
+void get_name(char **pString, int counter, char buff[]) {
+    char *temp;
+    fgets(buff, 20, stdin);
+    temp = strdup(buff);
+    pString[counter] = temp;
 }
 
 char *strdup (const char *s) {
@@ -126,24 +153,7 @@ char *strdup (const char *s) {
     return d;                            // Return new memory
 }
 
-int get_name(char *buff, size_t size) {
-    int ch, extra;
 
-    //get name with buffer overrun protection
-    if((fgets(buff, size, stdin)) == NULL)
-        return NO_INPUT;
-
-    if(buff[strlen(buff) - 1] != '\n'){
-        extra = 0;
-        while(((ch = getchar()) != '\n' && (ch != EOF))) {
-            extra = 1;
-        }
-            return (extra == 1) ? TOO_LONG : OK;
-
-    }
-
-    return 0;
-}
 
 //function to pull ints from data
 int get_ints(int **pInt, int limit) {
