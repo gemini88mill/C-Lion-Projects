@@ -46,26 +46,18 @@
 #define TOO_LONG 2
 
 
+
+
 void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks);
-
 void manipulate_input(int *friends_length, int *ducks, char **friend_names, int i);
-
 void output();
-
 void get_games(int **pInt);
-
 int get_ints(int **pInt, int limit);
-
-
 char *strdup (const char *s);
-
 void get_name(char **pString, int counter, char buff[]);
-
 int get_int_arr(int *pInt, int limit);
-
 char **game_logic(char **friends_list, int *ducks, int list_length, int i);
-
-char **remove_from_list(char **previous_list, char *player, int pos, int list_length);
+char **remove_from_list(char **old_list, char *player, int pos, int list_length);
 
 int main() {
     //----------------------------------------------
@@ -140,8 +132,8 @@ void manipulate_input(int *friends_length, int *ducks, char **friend_names, int 
 char **game_logic(char **friends_list, int *ducks, int list_length, int rounds) {
     int pos = 0;
 
-    printf("ducks: %d\t", *ducks);
-    printf("listlength: %d", list_length);
+//    printf("ducks: %d\t", *ducks);
+//    printf("listlength: %d", list_length);
 
     while (rounds > 0) {
         if (list_length > *ducks) {
@@ -153,14 +145,14 @@ char **game_logic(char **friends_list, int *ducks, int list_length, int rounds) 
             printf("friend: %d, %s", pos + 1, friends_list[pos]);
             //remove and restructure
         }
-        //friends_list = remove_from_list(friends_list, friends_list[pos], pos, list_length);
+        friends_list = remove_from_list(friends_list, friends_list[pos], pos, list_length);
         rounds--;
     }
 
     return NULL;
 }
 
-char **remove_from_list(char **previous_list, char *player, int pos, int list_length) {
+char **remove_from_list(char **old_list, char *player, int pos, int list_length) {
     char **new_list = malloc(sizeof(char) * 20 * list_length);
     int i = 0;
     if(pos >= list_length + 1){
@@ -170,15 +162,15 @@ char **remove_from_list(char **previous_list, char *player, int pos, int list_le
             i++;
         }
         while(i < list_length){
-            previous_list[i] = previous_list[i + 1];
+            old_list[i] = old_list[i + 1];
             i++;
         }
         list_length--;
     }
 
     for(i = 0; i < list_length; i++){
-        new_list[i] = previous_list[i];
-        printf("%s\n", previous_list[i]);
+        new_list[i] = old_list[i];
+        printf("%s\n", old_list[i]);
         printf("%s\n", new_list[i]);
     }
     return new_list;
