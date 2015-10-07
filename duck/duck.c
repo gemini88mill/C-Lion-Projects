@@ -45,6 +45,11 @@
 #define OK 0
 #define TOO_LONG 2
 
+//linked list def
+typedef struct node{
+    char *name;
+    struct node * next;
+}node_t;
 
 
 
@@ -58,6 +63,10 @@ void get_name(char **pString, int counter, char buff[]);
 int get_int_arr(int *pInt, int limit);
 char **game_logic(char **friends_list, int *ducks, int list_length, int i);
 char **remove_from_list(char **old_list, char *player, int pos, int list_length);
+
+void list_append(char *string, node_t *head);
+
+void print_list(node_t *head);
 
 int main() {
     //----------------------------------------------
@@ -131,6 +140,21 @@ void manipulate_input(int *friends_length, int *ducks, char **friend_names, int 
 
 char **game_logic(char **friends_list, int *ducks, int list_length, int rounds) {
     int pos = 0;
+    int i;
+    node_t *head = NULL;
+    head = malloc(sizeof(node_t));
+    if (head == NULL){
+        return (char **) 1;
+    }
+
+    head->name = "1";
+
+    for(i = 0; i < list_length; i++) {
+        list_append(friends_list[i], head);
+    }
+
+    print_list(head);
+
 
 //    printf("ducks: %d\t", *ducks);
 //    printf("listlength: %d", list_length);
@@ -145,11 +169,31 @@ char **game_logic(char **friends_list, int *ducks, int list_length, int rounds) 
             printf("friend: %d, %s", pos + 1, friends_list[pos]);
             //remove and restructure
         }
-        friends_list = remove_from_list(friends_list, friends_list[pos], pos, list_length);
+        //friends_list = remove_from_list(friends_list, friends_list[pos], pos, list_length);
         rounds--;
     }
 
     return NULL;
+}
+
+void print_list(node_t *head) {
+    node_t *current = head;
+
+    while(current != NULL){
+        printf("%s\n", current->name);
+        current = current->next;
+    }
+}
+
+void list_append(char *string, node_t *head) {
+    node_t *current = head;
+    while (current->next != NULL){
+        current = current->next;
+    }
+
+    current->next = malloc(sizeof(node_t));
+    current->next->name = string;
+    current->next->next = NULL;
 }
 
 char **remove_from_list(char **old_list, char *player, int pos, int list_length) {
