@@ -54,15 +54,14 @@ typedef struct node{
 
 
 void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks);
-void manipulate_input(int *friends_length, int *ducks, char **friend_names, int i);
-void output();
+node_t * manipulate_input(int *friends_length, int *ducks, char **friend_names, int i);
+void output(node_t *pNode, int i);
 void get_games(int **pInt);
 int get_ints(int **pInt, int limit);
 char *strdup (const char *s);
 void get_name(char **pString, int counter, char buff[]);
-int get_int_arr(int *pInt, int limit);
-char **game_logic(char **friends_list, int *ducks, int list_length, int i);
-char **remove_from_list(char **old_list, char *player, int pos, int list_length);
+
+node_t * game_logic(char **friends_list, int *ducks, int list_length, int i);
 
 void list_append(char *string, node_t *head);
 
@@ -84,6 +83,7 @@ int main() {
     //----------------------------------------------
     int i;
     //----------------------------------------------
+    node_t *winners = NULL;
     gather_input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
 
 //    printf("%d\n", no_of_games);
@@ -96,16 +96,19 @@ int main() {
 //    printf("%d\n", ducks);
 
 
-    manipulate_input(&no_of_friends, &ducks, friend_names, rounds);
-    output();
+    for (i = 0; i < no_of_games; i++) {
+        winners = manipulate_input(&no_of_friends, &ducks, friend_names, rounds);
+        output(winners, i);
+    }
     return 0;
 }
 
-void output() {
-
+void output(node_t *pNode, int i) {
+    printf("Game %d\n", i + 1);
+    print_list(pNode);
 }
 
-void manipulate_input(int *friends_length, int *ducks, char **friend_names, int rounds) {
+node_t * manipulate_input(int *friends_length, int *ducks, char **friend_names, int rounds) {
     /*  manipulate input() - in this scenario the idea is that jimmy will have a number of friends once he starts
      *  playing the game, and then, depending on how many rounds the game is played, loses friends systematically,
      *
@@ -130,7 +133,7 @@ void manipulate_input(int *friends_length, int *ducks, char **friend_names, int 
      *     Note: friends_names should be copied to another function as to not ruin the original data just in case...*/
     int no_of_friends = *friends_length;
     char **friends_list = malloc(sizeof(char) * no_of_friends * 20);
-    char **winners = malloc(sizeof(char) * no_of_friends * 20);
+    node_t *winners = NULL;
 
     int i;
 
@@ -138,17 +141,19 @@ void manipulate_input(int *friends_length, int *ducks, char **friend_names, int 
         friends_list[i] = friend_names[i];
     }
 
-    game_logic(friends_list, ducks, no_of_friends, rounds);
+    winners = game_logic(friends_list, ducks, no_of_friends, rounds);
+
+    return winners;
 
 }
 
-char **game_logic(char **friends_list, int *ducks, int list_length, int rounds) {
+node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds) {
     int pos = 0;
     int i;
     node_t *head = NULL;
     head = malloc(sizeof(node_t));
     if (head == NULL){
-        return (char **) 1;
+        return (node_t *) 1;
     }
 
     head->name = "1";
@@ -158,31 +163,24 @@ char **game_logic(char **friends_list, int *ducks, int list_length, int rounds) 
     }
     pop_list(&head);
 
-    print_list(head);
-
-    remove_by_index(&head, 0);
-
-    print_list(head); //now we have a fully functioning linked list
-
-
-//    printf("ducks: %d\t", *ducks);
-//    printf("listlength: %d", list_length);
-
     while (rounds > 0) {
         if (list_length > *ducks) {
             pos = *ducks;
-            printf("friend: %d, %s", pos + 1, friends_list[pos]);
+            //printf("friend: %d, %s", pos + 1, friends_list[pos]);
             //remove and restructure
         } else if (list_length < *ducks) {
             pos = *ducks % list_length;
-            printf("friend: %d, %s", pos + 1, friends_list[pos]);
+            //printf("friend: %d, %s", pos + 1, friends_list[pos]);
             //remove and restructure
         }
         //friends_list = remove_from_list(friends_list, friends_list[pos], pos, list_length);
+        remove_by_index(&head, pos);
+        //print_list(head);
         rounds--;
+        //supposed to go around in a circle, always starts from beginning
     }
 
-    return NULL;
+    return head;
 }
 
 char *remove_by_index(node_t **pNode, int index) {
@@ -244,30 +242,6 @@ void list_append(char *string, node_t *head) {
     current->next->next = NULL;
 }
 
-char **remove_from_list(char **old_list, char *player, int pos, int list_length) {
-    char **new_list = malloc(sizeof(char) * 20 * list_length);
-    int i = 0;
-    if(pos >= list_length + 1){
-        perror("Error: out of bounds");
-    } else {
-        while (i != pos -1){
-            i++;
-        }
-        while(i < list_length){
-            old_list[i] = old_list[i + 1];
-            i++;
-        }
-        list_length--;
-    }
-
-    for(i = 0; i < list_length; i++){
-        new_list[i] = old_list[i];
-        printf("%s\n", old_list[i]);
-        printf("%s\n", new_list[i]);
-    }
-    return new_list;
-}
-
 void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks) {
     int counter;
     int rounds_and_ducks[2] = {0,0};
@@ -304,15 +278,6 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
 //    printf("%d", rounds_and_ducks[0]);
 //    printf("%d", rounds_and_ducks[1]);
 
-}
-
-int get_int_arr(int *pInt, int limit) {
-    int i = 0;
-    int result;
-    while (i < limit && (result = scanf("%d ", &pInt[i]) == 1))
-        i++;
-
-    return result;
 }
 
 void get_name(char **pString, int counter, char buff[]) {
