@@ -68,6 +68,10 @@ void list_append(char *string, node_t *head);
 
 void print_list(node_t *head);
 
+char * pop_list(node_t **pNode);
+
+char *remove_by_index(node_t **pNode, int index);
+
 int main() {
     //----------------------------------------------
     int no_of_games = 0;
@@ -152,8 +156,13 @@ char **game_logic(char **friends_list, int *ducks, int list_length, int rounds) 
     for(i = 0; i < list_length; i++) {
         list_append(friends_list[i], head);
     }
+    pop_list(&head);
 
     print_list(head);
+
+    remove_by_index(&head, 0);
+
+    print_list(head); //now we have a fully functioning linked list
 
 
 //    printf("ducks: %d\t", *ducks);
@@ -174,6 +183,45 @@ char **game_logic(char **friends_list, int *ducks, int list_length, int rounds) 
     }
 
     return NULL;
+}
+
+char *remove_by_index(node_t **pNode, int index) {
+    int i = 0;
+    char *retval;
+    node_t *current = *pNode;
+    node_t *temp_node = NULL;
+
+    if (index == 0){
+        return pop_list(pNode);
+    }
+
+    for(i = 0; i < index - 1; i++){
+        if(current->next == NULL){
+            return (char *) -1;
+        }
+        current = current->next;
+    }
+
+    temp_node = current->next;
+    retval = temp_node->name;
+    current->next = temp_node->next;
+    free(temp_node);
+
+    return retval;
+}
+
+char * pop_list(node_t **pNode) {
+    char *retval;
+    node_t *next_node = NULL;
+    if(*pNode == NULL){
+        return NULL;
+    }
+    next_node = (*pNode)->next;
+    retval = (*pNode)->name;
+    free(*pNode);
+    *pNode = next_node;
+
+    return retval;
 }
 
 void print_list(node_t *head) {
