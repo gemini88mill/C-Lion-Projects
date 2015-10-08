@@ -81,11 +81,15 @@ int main() {
     //----------------------------------------------
 
     //----------------------------------------------
-    int i;
+    int i, j;
     //----------------------------------------------
     node_t *winners = NULL;
-    gather_input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
 
+    scanf("%d", &no_of_games);
+
+    for(j = 0; j < no_of_games; j++) {
+        gather_input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
+    }
 //    printf("%d\n", no_of_games);
 //    printf("%d\n", no_of_friends);
 //
@@ -96,10 +100,10 @@ int main() {
 //    printf("%d\n", ducks);
 
 
-    for (i = 0; i < no_of_games; i++) {
-        winners = manipulate_input(&no_of_friends, &ducks, friend_names, rounds);
-        output(winners, i);
-    }
+//    for (i = 0; i < no_of_games; i++) {
+//        winners = manipulate_input(&no_of_friends, &ducks, friend_names, rounds);
+//        output(winners, i);
+//    }
     return 0;
 }
 
@@ -208,7 +212,7 @@ char *remove_by_index(node_t **pNode, int index) {
     return retval;
 }
 
-char * pop_list(node_t **pNode) {
+char *pop_list(node_t **pNode) {
     char *retval;
     node_t *next_node = NULL;
     if(*pNode == NULL){
@@ -247,14 +251,12 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
     int rounds_and_ducks[2] = {0,0};
     int *rd_ptr = rounds_and_ducks;
     char buff[BUFSIZ];
-    char *temp;
-    int read_check;
     int ch;
 
     //scans in the number of games
     /*  gets the amount of games for jimmy the sadist to play. Put into a for loop so we can gather the information
      *  for the rest of the *.in file*/
-    get_ints(&games, 1);
+    //get_ints(&games, 1);
     get_ints(&friends, 1); //scans in the number of friends.
 
     printf("%d", *games);
@@ -272,6 +274,15 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
 
     get_ints(&rounds, 1);
     get_ints(&ducks, 1);
+
+    int i;
+
+    node_t *winners = NULL;
+
+    for (i = 0; i < *rounds; i++) {
+        winners = manipulate_input(friends, ducks, friend_names, *rounds);
+        output(winners, i);
+    }
 //    *rounds = rounds_and_ducks[0];
 //    *ducks = rounds_and_ducks[1];
 //

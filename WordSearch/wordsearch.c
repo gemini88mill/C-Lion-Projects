@@ -10,14 +10,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+<<<<<<< HEAD
 
 #define TXT_FILE "/home/raphael/ClionProjects/WordSearch/dictionary.txt"
+=======
+//need to change to directory independent directory.
+#define TXT_FILE "/home/raphael/ClionProjects/C-Lion-Projects/WordSearch/dictionary.txt"
+>>>>>>> 8b5eac0064d3435820fe4d2302c2fa592996eb64
 #define TEST_FILE "/home/raphael/ClionProjects/WordSearch/hello.txt"
 #define TRUE 1
 #define FALSE 0
 
 typedef struct{
     size_t used;
+    size_t length; //to get length of string
     size_t size;
     char **words;
 } Entries;
@@ -29,6 +35,11 @@ char *strdup (const char *s);
 char *get_puzzle_string();
 int binary_search(char **pString, char *search_ptr, int low, int high, size_t length);
 int find_word(char **dictionary, char *grid, unsigned int rows, unsigned int colomns, size_t i, char *solutions);
+
+unsigned int get_larger_val_for_grid(unsigned int i, unsigned int i1);
+
+
+Entries parse_dictionary_word_length(int length, Entries word);
 
 int main() {
 
@@ -51,12 +62,19 @@ int main() {
 
     //---------------------------------------------------------------------------
 
+<<<<<<< HEAD
     //binary search variables ---------------------------------------------------
     char search_string[32]; //testing search string.
     char *search_ptr = search_string; //ptr to binary search string.
 
     int result;
     //---------------------------------------------------------------------------
+=======
+    //parse and binary search variable-------------------------------------------
+    int max_size_word_length;
+    //---------------------------------------------------------------------------
+
+>>>>>>> 8b5eac0064d3435820fe4d2302c2fa592996eb64
 
     //grid values----------------------------------------------------------------
 
@@ -112,6 +130,7 @@ int main() {
     //accept in file arguements----
     scanf("%d", &input_cases);
 
+<<<<<<< HEAD
     for(o = 0; o < input_cases; o++) {
         scanf("%d", &rows);
         scanf("%d", &colomns);
@@ -146,10 +165,26 @@ int main() {
         }
     }
     //--------------------------------------------------------------
+=======
+    max_size_word_length = get_larger_val_for_grid(rows, colomns);
+
+    //debug
+    //printf("%d", max_size_word_length);
+
+    parse_dictionary_word_length(max_size_word_length, word);
+
+    //exit code 139 here-------------------------------
+    //puzzle_block = malloc(rows * colomns);
+    //puzzle_values = malloc(rows);
+
+    //puzzle_values = get_puzzle_string();
+    //-------------------------------------------------
+>>>>>>> 8b5eac0064d3435820fe4d2302c2fa592996eb64
 
     return 0;
 }
 
+<<<<<<< HEAD
 int find_word(char **dictionary, char *grid, unsigned int rows, unsigned int colomns, size_t i,
               char *solutions) {
     //finds all horizontal values in grid.
@@ -231,6 +266,33 @@ int binary_search(char **pString, char *search_ptr, int low, int high, size_t le
 }
 
 
+=======
+Entries parse_dictionary_word_length(int length, Entries word) {
+    /*checks each array for the length of the array.
+     * then takes those elements from that array and stores them in new struct Entries
+     * then sends the struct back with all the words...*/
+    Entries results;
+    initEntries(&results, 5); //initialize string array for words.
+
+    //first find the number of elements of an array
+
+
+    return results; //return Entries
+}
+
+
+unsigned int get_larger_val_for_grid(unsigned int i, unsigned int i1) {
+    unsigned int larger_val;
+    if(i > i1){
+        larger_val = i;
+    }else{
+        larger_val = i1;
+    }
+
+    return larger_val;
+}
+
+>>>>>>> 8b5eac0064d3435820fe4d2302c2fa592996eb64
 char *get_puzzle_string(){
     char *pStr = NULL;
     pStr = fgets(pStr, 64, stdin);
