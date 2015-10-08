@@ -71,6 +71,8 @@ char * pop_list(node_t **pNode);
 
 char *remove_by_index(node_t **pNode, int index);
 
+int compare_position(node_t *friend_list, int pos);
+
 int main() {
     //----------------------------------------------
     int no_of_games = 0;
@@ -153,7 +155,7 @@ node_t * manipulate_input(int *friends_length, int *ducks, char **friend_names, 
 
 node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds) {
     int pos = 0;
-    int i, j = 0;
+    int i, j = 0, k = 0;
     node_t *head = NULL;
     head = malloc(sizeof(node_t));
     if (head == NULL){
@@ -167,25 +169,29 @@ node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds
     }
     pop_list(&head);
 
-    while (j < rounds) {
-        if (list_length > *ducks) {
-            pos = *ducks;
-            //printf("friend: %d, %s", pos + 1, friends_list[pos]);
-            //remove and restructure
-        } else if (list_length < *ducks) {
-            pos = *ducks % list_length;
-            //printf("friend: %d, %s", pos + 1, friends_list[pos]);
-            //remove and restructure
+    int total_moves = rounds * *ducks;
+
+    for(j = 0; j < rounds; j++){
+        while (pos < list_length){
+            if(pos == k){
+                remove_by_index(&head, pos);
+                k = 0;
+
+            }
+            pos++;
         }
-        //friends_list = remove_from_list(friends_list, friends_list[pos], pos, list_length);
-        remove_by_index(&head, pos);
-        //print_list(head);
-        rounds++;
-        //supposed to go around in a circle, always starts from beginning
+        while(k != *ducks){
+
+            k++;
+        }
+        pos = 0;
+        list_length--;
     }
 
     return head;
 }
+
+
 
 char *remove_by_index(node_t **pNode, int index) {
     int i = 0;
