@@ -153,7 +153,7 @@ node_t * manipulate_input(int *friends_length, int *ducks, char **friend_names, 
 
 node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds) {
     int pos = 0;
-    int i;
+    int i, j = 0;
     node_t *head = NULL;
     head = malloc(sizeof(node_t));
     if (head == NULL){
@@ -167,7 +167,7 @@ node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds
     }
     pop_list(&head);
 
-    while (rounds > 0) {
+    while (j < rounds) {
         if (list_length > *ducks) {
             pos = *ducks;
             //printf("friend: %d, %s", pos + 1, friends_list[pos]);
@@ -180,7 +180,7 @@ node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds
         //friends_list = remove_from_list(friends_list, friends_list[pos], pos, list_length);
         remove_by_index(&head, pos);
         //print_list(head);
-        rounds--;
+        rounds++;
         //supposed to go around in a circle, always starts from beginning
     }
 
