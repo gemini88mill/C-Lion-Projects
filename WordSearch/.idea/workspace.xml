@@ -44,8 +44,8 @@
       <file leaf-file-name="wordsearch.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wordsearch.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15756631">
-              <caret line="18" column="44" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.35413417">
+              <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
               <folding>
                 <element signature="e#121#139#0" expanded="true" />
               </folding>
@@ -330,8 +330,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wordsearch.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15756631">
-          <caret line="18" column="44" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.35413417">
+          <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
           <folding>
             <element signature="e#121#139#0" expanded="true" />
           </folding>
