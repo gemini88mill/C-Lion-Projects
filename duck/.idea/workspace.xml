@@ -44,14 +44,14 @@
       <file leaf-file-name="duck.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/duck.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46451613">
-              <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6188925">
+              <caret line="178" column="26" selection-start-line="178" selection-start-column="26" selection-end-line="178" selection-end-column="26" />
               <folding>
                 <element signature="e#2192#2210#0" expanded="true" />
-                <element signature="e#6609#7107#0" expanded="false" />
-                <element signature="e#7109#7365#0" expanded="false" />
-                <element signature="e#7367#7535#0" expanded="false" />
-                <element signature="e#7537#7798#0" expanded="false" />
+                <element signature="e#6653#7151#0" expanded="false" />
+                <element signature="e#7153#7409#0" expanded="false" />
+                <element signature="e#7411#7579#0" expanded="false" />
+                <element signature="e#7581#7842#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -179,7 +179,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32916668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32916668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -206,7 +206,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="20" />
+      <option name="time" value="25" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -225,10 +225,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#2192#2210#0" expanded="true" />
-            <element signature="e#6609#7107#0" expanded="false" />
-            <element signature="e#7109#7365#0" expanded="false" />
-            <element signature="e#7367#7535#0" expanded="false" />
-            <element signature="e#7537#7798#0" expanded="false" />
+            <element signature="e#6653#7151#0" expanded="false" />
+            <element signature="e#7153#7409#0" expanded="false" />
+            <element signature="e#7411#7579#0" expanded="false" />
+            <element signature="e#7581#7842#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -243,14 +243,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/duck.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46451613">
-          <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6188925">
+          <caret line="178" column="26" selection-start-line="178" selection-start-column="26" selection-end-line="178" selection-end-column="26" />
           <folding>
             <element signature="e#2192#2210#0" expanded="true" />
-            <element signature="e#6609#7107#0" expanded="false" />
-            <element signature="e#7109#7365#0" expanded="false" />
-            <element signature="e#7367#7535#0" expanded="false" />
-            <element signature="e#7537#7798#0" expanded="false" />
+            <element signature="e#6653#7151#0" expanded="false" />
+            <element signature="e#7153#7409#0" expanded="false" />
+            <element signature="e#7411#7579#0" expanded="false" />
+            <element signature="e#7581#7842#0" expanded="false" />
           </folding>
         </state>
       </provider>

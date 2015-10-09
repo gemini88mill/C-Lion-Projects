@@ -171,21 +171,24 @@ node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds
 
     int total_moves = rounds * *ducks;
 
-    for(j = 0; j < rounds; j++){
-        while (pos < list_length){
-            if(pos == k){
-                remove_by_index(&head, pos);
-                k = 0;
-
-            }
-            pos++;
+    while(j < rounds){
+        if (k == *ducks) {
+            printf("%d", pos);
+            remove_by_index(&head, pos + 1);
+            k = 0;
+            list_length--;
         }
-        while(k != *ducks){
+        while(k != *ducks) {
+            if (pos == list_length) {
+                pos = 0;
+            }
 
+            pos++;
             k++;
         }
-        pos = 0;
-        list_length--;
+
+
+    j++;
     }
 
     return head;
