@@ -23,6 +23,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //"Top-Level functions"-------------
 void input();
@@ -31,8 +32,10 @@ void output();
 //----------------------------------
 
 int *get_ints(int arr[], int i);
+char **get_maze(char **maze_ptr, int i, int i1);
+char *strdup (const char *s);
 
-char **get_maze(char **maze_ptr);
+void get_line(char **pString, char buff[], int counter);
 
 int main() {
     printf("hello");
@@ -55,6 +58,18 @@ void output() {
 }
 
 void logic() {
+    /*  logic functions go here.
+     *  params: maze. At this point, Maze should be properly formatted and ready to be manipulated.
+     *
+     *  find_s() - finds s on the map and creates a marker
+     *  check_right() - check to see if we can move right
+     *  check_left() - check to see if we can go left
+     *  check_up() - check to se if we can go up
+     *  check_down() - check to see if we can go down
+     *
+     *  if any of these values are true, take that route.
+     *  repeat until ~ is reached
+     *  count the number of moves. */
 
 }
 
@@ -71,24 +86,48 @@ void input() {
 
     char **maze = malloc(sizeof(char) * arr[0] * arr[1]);
     //gets maze values
-    get_maze(maze);
+    get_maze(maze, arr[0], arr[1]);
 
 }
 
-char **get_maze(char **maze_ptr) {
+char **get_maze(char **maze_ptr, int rows, int columns) {
     //function to get the values for the maze.
     int i = 0;
-    
+    char buff[300];
+
+    //collect input using buff
+    while(i < rows){
+        get_line(maze_ptr, buff, i);
+        i++;
+    }
+
+    for(i = 0; i < rows; i++){
+        printf("%s", maze_ptr[i]);
+    }
+
 
     return 0;
+}
+
+void get_line(char **pString, char buff[], int counter) {
+    char *temp;
+    fgets(buff, 20, stdin);
+    temp = strdup(buff);
+    pString[counter] = temp;
 }
 
 int *get_ints(int arr[], int limit) {
     //accepts ints from scanf (with spaces!!!) and returns values.
     int i = 0;
     while (i < limit && scanf("%d", &arr[i]) == 1) {
-        printf("arr[%d]: %d", i, arr[i]);
+        printf("arr[%d]: %d\n", i, arr[i]);
         i++;
     }
     return arr;
+}
+
+char *strdup (const char *s) {
+    char *d = malloc (strlen (s) + 1);   // Allocate memory
+    if (d != NULL) strcpy (d,s);         // Copy string if okay
+    return d;                            // Return new memory
 }
