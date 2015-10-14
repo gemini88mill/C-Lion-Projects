@@ -60,7 +60,9 @@ int *find_s(char **pString);
 
 int move_cursor(char **pString, int *pos, int *cursor, int i, int i1);
 
-int *queue_init(int **pInt, char **pString);
+int * queue_init(int **pInt, char **pString, int i, int i1);
+
+void print_queue_val(int **pInt);
 
 int main() {
     //struct initialization------------------------------------------
@@ -111,7 +113,7 @@ void logic() {
      *  count the number of moves. */
 
     //test case: meta data - 5, 7
-    int i, j, x, y;
+    int i, j, x = 0, y = 0;
     int *pos;
     int *cursor = malloc(sizeof(int) * 2);
     char **test_maze_ptr = malloc(sizeof(char) * 6 * 8);
@@ -125,15 +127,22 @@ void logic() {
         printf("%s\n", test_maze_ptr[i]);
     }
 
-    
+    arr[0][0] = 0;
 
+    printf("arr: %i", arr[0][0]);
 
+    while(x < 5) {
+        arr[x] = queue_init(arr, test_maze_ptr, x, y);
+        x++;
+    }
 
-    queue_init(arr, test_maze_ptr);
+    printf("%i\n\n", arr[0][0]);
+    print_queue_val(arr);
 
-    pos = find_s(test_maze_ptr);
+    //pos = find_s(test_maze_ptr);
 
-    printf("found S at: %d, %d\n", pos[0], pos[1]);
+    //----------------------------------------------------------------------------------------------
+    //printf("found S at: %d, %d\n", pos[0], pos[1]);
 
     //now that we found the starting position we can check for adjacent blocks
 
@@ -153,26 +162,34 @@ void logic() {
 
 }
 
-int *queue_init(int **pInt, char **pString) {
-    //queue_init, queue initialization. renames all of the values of the maze and applies numerical values to them.
-    int i,j;
-
-
-
-    for(i = 0; i < 5; i++){
-        for(j = 0; j < 7; j++) {
-            printf("%c", pString[i][j]);
-            if (pString[i][j] != 'S') {
-                pInt[i][j] = -1;
-            } else {
-                pInt = 0;
-            }
+void print_queue_val(int **pInt) {
+    int i, j;
+    for(i = 0; i < 5; i++) {
+        for (j = 0; j < 7; j++) {
+            printf("%i ", pInt[i][j]);
         }
-
         printf("\n");
     }
 
-    return 0;
+}
+
+int * queue_init(int **pInt, char **pString, int x, int y) {
+    //queue_init, queue initialization. renames all of the values of the maze and applies numerical values to them.
+    int i,j;
+
+    while (y <= 7) {
+        if (pString[x][y] != 'S') {
+            pInt[x][y] = -1;
+            printf("pInt[%i][%i]: %i\n", x, y, pInt[x][y]);
+            return queue_init(pInt, pString, x, y + 1);
+        } else {
+            pInt[x][y] = 0;
+            printf("pInt[%i][%i]: %i\n", x, y, pInt[x][y]);
+            return queue_init(pInt, pString, x, y + 1);
+        }
+    }
+
+    return pInt[x];
 }
 
 int move_cursor(char **pString, int *pos, int *cursor, int x, int y) {
