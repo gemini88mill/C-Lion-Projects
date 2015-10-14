@@ -19,33 +19,54 @@
  *     int queue_layer(maze)
  *
  *  output layer - functions
- *      printOut() - prints out final solution to particular problem */
+ *      printOut() - prints out final solution to particular problem
+ *
+ *  Additional: in order to cleanly sent data through to other functions in the top level, top level functions will
+ *  return structs for that data. */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_ROWS 300
+#define MAX_COLUMNS 300
+#define VAL_SIZE 2
+
+//struct def
+struct Maze
+{
+    char **maze_val;
+    int *maze_meda_data;
+};
+
 //"Top-Level functions"-------------
-void input();
+struct Maze * input(struct Maze *pMaze);
 void logic();
 void output();
 //----------------------------------
 
+//related input type functions---------------------------------
 int *get_ints(int arr[], int i);
 char **get_maze(char **maze_ptr, int i, int i1);
 char *strdup (const char *s);
-
 void get_line(char **pString, char buff[], int counter);
+//-------------------------------------------------------------
 
 int main() {
-    printf("hello");
+    //struct initialization------------------------------------------
+    struct Maze maze;
+    maze.maze_meda_data = malloc(sizeof(int) * VAL_SIZE);
+    maze.maze_val = malloc(sizeof(char) * MAX_ROWS * MAX_COLUMNS);
+    //---------------------------------------------------------------
+    struct Maze *maze_ptr = &maze;
+
 
     int test_cases = 0;
 
     scanf("%d", &test_cases);
 
     //for loop here for test cases
-    input();
+    maze_ptr = input(&maze);
     //----------------------------
     logic();
     output();
@@ -73,7 +94,7 @@ void logic() {
 
 }
 
-void input() {
+struct Maze * input(struct Maze *pMaze) {
     /*input function - accepts all incoming params and organizes them into the program.*/
     //values for meta val--------------------
     int limit = 2;
@@ -86,8 +107,15 @@ void input() {
 
     char **maze = malloc(sizeof(char) * arr[0] * arr[1]);
     //gets maze values
-    get_maze(maze, arr[0], arr[1]);
+    maze = get_maze(maze, arr[0], arr[1]);
 
+    //now we have maze and arr that represent our input values for the maze
+    //send them to main
+
+    pMaze->maze_val = maze;
+    pMaze->maze_meda_data = arr;
+
+    return pMaze;
 }
 
 char **get_maze(char **maze_ptr, int rows, int columns) {
@@ -100,20 +128,12 @@ char **get_maze(char **maze_ptr, int rows, int columns) {
         get_line(maze_ptr, buff, i);
         i++;
     }
+//    for(i = 0; i < rows; i++){
+//        printf("%s", maze_ptr[i]);
+//    }
 
-    for(i = 0; i < rows; i++){
-        printf("%s", maze_ptr[i]);
-    }
 
-
-    return 0;
-}
-
-void get_line(char **pString, char buff[], int counter) {
-    char *temp;
-    fgets(buff, 20, stdin);
-    temp = strdup(buff);
-    pString[counter] = temp;
+    return maze_ptr;
 }
 
 int *get_ints(int arr[], int limit) {
@@ -130,4 +150,11 @@ char *strdup (const char *s) {
     char *d = malloc (strlen (s) + 1);   // Allocate memory
     if (d != NULL) strcpy (d,s);         // Copy string if okay
     return d;                            // Return new memory
+}
+
+void get_line(char **pString, char buff[], int counter) {
+    char *temp;
+    fgets(buff, 20, stdin);
+    temp = strdup(buff);
+    pString[counter] = temp;
 }
