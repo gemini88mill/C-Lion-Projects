@@ -64,9 +64,11 @@ int * queue_init(int **pInt, char **pString, int i, int i1);
 
 void print_queue_val(int **pInt);
 
-int find_path(char **pString, int **pInt, int x, int y);
+int find_path(char **pString, int **pInt, int x, int y, int i);
 
 void print_maze(char **pString);
+
+int check_adjacent_values(char **pString, int **pInt, int x, int y);
 
 int main() {
     //struct initialization------------------------------------------
@@ -125,6 +127,7 @@ void logic() {
     int **arr = (int **)malloc(300 * sizeof(int *));
     for (i=0; i<300; i++)
         arr[i] = (int *)malloc(300 * sizeof(int));
+    int count = 0;
     fill_test_maze(test_maze_ptr);
 
 
@@ -142,9 +145,9 @@ void logic() {
     pos = find_s(test_maze_ptr);
     y = pos[0];
     x = pos[1];
-    find_path(test_maze_ptr, arr, x, y);
+    count = find_path(test_maze_ptr, arr, x, y, count);
 
-
+    printf("count: %d", count);
 
 
 
@@ -177,34 +180,51 @@ void print_maze(char **pString) {
 
 }
 
-int find_path(char **pString, int **pInt, int x, int y) {
+int find_path(char **pString, int **pInt, int x, int y, int count) {
     //find_path function, uses the data collected and tries to find a path out
     printf("%i, %i\n", x, y);
-    print_maze(pString);
-    int count = 0;
-
-    printf("%c", pString[x][y]);
-
-//    if(pString[x][y + 1] == '-'){
-//        pInt[x][y + 1] = count++;
-//        print_queue_val(pInt);
-//        find_path(pString, pInt, x, y + 1);
-//    } else if(pString[x][y - 1] == '-'){
-//        pInt[x][y + 1] = count++;
-//        print_queue_val(pInt);
-//        find_path(pString, pInt, x, y - 1);
-//    } else if(pString[x + 1][y] == '-'){
-//        pInt[x + 1][y] = count++;
-//        print_queue_val(pInt);
-//        find_path(pString, pInt, x + 1, y);
-//    } else if(pString[x - 1][y] == '-'){
-//        pInt[x - 1][y] = count++;
-//        print_queue_val(pInt);
-//        find_path(pString, pInt, x - 1, y);
-//    }
-
+    //print_maze(pString);
     print_queue_val(pInt);
+
+    printf("%c\n", pString[x][y]);
+    if(pString[x][y] == 'S'){
+        pInt[x][y] = count;
+        find_path(pString, pInt, x + 1, y, count);
+        find_path(pString, pInt, x - 1, y, count);
+        find_path(pString, pInt, x, y + 1, count);
+        find_path(pString, pInt, x, y - 1, count);
+    } else if(pString[x][y] == '-' && pInt[x][y] == -1){
+        pInt[x][y] = count + 1;
+        find_path(pString, pInt, x + 1, y, count + 1);
+        find_path(pString, pInt, x - 1, y, count + 1);
+        find_path(pString, pInt, x, y + 1, count + 1);
+        find_path(pString, pInt, x, y - 1, count + 1);
+
+    } else if(pString[x][y] == '~'){
+        pInt[x][y] = count + 1;
+        return count;
+    } else if(pString[x][y] == 'X'){
+        return -1;
+    }
+
     return 0;
+}
+
+int check_adjacent_values(char **pString, int **pInt, int x, int y) {
+    if(pString[x][y] == '-' && pInt != 0){
+        pInt[x][y] = 0;
+        check_adjacent_values(pString, pInt, x - 1, y);
+        check_adjacent_values(pString, pInt, x + 1, y);
+        check_adjacent_values(pString, pInt, x, y - 1);
+        check_adjacent_values(pString, pInt, x, y + 1);
+    } else if (pString[x][y] == '~') {
+        return 1;
+    }
+     else if (pString[x][y] == 'X'){
+        return -1;
+    }
+    return 0;
+
 }
 
 void print_queue_val(int **pInt) {
@@ -223,15 +243,8 @@ int * queue_init(int **pInt, char **pString, int x, int y) {
     int i,j;
 
     while (y <= 7) {
-        if (pString[x][y] != 'S') {
-            pInt[x][y] = -1;
-            //printf("pInt[%i][%i]: %i\n", x, y, pInt[x][y]);
-            return queue_init(pInt, pString, x, y + 1);
-        } else {
-            pInt[x][y] = 0;
-            //printf("pInt[%i][%i]: %i\n", x, y, pInt[x][y]);
-            return queue_init(pInt, pString, x, y + 1);
-        }
+        pInt[x][y] = -1;
+        return queue_init(pInt, pString, x, y + 1);
     }
 
     return pInt[x];
