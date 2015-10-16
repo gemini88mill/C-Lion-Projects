@@ -44,11 +44,12 @@
       <file leaf-file-name="Maze.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Maze.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.77198696">
-              <caret line="203" column="30" selection-start-line="203" selection-start-column="30" selection-end-line="203" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.29641694">
+              <caret line="163" column="6" selection-start-line="163" selection-start-column="6" selection-end-line="163" selection-end-column="6" />
               <folding>
                 <element signature="e#988#1006#0" expanded="true" />
-                <element signature="e#8221#8423#0" expanded="false" />
+                <element signature="e#5405#5907#0" expanded="false" />
+                <element signature="e#7869#8071#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -204,21 +205,21 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Maze.c</url>
-          <line>266</line>
+          <line>252</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Maze.c</url>
-          <line>269</line>
+          <line>255</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Maze.c</url>
-          <line>272</line>
+          <line>258</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="29" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -233,11 +234,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Maze.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77198696">
-          <caret line="203" column="30" selection-start-line="203" selection-start-column="30" selection-end-line="203" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.29641694">
+          <caret line="163" column="6" selection-start-line="163" selection-start-column="6" selection-end-line="163" selection-end-column="6" />
           <folding>
             <element signature="e#988#1006#0" expanded="true" />
-            <element signature="e#8221#8423#0" expanded="false" />
+            <element signature="e#5405#5907#0" expanded="false" />
+            <element signature="e#7869#8071#0" expanded="false" />
           </folding>
         </state>
       </provider>

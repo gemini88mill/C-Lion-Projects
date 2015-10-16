@@ -64,7 +64,7 @@ int * queue_init(int **pInt, char **pString, int i, int i1);
 
 void print_queue_val(int **pInt);
 
-int find_path(char **pString, int **pInt, int x, int y, int i);
+int find_path(char **pString, int **pInt, int x, int y, int *count);
 
 void print_maze(char **pString);
 
@@ -145,31 +145,47 @@ void logic() {
     pos = find_s(test_maze_ptr);
     y = pos[0];
     x = pos[1];
-    count = find_path(test_maze_ptr, arr, x, y, count);
 
-    printf("count: %d", count);
-
-
-
-    //----------------------------------------------------------------------------------------------
-    //printf("found S at: %d, %d\n", pos[0], pos[1]);
-
-    //now that we found the starting position we can check for adjacent blocks
-
-    //pos x = 0, pos y = 1
-    //the quickest way out of a maze, they say, is to go right. so lets start with right.
-
-    //moving right
-    x = pos[0] + 1;
-    y = pos[1];
-
-    cursor[0] = pos[0];
-    cursor[1] = pos[1];
-    //cursor = pos start
-
-    //move_cursor(test_maze_ptr, pos, cursor, x, y);
+    if(find_path(test_maze_ptr, arr, x, y, &count) != 0) {
+        count = find_path(test_maze_ptr, arr, x, y, &count);
+        printf("count: %d", count);
+    }
 
 
+}
+
+int find_path(char **pString, int **pInt, int x, int y, int *count) {
+    //find_path function, uses the data collected and tries to find a path out
+    //printf("%i, %i\n", x, y);
+    //print_maze(pString);
+    //print_queue_val(pInt);
+
+
+    //printf("%c\n", pString[x][y]);
+    if(pString[x][y] == 'S'){
+        pInt[x][y] = *count;
+        find_path(pString, pInt, x + 1, y, count);
+        find_path(pString, pInt, x - 1, y, count);
+        find_path(pString, pInt, x, y + 1, count);
+        find_path(pString, pInt, x, y - 1, count);
+
+    } else if(pString[x][y] == '-' && pInt[x][y] == -1 && pInt[x][y] != 0){
+        pInt[x][y] = *count + 1;
+        find_path(pString, pInt, x + 1, y, count + 1);
+        find_path(pString, pInt, x - 1, y, count + 1);
+        find_path(pString, pInt, x, y + 1, count + 1);
+        find_path(pString, pInt, x, y - 1, count + 1);
+
+    } else if(pString[x][y] == '~'){
+        pInt[x][y] = *count + 1;
+        printf("count: %d\n", *count);
+        return *count;
+    } else if(pString[x][y] == 'X'){
+        pInt[x][y] = -1;
+        return *count;
+    }
+
+    return pInt[x][y];
 }
 
 void print_maze(char **pString) {
@@ -180,38 +196,8 @@ void print_maze(char **pString) {
 
 }
 
-int find_path(char **pString, int **pInt, int x, int y, int count) {
-    //find_path function, uses the data collected and tries to find a path out
-    printf("%i, %i\n", x, y);
-    //print_maze(pString);
-    print_queue_val(pInt);
-
-    printf("%c\n", pString[x][y]);
-    if(pString[x][y] == 'S'){
-        pInt[x][y] = count;
-        find_path(pString, pInt, x + 1, y, count);
-        find_path(pString, pInt, x - 1, y, count);
-        find_path(pString, pInt, x, y + 1, count);
-        find_path(pString, pInt, x, y - 1, count);
-    } else if(pString[x][y] == '-' && pInt[x][y] == -1){
-        pInt[x][y] = count + 1;
-        find_path(pString, pInt, x + 1, y, count + 1);
-        find_path(pString, pInt, x - 1, y, count + 1);
-        find_path(pString, pInt, x, y + 1, count + 1);
-        find_path(pString, pInt, x, y - 1, count + 1);
-
-    } else if(pString[x][y] == '~'){
-        pInt[x][y] = count + 1;
-        return count;
-    } else if(pString[x][y] == 'X'){
-        return -1;
-    }
-
-    return 0;
-}
-
 int check_adjacent_values(char **pString, int **pInt, int x, int y) {
-    if(pString[x][y] == '-' && pInt != 0){
+    if(pString[x][y] == '-' || pInt != 0){
         pInt[x][y] = 0;
         check_adjacent_values(pString, pInt, x - 1, y);
         check_adjacent_values(pString, pInt, x + 1, y);
