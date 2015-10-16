@@ -48,11 +48,9 @@ typedef struct node{
 }node_t;
 
 
-
 void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks);
 node_t * manipulate_input(int *friends_length, int *ducks, char **friend_names, int i);
 void output(node_t *pNode, int i);
-void get_games(int **pInt);
 int get_ints(int **pInt, int limit);
 char *strdup (const char *s);
 void get_name(char **pString, int counter, char buff[]);
@@ -61,7 +59,7 @@ void list_append(char *string, node_t *pointer);
 void print_list(node_t *head);
 char * pop_list(node_t **pNode);
 char *remove_by_index(node_t **pNode, int index);
-int compare_position(node_t *friend_list, int pos);
+
 
 int main() {
     //----------------------------------------------
@@ -92,7 +90,7 @@ int main() {
 }
 
 void output(node_t *pNode, int i) {
-    printf("Game %d\n", i + 1);
+
     print_list(pNode);
 }
 
@@ -154,24 +152,10 @@ node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds
     int total_moves = rounds * *ducks;
 
     while(j < rounds){
-        if (k == *ducks) {
-            printf("%d", pos);
-            remove_by_index(&head, pos + 1);
-            k = 0;
-            list_length--;
-        }
-        while(k != *ducks) {
-            if (pos == list_length) {
-                pos = 0;
-            }
-
-            pos++;
-            k++;
-        }
-
-
-    j++;
+        remove_by_index(&head, pos + 1);
+        j++;
     }
+
 
     return head;
 }
@@ -256,8 +240,8 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
     //get_ints(&games, 1);
     get_ints(&friends, 1); //scans in the number of friends.
 
-    printf("%d", *games);
-    printf("%d\n", *friends);
+//    printf("%d", *games);
+//    printf("%d\n", *friends);
 
     //clearing input buffer... took me forever to figure this out...
     while ((ch = getchar()) != '\n' && ch != EOF);
@@ -276,6 +260,7 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
 
     node_t *winners = NULL;
 
+    printf("Game %d\n", *games + 1);
     for (i = 0; i < *rounds; i++) {
         winners = manipulate_input(friends, ducks, friend_names, *rounds);
         output(winners, i);
