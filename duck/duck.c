@@ -23,11 +23,11 @@
  *     modify the input data, for whatever reason, but this isn't directed at only this function. The body prepares
  *     the result for output.
  *
- *          In gather_input() -
+ *          In input() -
  *              get_ints() - gets all ints from *.in file using scanf()
  *              get_names_of_friends() - gets the friends name
  *
- *         In manipulate_input() -
+ *         In logic() -
  *              move_jimmy() - moves jimmy for every "duck" being called
  *              reshuffle_friends() - creates a new round where a friend that got the boot is missing
  *              set_up() - sets up the game for jimmy to play
@@ -47,18 +47,28 @@ typedef struct node{
     struct node * next;
 }node_t;
 
-
-void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks);
-node_t * manipulate_input(int *friends_length, int *ducks, char **friend_names, int i);
+//meta functions-------------------------------------------------------------------------------------------------------
+void input(int *games, int *friends, char **friend_names, int *rounds, int *ducks);
+node_t *logic(int *friends_length, int *ducks, char **friend_names, int i);
 void output(node_t *pNode, int i);
+//---------------------------------------------------------------------------------------------------------------------
+
+//functions for input--------------------------------------------------------------------------------------------------
 int get_ints(int **pInt, int limit);
 char *strdup (const char *s);
 void get_name(char **pString, int counter, char buff[]);
+//functions for input--------------------------------------------------------------------------------------------------
+
+//functions for logic--------------------------------------------------------------------------------------------------
 node_t * game_logic(char **friends_list, int *ducks, int list_length, int i);
+//---------------------------------------------------------------------------------------------------------------------
+
+//functions for linked list--------------------------------------------------------------------------------------------
 void list_append(char *string, node_t *pointer);
 void print_list(node_t *head);
 char * pop_list(node_t **pNode);
 char *remove_by_index(node_t **pNode, int index);
+//functions for linked list--------------------------------------------------------------------------------------------
 
 
 int main() {
@@ -71,30 +81,28 @@ int main() {
     //----------------------------------------------
 
     //----------------------------------------------
-    int i, j;
+    int j;
     //----------------------------------------------
     node_t *winners = NULL;
 
     scanf("%d", &no_of_games);
 
     for(j = 0; j < no_of_games; j++) {
-        gather_input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
+        input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
+        winners = logic(&no_of_friends, &ducks, friend_names, rounds);
+
+        output(winners, j);
     }
 
-
-//    for (i = 0; i < no_of_games; i++) {
-//        winners = manipulate_input(&no_of_friends, &ducks, friend_names, rounds);
-//        output(winners, i);
-//    }
     return 0;
 }
 
 void output(node_t *pNode, int i) {
-
+    printf("Game %d\n", i + 1);
     print_list(pNode);
 }
 
-node_t * manipulate_input(int *friends_length, int *ducks, char **friend_names, int rounds) {
+node_t *logic(int *friends_length, int *ducks, char **friend_names, int rounds) {
     /*  manipulate input() - in this scenario the idea is that jimmy will have a number of friends once he starts
      *  playing the game, and then, depending on how many rounds the game is played, loses friends systematically,
      *
@@ -227,7 +235,7 @@ void list_append(char *string, node_t *pointer) {
 //---------------------------------------------------------------------------------------------------------------------
 //input functions------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
-void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks) {
+void input(int *games, int *friends, char **friend_names, int *rounds, int *ducks) {
     int counter;
     int rounds_and_ducks[2] = {0,0};
     int *rd_ptr = rounds_and_ducks;
@@ -237,9 +245,10 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
     //scans in the number of games
     /*  gets the amount of games for jimmy the sadist to play. Put into a for loop so we can gather the information
      *  for the rest of the *.in file*/
-    //get_ints(&games, 1);
+
     get_ints(&friends, 1); //scans in the number of friends.
 
+    //debug for collecting games.
 //    printf("%d", *games);
 //    printf("%d\n", *friends);
 
@@ -251,20 +260,12 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
             the data to other parts of the program*/
         get_name(friend_names, counter, buff);
     }
-    //get_int_arr(rd_ptr, 1);
+
 
     get_ints(&rounds, 1);
     get_ints(&ducks, 1);
 
-    int i;
-
-    node_t *winners = NULL;
-
-    printf("Game %d\n", *games + 1);
-    for (i = 0; i < *rounds; i++) {
-        winners = manipulate_input(friends, ducks, friend_names, *rounds);
-        output(winners, i);
-    }
+    
 
 
 }
