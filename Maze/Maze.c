@@ -128,6 +128,7 @@ void logic() {
     for (i=0; i<300; i++)
         arr[i] = (int *)malloc(300 * sizeof(int));
     int count = 0;
+    int *count_ptr = &count;
     fill_test_maze(test_maze_ptr);
 
 
@@ -146,8 +147,8 @@ void logic() {
     y = pos[0];
     x = pos[1];
 
-    if(find_path(test_maze_ptr, arr, x, y, &count) != 0) {
-        count = find_path(test_maze_ptr, arr, x, y, &count);
+    if(find_path(test_maze_ptr, arr, x, y, count_ptr) != 0) {
+        count = find_path(test_maze_ptr, arr, x, y, count_ptr);
         printf("count: %d", count);
     }
 
@@ -159,8 +160,6 @@ int find_path(char **pString, int **pInt, int x, int y, int *count) {
     //printf("%i, %i\n", x, y);
     //print_maze(pString);
     //print_queue_val(pInt);
-
-
     //printf("%c\n", pString[x][y]);
     if(pString[x][y] == 'S'){
         pInt[x][y] = *count;

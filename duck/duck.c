@@ -41,10 +41,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define NO_INPUT 1
-#define OK 0
-#define TOO_LONG 2
-
 //linked list def
 typedef struct node{
     char *name;
@@ -60,17 +56,11 @@ void get_games(int **pInt);
 int get_ints(int **pInt, int limit);
 char *strdup (const char *s);
 void get_name(char **pString, int counter, char buff[]);
-
 node_t * game_logic(char **friends_list, int *ducks, int list_length, int i);
-
-void list_append(char *string, node_t *head);
-
+void list_append(char *string, node_t *pointer);
 void print_list(node_t *head);
-
 char * pop_list(node_t **pNode);
-
 char *remove_by_index(node_t **pNode, int index);
-
 int compare_position(node_t *friend_list, int pos);
 
 int main() {
@@ -92,14 +82,6 @@ int main() {
     for(j = 0; j < no_of_games; j++) {
         gather_input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
     }
-//    printf("%d\n", no_of_games);
-//    printf("%d\n", no_of_friends);
-//
-//    for(i = 0; i < no_of_friends; i++)
-//        printf("%s", friend_names[i]);
-//
-//    printf("%d\n", rounds);
-//    printf("%d\n", ducks);
 
 
 //    for (i = 0; i < no_of_games; i++) {
@@ -195,7 +177,7 @@ node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds
 }
 
 
-
+//linked list logic----------------------------------------------------------------------------------------------------
 char *remove_by_index(node_t **pNode, int index) {
     int i = 0;
     char *retval;
@@ -244,17 +226,23 @@ void print_list(node_t *head) {
     }
 }
 
-void list_append(char *string, node_t *head) {
-    node_t *current = head;
-    while (current->next != NULL){
+void list_append(char *string, node_t *pointer) {
+    node_t *current = pointer;
+    while (pointer->next != current){
         current = current->next;
     }
 
-    current->next = malloc(sizeof(node_t));
-    current->next->name = string;
-    current->next->next = NULL;
+    pointer->next = malloc(sizeof(node_t));
+    pointer = pointer->next;
+    pointer->name = string;
+    pointer->next = current;
 }
+//end of linked list logic---------------------------------------------------------------------------------------------
 
+
+//---------------------------------------------------------------------------------------------------------------------
+//input functions------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 void gather_input(int *games, int *friends, char **friend_names, int *rounds, int *ducks) {
     int counter;
     int rounds_and_ducks[2] = {0,0};
@@ -292,11 +280,7 @@ void gather_input(int *games, int *friends, char **friend_names, int *rounds, in
         winners = manipulate_input(friends, ducks, friend_names, *rounds);
         output(winners, i);
     }
-//    *rounds = rounds_and_ducks[0];
-//    *ducks = rounds_and_ducks[1];
-//
-//    printf("%d", rounds_and_ducks[0]);
-//    printf("%d", rounds_and_ducks[1]);
+
 
 }
 
@@ -322,6 +306,9 @@ int get_ints(int **pInt, int limit) {
         i++;
 
     return result;
-    return 0;
+
 }
+//---------------------------------------------------------------------------------------------------------------------
+//input functions------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 
