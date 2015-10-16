@@ -72,36 +72,37 @@ char *remove_by_index(node_t **pNode, int index);
 
 
 int main() {
-    //----------------------------------------------
-    int no_of_games = 0;
-    int no_of_friends = 0;
+    //essential game variables----------------------------------------------
+    int no_of_games = 0, no_of_friends = 0, rounds = 0, ducks = 0;
     char **friend_names = malloc(sizeof(char)* 25 * 2000);
-    int rounds = 0;
-    int ducks = 0;
-    //----------------------------------------------
+    //----------------------------------------------------------------------
 
-    //----------------------------------------------
+    //looping variables----------------------------------------------
     int j;
-    //----------------------------------------------
+    //---------------------------------------------------------------
     node_t *winners = NULL;
 
-    scanf("%d", &no_of_games);
+    scanf("%d", &no_of_games); //scanf number of games, had to keep outside of input...
 
+    //loop through the number of games
     for(j = 0; j < no_of_games; j++) {
+        //three meta functions progressing through a loop of games.
         input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
         winners = logic(&no_of_friends, &ducks, friend_names, rounds);
-
         output(winners, j);
     }
 
-    return 0;
+    return 0; //exit code 0 end of main
 }
-
+//output function------------------------------------------------------------------------------------------------------
 void output(node_t *pNode, int i) {
     printf("Game %d\n", i + 1);
     print_list(pNode);
 }
+//end of output function-----------------------------------------------------------------------------------------------
 
+//logic meta functions ------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 node_t *logic(int *friends_length, int *ducks, char **friend_names, int rounds) {
     /*  manipulate input() - in this scenario the idea is that jimmy will have a number of friends once he starts
      *  playing the game, and then, depending on how many rounds the game is played, loses friends systematically,
@@ -125,16 +126,22 @@ node_t *logic(int *friends_length, int *ducks, char **friend_names, int rounds) 
      *              -person kicked = (friends_length % ducks) + 1
      *              -next round
      *     Note: friends_names should be copied to another function as to not ruin the original data just in case...*/
+
+    //essential function variables -------------------------------------
     int no_of_friends = *friends_length;
     char **friends_list = malloc(sizeof(char) * no_of_friends * 20);
     node_t *winners = NULL;
+    //------------------------------------------------------------------
 
+    //looping variables
     int i;
 
+    //not sure why I'm doing this, probably because if I passed the **char right through it would seg fault.
     for (i = 0; i < no_of_friends; i++){
         friends_list[i] = friend_names[i];
     }
 
+    //go to game logic, the heart of the actual program.
     winners = game_logic(friends_list, ducks, no_of_friends, rounds);
 
     return winners;
@@ -143,34 +150,45 @@ node_t *logic(int *friends_length, int *ducks, char **friend_names, int rounds) 
 
 node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds) {
     int pos = 0;
-    int i, j = 0, k = 0;
+    int i, j = 0;
+
+    //introduce linked list-------------
     node_t *head = NULL;
     head = malloc(sizeof(node_t));
     if (head == NULL){
         return (node_t *) 1;
     }
 
+    //header, to remove later...
     head->name = "1";
+    //---------------------------------
 
+    //add **char to linked list, by the amount of list length.
     for(i = 0; i < list_length; i++) {
         list_append(friends_list[i], head);
     }
+    //pop list
     pop_list(&head);
 
     int total_moves = rounds * *ducks;
 
+    //actual logic of removing indices, pretty simple considering that it was a lot more complicated yesterday
     while(j < rounds){
         remove_by_index(&head, pos + 1);
         j++;
     }
 
-
+    //return linked list with indices removed
     return head;
 }
-
+//end of logic meta functions -----------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 
 //linked list logic----------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
 char *remove_by_index(node_t **pNode, int index) {
+    /*  removed specified in [index] position from pNode, then moves all other indices up to make sure no missing
+     *  spaces will be accounted for. */
     int i = 0;
     char *retval;
     node_t *current = *pNode;
@@ -196,6 +214,8 @@ char *remove_by_index(node_t **pNode, int index) {
 }
 
 char *pop_list(node_t **pNode) {
+    /*pops the head (temporary value for initialization of the linked list) 1, in order to have a list of just
+     * strings */
     char *retval;
     node_t *next_node = NULL;
     if(*pNode == NULL){
@@ -210,6 +230,7 @@ char *pop_list(node_t **pNode) {
 }
 
 void print_list(node_t *head) {
+    //prints current list...
     node_t *current = head;
 
     while(current != NULL){
@@ -219,6 +240,7 @@ void print_list(node_t *head) {
 }
 
 void list_append(char *string, node_t *pointer) {
+    //adds to the list. along with having the end of the list link back to the beginning.
     node_t *current = pointer;
     while (pointer->next != current){
         current = current->next;
@@ -230,15 +252,13 @@ void list_append(char *string, node_t *pointer) {
     pointer->next = current;
 }
 //end of linked list logic---------------------------------------------------------------------------------------------
-
-
 //---------------------------------------------------------------------------------------------------------------------
-//input functions------------------------------------------------------------------------------------------------------
+
+//input meta functions-------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 void input(int *games, int *friends, char **friend_names, int *rounds, int *ducks) {
-    int counter;
+    int counter, i = 0;
     int rounds_and_ducks[2] = {0,0};
-    int *rd_ptr = rounds_and_ducks;
     char buff[BUFSIZ];
     int ch;
 
@@ -247,10 +267,6 @@ void input(int *games, int *friends, char **friend_names, int *rounds, int *duck
      *  for the rest of the *.in file*/
 
     get_ints(&friends, 1); //scans in the number of friends.
-
-    //debug for collecting games.
-//    printf("%d", *games);
-//    printf("%d\n", *friends);
 
     //clearing input buffer... took me forever to figure this out...
     while ((ch = getchar()) != '\n' && ch != EOF);
@@ -261,16 +277,18 @@ void input(int *games, int *friends, char **friend_names, int *rounds, int *duck
         get_name(friend_names, counter, buff);
     }
 
+    //get rounds and ducks by space separated values.
+    while (i < 2 && (scanf("%d*[^\n]", &rounds_and_ducks[i]) == 1))
+        i++;
 
-    get_ints(&rounds, 1);
-    get_ints(&ducks, 1);
-
-    
-
+    //collect rounds and ducks from rounds and ducks[]
+    *rounds = rounds_and_ducks[0];
+    *ducks = rounds_and_ducks[1];
 
 }
 
 void get_name(char **pString, int counter, char buff[]) {
+    //gets the name and puts it into a string, from stdin
     char *temp;
     fgets(buff, 20, stdin);
     temp = strdup(buff);
@@ -278,6 +296,7 @@ void get_name(char **pString, int counter, char buff[]) {
 }
 
 char *strdup (const char *s) {
+    //strdup from POSIX system libs
     char *d = malloc (strlen (s) + 1);   // Allocate memory
     if (d != NULL) strcpy (d,s);         // Copy string if okay
     return d;                            // Return new memory
@@ -285,7 +304,7 @@ char *strdup (const char *s) {
 
 //function to pull ints from data
 int get_ints(int **pInt, int limit) {
-
+    //gets ints function
     int i = 1;
     int result;
     while (i <= limit && (result = scanf("%d*[^\n]", *pInt) == 1))
@@ -294,7 +313,6 @@ int get_ints(int **pInt, int limit) {
     return result;
 
 }
-//---------------------------------------------------------------------------------------------------------------------
-//input functions------------------------------------------------------------------------------------------------------
+//end of input meta functions------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 

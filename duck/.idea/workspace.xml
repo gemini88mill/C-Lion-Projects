@@ -44,18 +44,10 @@
       <file leaf-file-name="duck.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/duck.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47634408">
-              <caret line="267" column="4" selection-start-line="267" selection-start-column="4" selection-end-line="267" selection-end-column="4" />
+            <state vertical-scroll-proportion="2.9935484">
+              <caret line="315" column="19" selection-start-line="315" selection-start-column="19" selection-end-line="315" selection-end-column="19" />
               <folding>
                 <element signature="e#2174#2192#0" expanded="true" />
-                <element signature="e#4629#6341#0" expanded="false" />
-                <element signature="e#6343#6865#0" expanded="false" />
-                <element signature="e#6868#7486#0" expanded="false" />
-                <element signature="e#7488#7744#0" expanded="false" />
-                <element signature="e#7746#7914#0" expanded="false" />
-                <element signature="e#7916#8206#0" expanded="false" />
-                <element signature="e#9713#9870#0" expanded="false" />
-                <element signature="e#9872#10090#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -224,14 +216,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#2174#2192#0" expanded="true" />
-            <element signature="e#4629#6341#0" expanded="false" />
-            <element signature="e#6343#6865#0" expanded="false" />
-            <element signature="e#6868#7486#0" expanded="false" />
-            <element signature="e#7488#7744#0" expanded="false" />
-            <element signature="e#7746#7914#0" expanded="false" />
-            <element signature="e#7916#8206#0" expanded="false" />
-            <element signature="e#9713#9870#0" expanded="false" />
-            <element signature="e#9872#10090#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -250,14 +234,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#2174#2192#0" expanded="true" />
-            <element signature="e#4629#6341#0" expanded="false" />
-            <element signature="e#6343#6865#0" expanded="false" />
-            <element signature="e#6868#7486#0" expanded="false" />
-            <element signature="e#7488#7744#0" expanded="false" />
-            <element signature="e#7746#7914#0" expanded="false" />
-            <element signature="e#7916#8206#0" expanded="false" />
-            <element signature="e#9713#9870#0" expanded="false" />
-            <element signature="e#9872#10090#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -276,14 +252,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#2174#2192#0" expanded="true" />
-            <element signature="e#4629#6341#0" expanded="false" />
-            <element signature="e#6343#6865#0" expanded="false" />
-            <element signature="e#6868#7486#0" expanded="false" />
-            <element signature="e#7488#7744#0" expanded="false" />
-            <element signature="e#7746#7914#0" expanded="false" />
-            <element signature="e#7916#8206#0" expanded="false" />
-            <element signature="e#9713#9870#0" expanded="false" />
-            <element signature="e#9872#10090#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -298,18 +266,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/duck.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47634408">
-          <caret line="267" column="4" selection-start-line="267" selection-start-column="4" selection-end-line="267" selection-end-column="4" />
+        <state vertical-scroll-proportion="2.9935484">
+          <caret line="315" column="19" selection-start-line="315" selection-start-column="19" selection-end-line="315" selection-end-column="19" />
           <folding>
             <element signature="e#2174#2192#0" expanded="true" />
-            <element signature="e#4629#6341#0" expanded="false" />
-            <element signature="e#6343#6865#0" expanded="false" />
-            <element signature="e#6868#7486#0" expanded="false" />
-            <element signature="e#7488#7744#0" expanded="false" />
-            <element signature="e#7746#7914#0" expanded="false" />
-            <element signature="e#7916#8206#0" expanded="false" />
-            <element signature="e#9713#9870#0" expanded="false" />
-            <element signature="e#9872#10090#0" expanded="false" />
           </folding>
         </state>
       </provider>
