@@ -48,8 +48,8 @@ typedef struct node{
 }node_t;
 
 //meta functions-------------------------------------------------------------------------------------------------------
-void input(int *games, int *friends, char **friend_names, int *rounds, int *ducks);
-node_t *logic(int *friends_length, int *ducks, char **friend_names, int i);
+void input(int *friends, char **friend_names, int *rounds, int *ducks);
+node_t *logic(int *friends_length, char **friend_names, int i);
 void output(node_t *pNode, int i);
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ void get_name(char **pString, int counter, char buff[]);
 //functions for input--------------------------------------------------------------------------------------------------
 
 //functions for logic--------------------------------------------------------------------------------------------------
-node_t * game_logic(char **friends_list, int *ducks, int list_length, int i);
+node_t *game_logic(char **friends_list, int list_length, int i);
 //---------------------------------------------------------------------------------------------------------------------
 
 //functions for linked list--------------------------------------------------------------------------------------------
@@ -87,11 +87,12 @@ int main() {
     //loop through the number of games
     for(j = 0; j < no_of_games; j++) {
         //three meta functions progressing through a loop of games.
-        input(&no_of_games, &no_of_friends, friend_names, &rounds, &ducks);
-        winners = logic(&no_of_friends, &ducks, friend_names, rounds);
+        input(&no_of_friends, friend_names, &rounds, &ducks);
+        winners = logic(&no_of_friends, friend_names, rounds);
         output(winners, j);
     }
 
+    free(friend_names);
     return 0; //exit code 0 end of main
 }
 //output function------------------------------------------------------------------------------------------------------
@@ -103,7 +104,7 @@ void output(node_t *pNode, int i) {
 
 //logic meta functions ------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
-node_t *logic(int *friends_length, int *ducks, char **friend_names, int rounds) {
+node_t *logic(int *friends_length, char **friend_names, int rounds) {
     /*  manipulate input() - in this scenario the idea is that jimmy will have a number of friends once he starts
      *  playing the game, and then, depending on how many rounds the game is played, loses friends systematically,
      *
@@ -142,13 +143,15 @@ node_t *logic(int *friends_length, int *ducks, char **friend_names, int rounds) 
     }
 
     //go to game logic, the heart of the actual program.
-    winners = game_logic(friends_list, ducks, no_of_friends, rounds);
+    winners = game_logic(friends_list, no_of_friends, rounds);
 
+
+    free(friends_list);
     return winners;
 
 }
 
-node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds) {
+node_t *game_logic(char **friends_list, int list_length, int rounds) {
     int pos = 0;
     int i, j = 0;
 
@@ -170,13 +173,12 @@ node_t * game_logic(char **friends_list, int *ducks, int list_length, int rounds
     //pop list
     pop_list(&head);
 
-    int total_moves = rounds * *ducks;
-
     //actual logic of removing indices, pretty simple considering that it was a lot more complicated yesterday
     while(j < rounds){
         remove_by_index(&head, pos + 1);
         j++;
     }
+
 
     //return linked list with indices removed
     return head;
@@ -256,7 +258,7 @@ void list_append(char *string, node_t *pointer) {
 
 //input meta functions-------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
-void input(int *games, int *friends, char **friend_names, int *rounds, int *ducks) {
+void input(int *friends, char **friend_names, int *rounds, int *ducks) {
     int counter, i = 0;
     int rounds_and_ducks[2] = {0,0};
     char buff[BUFSIZ];
@@ -311,7 +313,6 @@ int get_ints(int **pInt, int limit) {
         i++;
 
     return result;
-
 }
 //end of input meta functions------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------

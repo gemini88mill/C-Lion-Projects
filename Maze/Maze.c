@@ -64,7 +64,7 @@ int * queue_init(int **pInt, char **pString, int i, int i1);
 
 void print_queue_val(int **pInt);
 
-int find_path(char **pString, int **pInt, int x, int y, int *count);
+int find_path(char **pString, int **pInt, int x, int y, int count, int *grab);
 
 void print_maze(char **pString);
 
@@ -129,6 +129,7 @@ void logic() {
         arr[i] = (int *)malloc(300 * sizeof(int));
     int count = 0;
     int *count_ptr = &count;
+    int grab_last_index = 0;
     fill_test_maze(test_maze_ptr);
 
 
@@ -147,41 +148,43 @@ void logic() {
     y = pos[0];
     x = pos[1];
 
-    if(find_path(test_maze_ptr, arr, x, y, count_ptr) != 0) {
-        count = find_path(test_maze_ptr, arr, x, y, count_ptr);
-        printf("count: %d", count);
-    }
+
+        count = find_path(test_maze_ptr, arr, x, y, count, &grab_last_index);
+        printf("grab: %d", grab_last_index);
+
 
 
 }
 
-int find_path(char **pString, int **pInt, int x, int y, int *count) {
+int find_path(char **pString, int **pInt, int x, int y, int count, int *grab) {
     //find_path function, uses the data collected and tries to find a path out
     //printf("%i, %i\n", x, y);
     //print_maze(pString);
     //print_queue_val(pInt);
     //printf("%c\n", pString[x][y]);
     if(pString[x][y] == 'S'){
-        pInt[x][y] = *count;
-        find_path(pString, pInt, x + 1, y, count);
-        find_path(pString, pInt, x - 1, y, count);
-        find_path(pString, pInt, x, y + 1, count);
-        find_path(pString, pInt, x, y - 1, count);
+        pInt[x][y] = count;
+        find_path(pString, pInt, x + 1, y, count, grab);
+        find_path(pString, pInt, x - 1, y, count, grab);
+        find_path(pString, pInt, x, y + 1, count, grab);
+        find_path(pString, pInt, x, y - 1, count, grab);
 
     } else if(pString[x][y] == '-' && pInt[x][y] == -1 && pInt[x][y] != 0){
-        pInt[x][y] = *count + 1;
-        find_path(pString, pInt, x + 1, y, count + 1);
-        find_path(pString, pInt, x - 1, y, count + 1);
-        find_path(pString, pInt, x, y + 1, count + 1);
-        find_path(pString, pInt, x, y - 1, count + 1);
+        pInt[x][y] = count + 1;
+        find_path(pString, pInt, x + 1, y, count + 1, grab);
+        find_path(pString, pInt, x - 1, y, count + 1, grab);
+        find_path(pString, pInt, x, y + 1, count + 1, grab);
+        find_path(pString, pInt, x, y - 1, count + 1, grab);
 
     } else if(pString[x][y] == '~'){
-        pInt[x][y] = *count + 1;
-        printf("count: %d\n", *count);
-        return *count;
+        pInt[x][y] = count + 1;
+        printf("count: %d\n", count);
+        *grab = count;
+        printf("grab: %d\n", *grab);
+        return count;
     } else if(pString[x][y] == 'X'){
         pInt[x][y] = -1;
-        return *count;
+        return count;
     }
 
     return pInt[x][y];
