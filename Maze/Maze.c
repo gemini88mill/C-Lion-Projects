@@ -31,6 +31,7 @@
 #define MAX_ROWS 300
 #define MAX_COLUMNS 300
 #define VAL_SIZE 2
+#define MAX_CASES 100
 
 //struct def
 struct Maze
@@ -41,7 +42,7 @@ struct Maze
 
 //"Top-Level functions"-------------
 struct Maze * input(struct Maze *pMaze);
-void logic();
+void logic(struct Maze *pMaze);
 void output();
 //----------------------------------
 
@@ -52,23 +53,18 @@ char *strdup (const char *s);
 void get_line(char **pString, char buff[], int counter);
 //-------------------------------------------------------------
 
-
-
+//logic level functions--------------------------------------------------------------
 char **fill_test_maze(char **pString);
-
 int *find_s(char **pString);
-
 int move_cursor(char **pString, int *pos, int *cursor, int i, int i1);
-
 int * queue_init(int **pInt, char **pString, int i, int i1);
-
 void print_queue_val(int **pInt);
-
 int find_path(char **pString, int **pInt, int x, int y, int count, int *grab);
-
 void print_maze(char **pString);
-
 int check_adjacent_values(char **pString, int **pInt, int x, int y);
+//----------------------------------------------------------------------------------
+
+void print_input_maze(struct Maze *pMaze);
 
 int main() {
     //struct initialization------------------------------------------
@@ -82,20 +78,24 @@ int main() {
 
     int test_cases = 0;
 
-    //scanf("%d", &test_cases);
+    scanf("%d", &test_cases);
 
     //for loop here for test cases
-    //maze_ptr = input(&maze);
-    //temp comment out
+    for(i = 0; i < test_cases; i++) {
+        maze_ptr = input(&maze);
+    }
+
 
 //    printf("%d", maze_ptr->maze_meda_data[0]);
 //    //----------------------------
-//    for(i = 0; i < 4; i++){
+//    for(i = 0; i < maze.maze_meda_data[0]; i++){
 //        printf("%s", maze_ptr->maze_val[i]);
 //    }
 
-    logic();
-    output();
+
+    //--------------------------------------logic layer----------------------------------------------------------------
+    logic(maze_ptr);
+    //output();
 
     return 0;
 }
@@ -104,7 +104,7 @@ void output() {
 
 }
 
-void logic() {
+void logic(struct Maze *pMaze) {
     /*  logic functions go here.
      *  params: maze. At this point, Maze should be properly formatted and ready to be manipulated.
      *
@@ -121,24 +121,22 @@ void logic() {
     //test case: meta data - 5, 7
     int i, j, x = 0, y = 0;
     int *pos;
-    int *cursor = malloc(sizeof(int) * 2);
     char **test_maze_ptr = malloc(sizeof(char) * 6 * 8);
 
     int **arr = (int **)malloc(300 * sizeof(int *));
     for (i=0; i<300; i++)
         arr[i] = (int *)malloc(300 * sizeof(int));
     int count = 0;
-    int *count_ptr = &count;
     int grab_last_index = 0;
+
+    //debug----------------------------
     fill_test_maze(test_maze_ptr);
-
-
-
     print_maze(test_maze_ptr);
+    //---------------------------------
 
     //printf("arr: %i", arr[0][0]);
 
-    while(x < 5) {
+    while(x < pMaze->maze_meda_data[0]) {
         arr[x] = queue_init(arr, test_maze_ptr, x, y);
         x++;
     }
@@ -148,9 +146,8 @@ void logic() {
     y = pos[0];
     x = pos[1];
 
-
-        count = find_path(test_maze_ptr, arr, x, y, count, &grab_last_index);
-        printf("grab: %d", grab_last_index);
+    count = find_path(test_maze_ptr, arr, x, y, count, &grab_last_index);
+    printf("grab: %d", grab_last_index);
 
 
 
@@ -179,7 +176,7 @@ int find_path(char **pString, int **pInt, int x, int y, int count, int *grab) {
     } else if(pString[x][y] == '~'){
         pInt[x][y] = count + 1;
         printf("count: %d\n", count);
-        *grab = count;
+        *grab = count; //get smallest grab here! return to grab...
         printf("grab: %d\n", *grab);
         return count;
     } else if(pString[x][y] == 'X'){
@@ -319,7 +316,15 @@ struct Maze * input(struct Maze *pMaze) {
     pMaze->maze_val = maze;
     pMaze->maze_meda_data = arr;
 
+    //print_input_maze(pMaze);
     return pMaze;
+}
+
+void print_input_maze(struct Maze *pMaze) {
+    int i;
+    for(i = 0; i < pMaze->maze_meda_data[0]; i++){
+        printf("%s", pMaze->maze_val[i]);
+    }
 }
 
 char **get_maze(char **maze_ptr, int rows, int columns) {
@@ -346,6 +351,7 @@ int *get_ints(int arr[], int limit) {
 }
 
 char *strdup (const char *s) {
+    //taken from POSIX libs
     char *d = malloc (strlen (s) + 1);   // Allocate memory
     if (d != NULL) strcpy (d,s);         // Copy string if okay
     return d;                            // Return new memory
