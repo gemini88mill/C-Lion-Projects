@@ -42,8 +42,8 @@ struct Maze
 
 //"Top-Level functions"-------------
 struct Maze * input(struct Maze *pMaze);
-void logic(struct Maze *pMaze);
-void output();
+int logic(struct Maze *pMaze);
+void output(int i);
 //----------------------------------
 
 //related input type functions---------------------------------
@@ -94,17 +94,19 @@ int main() {
 
 
     //--------------------------------------logic layer----------------------------------------------------------------
-    logic(maze_ptr);
-    //output();
+    int value = logic(maze_ptr);
+    output(value);
 
     return 0;
 }
 
-void output() {
-
+void output(int i) {
+    if(i <= 0)
+        i = -1;
+    printf("%d", i);
 }
 
-void logic(struct Maze *pMaze) {
+int logic(struct Maze *pMaze) {
     /*  logic functions go here.
      *  params: maze. At this point, Maze should be properly formatted and ready to be manipulated.
      *
@@ -154,10 +156,10 @@ void logic(struct Maze *pMaze) {
     x = pos[1];
 
     //test_maze_ptr = **char
-    count = find_path(pMaze->maze_val, arr, x, y, count, &grab_last_index);
-    printf("grab: %d", grab_last_index);
+    find_path(pMaze->maze_val, arr, x, y, count, &grab_last_index);
+    //printf("grab: %d", grab_last_index);
 
-
+    return grab_last_index;
 
 }
 
@@ -250,9 +252,6 @@ int ** queue_init(int **pInt, int *pMaze_val, int x, int y) {
     }
 
     return pInt;
-
-
-
 }
 
 int move_cursor(char **pString, int *pos, int *cursor, int x, int y) {
