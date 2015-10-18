@@ -55,7 +55,7 @@ void get_line(char **pString, char buff[], int counter);
 
 //logic level functions--------------------------------------------------------------
 char **fill_test_maze(char **pString);
-int *find_s(char **pString);
+int *find_s(char **pString, int *pInt);
 int move_cursor(char **pString, int *pos, int *cursor, int i, int i1);
 int ** queue_init(int **pInt, int *pMaze_val, int i, int i1);
 void print_queue_val(int **pInt, struct Maze *pMaze);
@@ -65,6 +65,8 @@ int check_adjacent_values(char **pString, int **pInt, int x, int y);
 //----------------------------------------------------------------------------------
 
 void print_input_maze(struct Maze *pMaze);
+
+int find_lowest_grab(int *pInt);
 
 int main() {
     //struct initialization------------------------------------------
@@ -101,9 +103,12 @@ int main() {
 }
 
 void output(int i) {
-    if(i <= 0)
+    if(i < 0) {
         i = -1;
-    printf("%d", i);
+        printf("%d", i);
+    } else {
+        printf("%d", i + 1);
+    }
 }
 
 int logic(struct Maze *pMaze) {
@@ -149,7 +154,7 @@ int logic(struct Maze *pMaze) {
     print_input_maze(pMaze);
     //queue is now initialized proceed with dequeue logic
 
-    pos = find_s(pMaze->maze_val);
+    pos = find_s(pMaze->maze_val, pMaze->maze_meda_data);
 
     print_queue_val(arr, pMaze);
     y = pos[0];
@@ -188,6 +193,7 @@ int find_path(char **pString, int **pInt, int x, int y, int count, int *grab) {
         printf("count: %d\n", count);
         *grab = count; //get smallest grab here! return to grab...
         printf("grab: %d\n", *grab);
+        find_lowest_grab(grab);
         return count;
     } else if(pString[x][y] == 'X'){
         pInt[x][y] = -1;
@@ -195,6 +201,19 @@ int find_path(char **pString, int **pInt, int x, int y, int count, int *grab) {
     }
 
     return pInt[x][y];
+}
+
+int find_lowest_grab(int *pInt) {
+    //finds lowest grab and sends it back.
+    int temp = 100;
+
+    if(temp > *pInt){
+        return *pInt;
+    } else{
+        return temp;
+    }
+
+
 }
 
 void print_maze(char **pString) {
@@ -281,15 +300,15 @@ int move_cursor(char **pString, int *pos, int *cursor, int x, int y) {
     return 0;
 }
 
-int *find_s(char **pString) {
+int *find_s(char **pString, int *pInt) {
     //find_s() - searches through the string and finds the starting location of s. returns the array location of
     //said S
     int i, j;
     int *pos = malloc(sizeof(int) * VAL_SIZE);
 
     /*go through the chars */
-    for(i = 0; i < 5; i++){
-        for(j = 0; j < 7; j++){
+    for(i = 0; i < pInt[0]; i++){
+        for(j = 0; j < pInt[1]; j++){
             if (pString[i][j] == 'S'){
                 printf("found S at: %d, %d\n", j, i);
                 pos[0] = j;
