@@ -130,23 +130,26 @@ void logic(struct Maze *pMaze) {
     int grab_last_index = 0;
 
     //debug----------------------------
-    fill_test_maze(test_maze_ptr);
-    print_maze(test_maze_ptr);
+    //fill_test_maze(test_maze_ptr);
+    //print_maze(test_maze_ptr);
     //---------------------------------
 
     //printf("arr: %i", arr[0][0]);
 
     while(x < pMaze->maze_meda_data[0]) {
-        arr[x] = queue_init(arr, test_maze_ptr, x, y);
+        arr[x] = queue_init(arr, pMaze->maze_val, x, y);
         x++;
     }
+
+    print_input_maze(pMaze);
     //queue is now initialized proceed with dequeue logic
 
-    pos = find_s(test_maze_ptr);
+    pos = find_s(pMaze->maze_val);
     y = pos[0];
     x = pos[1];
 
-    count = find_path(test_maze_ptr, arr, x, y, count, &grab_last_index);
+    //test_maze_ptr = **char
+    count = find_path(pMaze->maze_val, arr, x, y, count, &grab_last_index);
     printf("grab: %d", grab_last_index);
 
 
@@ -272,7 +275,7 @@ int *find_s(char **pString) {
     for(i = 0; i < 5; i++){
         for(j = 0; j < 7; j++){
             if (pString[i][j] == 'S'){
-                //printf("found S at: %d, %d", j, i);
+                printf("found S at: %d, %d", j, i);
                 pos[0] = j;
                 pos[1] = i;
             }
@@ -333,7 +336,7 @@ char **get_maze(char **maze_ptr, int rows, int columns) {
     char buff[300];
 
     //collect input using buff
-    while(i < rows){
+    while(i <= rows){
         get_line(maze_ptr, buff, i);
         i++;
     }
