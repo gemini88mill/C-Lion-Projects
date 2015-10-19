@@ -31,7 +31,6 @@
 #define MAX_ROWS 300
 #define MAX_COLUMNS 300
 #define VAL_SIZE 2
-#define MAX_CASES 100
 
 //struct def
 struct Maze
@@ -40,7 +39,7 @@ struct Maze
     int *maze_meda_data;
 };
 
-//"Top-Level functions"-------------
+//"Top-Level" functions-------------
 struct Maze * input(struct Maze *pMaze);
 int logic(struct Maze *pMaze);
 void output(int i);
@@ -53,20 +52,17 @@ char *strdup (const char *s);
 void get_line(char **pString, char buff[], int counter);
 //-------------------------------------------------------------
 
-//logic level functions--------------------------------------------------------------
-char **fill_test_maze(char **pString);
+//related logic type functions-------------------------------------------------------
 int *find_s(char **pString, int *pInt);
 int move_cursor(char **pString, int *pos, int *cursor, int i, int i1);
 int ** queue_init(int **pInt, int *pMaze_val, int i, int i1);
 void print_queue_val(int **pInt, struct Maze *pMaze);
 int find_path(char **pString, int **pInt, int x, int y, int count, int *grab);
-void print_maze(char **pString);
 int check_adjacent_values(char **pString, int **pInt, int x, int y);
+void print_input_maze(struct Maze *pMaze);
+int find_lowest_grab(int *pInt);
 //----------------------------------------------------------------------------------
 
-void print_input_maze(struct Maze *pMaze);
-
-int find_lowest_grab(int *pInt);
 
 int main() {
     //struct initialization------------------------------------------
@@ -75,9 +71,7 @@ int main() {
     maze.maze_val = malloc(sizeof(char) * MAX_ROWS * MAX_COLUMNS);
     //---------------------------------------------------------------
     struct Maze *maze_ptr = &maze;
-
     int i;
-
     int test_cases = 0;
 
     scanf("%d", &test_cases);
@@ -85,32 +79,25 @@ int main() {
     //for loop here for test cases
     for(i = 0; i < test_cases; i++) {
         maze_ptr = input(&maze);
+        int value = logic(maze_ptr);
+        output(value);
     }
-
-
-//    printf("%d", maze_ptr->maze_meda_data[0]);
-//    //----------------------------
-//    for(i = 0; i < maze.maze_meda_data[0]; i++){
-//        printf("%s", maze_ptr->maze_val[i]);
-//    }
-
-
-    //--------------------------------------logic layer----------------------------------------------------------------
-    int value = logic(maze_ptr);
-    output(value);
-
     return 0;
 }
 
+
+//output---------------------------------------------------------------------------------------------------------------
 void output(int i) {
-    if(i < 0) {
+    if(i <= 0) {
         i = -1;
         printf("%d", i);
     } else {
-        printf("%d", i + 1);
+        printf("%d", i);
     }
 }
+//end of output--------------------------------------------------------------------------------------------------------
 
+//logic functions------------------------------------------------------------------------------------------------------
 int logic(struct Maze *pMaze) {
     /*  logic functions go here.
      *  params: maze. At this point, Maze should be properly formatted and ready to be manipulated.
@@ -216,14 +203,6 @@ int find_lowest_grab(int *pInt) {
 
 }
 
-void print_maze(char **pString) {
-    int i;
-    for(i = 0; i < 5; i++){
-        printf("%s\n", pString[i]);
-    }
-
-}
-
 int check_adjacent_values(char **pString, int **pInt, int x, int y) {
     if(pString[x][y] == '-' || pInt != 0){
         pInt[x][y] = 0;
@@ -252,7 +231,7 @@ void print_queue_val(int **pInt, struct Maze *pMaze) {
     printf("\n");
 }
 
-int ** queue_init(int **pInt, int *pMaze_val, int x, int y) {
+int **queue_init(int **pInt, int *pMaze_val, int x, int y) {
     //queue_init, queue initialization. renames all of the values of the maze and applies numerical values to them.
     int i,j;
 
@@ -320,17 +299,7 @@ int *find_s(char **pString, int *pInt) {
 
     return pos;
 }
-
-char **fill_test_maze(char **pString) {
-    pString[0] = "~~~~~~~";
-    pString[1] = "~XXXXX~";
-    pString[2] = "~X-S-X~";
-    pString[3] = "~--X-X~";
-    pString[4] = "~~~~~~~";
-
-    return pString;
-}
-
+//---------------------------------------------------------------------------------------------------------------------
 
 //input functions-------------------------------------------------------------------------------------
 struct Maze * input(struct Maze *pMaze) {
