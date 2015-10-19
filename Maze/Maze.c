@@ -54,11 +54,9 @@ void get_line(char **pString, char buff[], int counter);
 
 //related logic type functions-------------------------------------------------------
 int *find_s(char **pString, int *pInt);
-int move_cursor(char **pString, int *pos, int *cursor, int i, int i1);
 int ** queue_init(int **pInt, int *pMaze_val, int i, int i1);
 void print_queue_val(int **pInt, struct Maze *pMaze);
 int find_path(char **pString, int **pInt, int x, int y, int count, int *grab);
-int check_adjacent_values(char **pString, int **pInt, int x, int y);
 void print_input_maze(struct Maze *pMaze);
 int find_lowest_grab(int *pInt);
 //----------------------------------------------------------------------------------
@@ -88,11 +86,16 @@ int main() {
 
 //output---------------------------------------------------------------------------------------------------------------
 void output(int i) {
-    if(i <= 0) {
+    /*  output - "top-level" function - provides the desired output for the entire program. Differentiates between what
+     *  type of value is required, if value is less then 0, maze is unsolvable and therefore -1 is the result. If the
+     *  result is more then zero output the number received (total number of steps taken) and add one. The logic
+     *  does not provide for an addition to the value as far as steps. the ~ step is not counted, therefore it is added
+     *  here*/
+    if(i < 0) {
         i = -1;
         printf("%d", i);
     } else {
-        printf("%d", i);
+        printf("%d", i + 1);
     }
 }
 //end of output--------------------------------------------------------------------------------------------------------
@@ -138,12 +141,12 @@ int logic(struct Maze *pMaze) {
     }
     //--------------------------------------------------------
 
-    print_input_maze(pMaze);
+    //print_input_maze(pMaze);
     //queue is now initialized proceed with dequeue logic
 
     pos = find_s(pMaze->maze_val, pMaze->maze_meda_data);
 
-    print_queue_val(arr, pMaze);
+    //print_queue_val(arr, pMaze);
     y = pos[0];
     x = pos[1];
 
@@ -177,13 +180,14 @@ int find_path(char **pString, int **pInt, int x, int y, int count, int *grab) {
 
     } else if(pString[x][y] == '~'){
         pInt[x][y] = count + 1;
-        printf("count: %d\n", count);
+        //printf("count: %d\n", count);
         *grab = count; //get smallest grab here! return to grab...
-        printf("grab: %d\n", *grab);
+        //printf("grab: %d\n", *grab);
         find_lowest_grab(grab);
         return count;
     } else if(pString[x][y] == 'X'){
         pInt[x][y] = -1;
+        *grab = -1;
         return count;
     }
 
@@ -200,23 +204,6 @@ int find_lowest_grab(int *pInt) {
         return temp;
     }
 
-
-}
-
-int check_adjacent_values(char **pString, int **pInt, int x, int y) {
-    if(pString[x][y] == '-' || pInt != 0){
-        pInt[x][y] = 0;
-        check_adjacent_values(pString, pInt, x - 1, y);
-        check_adjacent_values(pString, pInt, x + 1, y);
-        check_adjacent_values(pString, pInt, x, y - 1);
-        check_adjacent_values(pString, pInt, x, y + 1);
-    } else if (pString[x][y] == '~') {
-        return 1;
-    }
-     else if (pString[x][y] == 'X'){
-        return -1;
-    }
-    return 0;
 
 }
 
@@ -252,33 +239,6 @@ int **queue_init(int **pInt, int *pMaze_val, int x, int y) {
     return pInt;
 }
 
-int move_cursor(char **pString, int *pos, int *cursor, int x, int y) {
-    //move_cursor() - moves the marker left to find a - char, if - is found, true value is returned, if any other value
-    //false value is returned.
-    int i;
-    printf("pos x: %i\n", pos[0]);
-    printf("pos y: %i\n", pos[1]);
-    printf("\tx: %i\n", x);
-    printf("\ty: %i\n", y);
-
-//    for(i = 0; i < 5; i++){
-//        printf("%s\n", pString[i]);
-//    }
-
-
-    if(pString[y - 1][x - 1] == '-'){
-        printf("pstring at %c: %i, %i\n", pString[y][x], x, y);
-        return move_cursor(pString, pos, cursor, x + 1, y);
-    }else if(pString[y-1][y-1] == 'X'){
-        printf("pstring at %c: %i, %i\n", pString[y-1][x-1], x, y);
-        return move_cursor(pString, pos, cursor, x, y + 1);
-    } else if (pString[y-1][x-1] == '~'){
-        printf("pstring at %c: %i, %i\n", pString[y][x], x, y);
-    }
-
-    return 0;
-}
-
 int *find_s(char **pString, int *pInt) {
     //find_s() - searches through the string and finds the starting location of s. returns the array location of
     //said S
@@ -301,7 +261,7 @@ int *find_s(char **pString, int *pInt) {
 }
 //---------------------------------------------------------------------------------------------------------------------
 
-//input functions-------------------------------------------------------------------------------------
+//input functions------------------------------------------------------------------------------------------------------
 struct Maze * input(struct Maze *pMaze) {
     /*input function - accepts all incoming params and organizes them into the program.*/
     //values for meta val--------------------
@@ -370,4 +330,4 @@ void get_line(char **pString, char buff[], int counter) {
     temp = strdup(buff);
     pString[counter] = temp;
 }
-//end of input functions-----------------------------------------------------------------------------
+//end of input functions-----------------------------------------------------------------------------------------------
