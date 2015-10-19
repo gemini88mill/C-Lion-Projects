@@ -93,9 +93,9 @@ void output(int i) {
      *  here*/
     if(i < 0) {
         i = -1;
-        printf("%d", i);
+        printf("%d\n", i);
     } else {
-        printf("%d", i + 1);
+        printf("%d\n", i + 1);
     }
 }
 //end of output--------------------------------------------------------------------------------------------------------
@@ -320,7 +320,7 @@ int *get_ints(int arr[], int limit) {
     //accepts ints from scanf (with spaces!!!) and returns values.
     int i = 0;
     while (i < limit && scanf("%d", &arr[i]) == 1) {
-        printf("arr[%d]: %d\n", i, arr[i]);
+        //printf("arr[%d]: %d\n", i, arr[i]);
         i++;
     }
     return arr;
