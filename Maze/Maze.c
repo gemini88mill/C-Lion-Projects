@@ -103,26 +103,30 @@ void output(int i) {
 //logic functions------------------------------------------------------------------------------------------------------
 int logic(struct Maze *pMaze) {
     /*  logic functions go here.
+     *  logic -top-level- function- all logic from the program is done here. uses additional functions to complete the
+     *  core processes of the program. Then the function returns an int for output() to use.
      *  params: maze. At this point, Maze should be properly formatted and ready to be manipulated.
      *
-     *  find_s() - finds s on the map and creates a marker
-     *  check_right() - check to see if we can move right
-     *  check_left() - check to see if we can go left
-     *  check_up() - check to se if we can go up
-     *  check_down() - check to see if we can go down
+     *  variables: arr[300][300] = provides the grid for the queue functions.
+     *             count = failed attempt to collect total number of steps
+     *             grab_last_index = collects the number of steps that to queue grid takes to solve the problem.
      *
-     *  if any of these values are true, take that route.
-     *  repeat until ~ is reached
-     *  count the number of moves. */
+     *  functions list: queue_init() - intializes queue grid
+     *                  find_s() - finds the value 'S' in the maze grid
+     *                  find_path() - finds the path for the maze function using the queue grid.
+     *
+     *  returns int.
+     *
+     *   */
 
-    //test case: meta data - 5, 7
-    int i, j, x = 0, y = 0;
+    //looping variables.
+    int i,x = 0, y = 0;
     int *pos;
-    char **test_maze_ptr = malloc(sizeof(char) * 6 * 8);
 
     int **arr = malloc(300 * sizeof(int *));
     for (i=0; i<300; i++)
         arr[i] = malloc(300 * sizeof(int));
+
     int count = 0;
     int grab_last_index = 0;
 
@@ -130,8 +134,6 @@ int logic(struct Maze *pMaze) {
     //fill_test_maze(test_maze_ptr);
     //print_maze(test_maze_ptr);
     //---------------------------------
-
-    //printf("arr: %i", arr[0][0]);
 
     //--------------------------------------------------------
     //initialize queue grid
@@ -152,18 +154,26 @@ int logic(struct Maze *pMaze) {
 
     //test_maze_ptr = **char
     find_path(pMaze->maze_val, arr, x, y, count, &grab_last_index);
-    //printf("grab: %d", grab_last_index);
 
     return grab_last_index;
 
 }
 
 int find_path(char **pString, int **pInt, int x, int y, int count, int *grab) {
+    /*find_path() - accepts values for the maze grid, the queue grid, x and y markers, and for the final value.
+     *              then proceeds to recursively solve for the path by moving the markers up, down, left, and right.
+     *              if there is a - value then replace the -1 (placed by queue_init()), with the total steps.
+     *
+     *              Note: the logic does not account for moves directions already taken, therefore the grab function
+     *              returns only goes after the lowest value. */
+
     //find_path function, uses the data collected and tries to find a path out
     //printf("%i, %i\n", x, y);
     //print_maze(pString);
     //print_queue_val(pInt);
     //printf("%c\n", pString[x][y]);
+
+    //recurse from "S"
     if(pString[x][y] == 'S'){
         pInt[x][y] = count;
         find_path(pString, pInt, x + 1, y, count, grab);
@@ -171,27 +181,28 @@ int find_path(char **pString, int **pInt, int x, int y, int count, int *grab) {
         find_path(pString, pInt, x, y + 1, count, grab);
         find_path(pString, pInt, x, y - 1, count, grab);
 
-    } else if(pString[x][y] == '-' && pInt[x][y] == -1 && pInt[x][y] != 0){
+    } else if(pString[x][y] == '-' && pInt[x][y] == -1 && pInt[x][y] != 0){ //recurse from "-"
         pInt[x][y] = count + 1;
         find_path(pString, pInt, x + 1, y, count + 1, grab);
         find_path(pString, pInt, x - 1, y, count + 1, grab);
         find_path(pString, pInt, x, y + 1, count + 1, grab);
         find_path(pString, pInt, x, y - 1, count + 1, grab);
 
-    } else if(pString[x][y] == '~'){
+    } else if(pString[x][y] == '~'){ //finish path add value to grab.
         pInt[x][y] = count + 1;
         //printf("count: %d\n", count);
         *grab = count; //get smallest grab here! return to grab...
         //printf("grab: %d\n", *grab);
-        find_lowest_grab(grab);
+        find_lowest_grab(grab); //find lowest value for grab.
         return count;
-    } else if(pString[x][y] == 'X'){
+
+    } else if(pString[x][y] == 'X'){ //end find_path(), X is in position.
         pInt[x][y] = -1;
         *grab = -1;
         return count;
     }
 
-    return pInt[x][y];
+    return pInt[x][y]; //return queue value... should not reach this point.
 }
 
 int find_lowest_grab(int *pInt) {
@@ -208,6 +219,8 @@ int find_lowest_grab(int *pInt) {
 }
 
 void print_queue_val(int **pInt, struct Maze *pMaze) {
+    /* ***for debug****
+     * print_queue_val() - displays queue grid to see whats going on in queue as the game progresses. */
     int i, j;
     for(i = 0; i < pMaze->maze_meda_data[0]; i++) {
         for (j = 0; j < pMaze->maze_meda_data[1]; j++) {
@@ -219,14 +232,8 @@ void print_queue_val(int **pInt, struct Maze *pMaze) {
 }
 
 int **queue_init(int **pInt, int *pMaze_val, int x, int y) {
-    //queue_init, queue initialization. renames all of the values of the maze and applies numerical values to them.
-    int i,j;
-
-//    while (y <= pMaze_val[y]) {
-//        pInt[x][y] = -1;
-//        y++;
-//        return queue_init(pInt, pMaze_val, x, y + 1);
-//    }
+    /*queue_init() -  queue initialization. renames all of the values of the maze and applies numerical values to
+     *                them. adds -1 to all spaces if pMaze is not filled. */
     pInt[x][y] = -1;
 
     if(x < pMaze_val[0]){
@@ -242,6 +249,8 @@ int **queue_init(int **pInt, int *pMaze_val, int x, int y) {
 int *find_s(char **pString, int *pInt) {
     //find_s() - searches through the string and finds the starting location of s. returns the array location of
     //said S
+
+    //looping variables
     int i, j;
     int *pos = malloc(sizeof(int) * VAL_SIZE);
 
@@ -249,7 +258,7 @@ int *find_s(char **pString, int *pInt) {
     for(i = 0; i < pInt[0]; i++){
         for(j = 0; j < pInt[1]; j++){
             if (pString[i][j] == 'S'){
-                printf("found S at: %d, %d\n", j, i);
+                //printf("found S at: %d, %d\n", j, i);
                 pos[0] = j;
                 pos[1] = i;
             }
