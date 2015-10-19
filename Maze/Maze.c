@@ -47,7 +47,7 @@ void output(int i);
 
 //related input type functions---------------------------------
 int *get_ints(int arr[], int i);
-char **get_maze(char **maze_ptr, int i, int i1);
+char **get_maze(char **maze_ptr, int i);
 char *strdup (const char *s);
 void get_line(char **pString, char buff[], int counter);
 //-------------------------------------------------------------
@@ -284,7 +284,7 @@ struct Maze * input(struct Maze *pMaze) {
 
     char **maze = malloc(sizeof(char) * (arr[0]+1) * (arr[1]+1));
     //gets maze values
-    maze = get_maze(maze, arr[0], arr[1]);
+    maze = get_maze(maze, arr[0]);
 
     //now we have maze and arr that represent our input values for the maze
     //send them to main
@@ -303,7 +303,7 @@ void print_input_maze(struct Maze *pMaze) {
     }
 }
 
-char **get_maze(char **maze_ptr, int rows, int columns) {
+char **get_maze(char **maze_ptr, int rows) {
     //function to get the values for the maze.
     int i = 0;
     char buff[300];
@@ -334,6 +334,7 @@ char *strdup (const char *s) {
 }
 
 void get_line(char **pString, char buff[], int counter) {
+    //gets the line for the maze function.
     char *temp;
     fgets(buff, 20, stdin);
     temp = strdup(buff);
