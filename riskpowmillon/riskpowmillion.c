@@ -14,44 +14,87 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define ARMY_MAX 1000000
+#define ARMY_POW_MAX 1000000000
+
 
 //struct def
 struct Battle_data{
     int no_armies;          //max 1,000,000
-    int army_power_atk[1];   //max 1,000,000,000
-    int army_power_def[1];   //max 1,000,000,000
+    int *army_power_atk;   //max 1,000,000,000
+    int *army_power_def;   //max 1,000,000,000
 };
 
 //top level functions-----------------
-void input();
+void input(struct Battle_data data);
 void logic();
 void output();
 //------------------------------------
 
 void get_int(int *i);
 
+void load_array(int arr[], int size);
+
+void load_struct(int atk[], int def[], int size, struct Battle_data data, int i);
+
 int main() {
 
+    //struct init
+    struct Battle_data data;
+    data.army_power_atk = malloc(sizeof(int) * ARMY_POW_MAX);
+    data.army_power_def = malloc(sizeof(int) * ARMY_POW_MAX);
 
     int input_cases = 0;
     int i;
 
     //for loop here for test_cases
-    input();
+    input(data);
     logic();
     output();
     return 0;
 }
 
-void input() {
+void input(struct Battle_data data) {
     /*input() - collect all input from *.in file. and organize according to program needs. */
 
     int army_size = 0;
-    int army_pow_val = 0;
+
+    int i;
 
     get_int(&army_size);
 
+    int army_pow_val_atk[army_size];
+    int army_pow_val_def[army_size];
+
+    load_array(army_pow_val_atk, army_size);
+    load_array(army_pow_val_def, army_size);
+
     printf("army_size: %d", army_size); //good
+
+    for(i = 0; i < army_size; i++){
+        printf("arr atk %d: %d\n", i, army_pow_val_atk[i]); //good
+        printf("arr def %d: %d\n", i, army_pow_val_def[i]); //good
+    }
+
+    load_struct(army_pow_val_atk, army_pow_val_def, army_size, data, 0);
+
+}
+
+void load_struct(int atk[], int def[], int size, struct Battle_data data, int i) {
+
+    if(i < size) {
+        data.army_power_atk[i] = atk[i];
+        data.army_power_def[i] = def[i];
+        data.no_armies = size;
+        load_struct(atk, def, size, data, i + 1);
+    }
+}
+
+void load_array(int arr[], int size) {
+    int i;
+    for(i = 0; i < size; i++) {
+        scanf("%d", &arr[i]);
+    }
 }
 
 void get_int(int *i) {
