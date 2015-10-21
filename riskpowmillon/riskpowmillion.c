@@ -26,7 +26,7 @@ struct Battle_data{
 };
 
 //top level functions-----------------
-void input(struct Battle_data data);
+void input(struct Battle_data *data);
 void logic();
 void output();
 //------------------------------------
@@ -35,7 +35,7 @@ void get_int(int *i);
 
 void load_array(int arr[], int size);
 
-void load_struct(int atk[], int def[], int size, struct Battle_data data, int i);
+void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i);
 
 int main() {
 
@@ -43,19 +43,27 @@ int main() {
     struct Battle_data data;
     data.army_power_atk = malloc(sizeof(int) * ARMY_POW_MAX);
     data.army_power_def = malloc(sizeof(int) * ARMY_POW_MAX);
+    data.no_armies = 0;
+
+    struct Battle_data *data_ptr = &data;
 
     int input_cases = 0;
     int i;
 
     //for loop here for test_cases
-    input(data);
+    input(&data);
+
+
+
     logic();
     output();
     return 0;
 }
 
-void input(struct Battle_data data) {
+void input(struct Battle_data *data) {
     /*input() - collect all input from *.in file. and organize according to program needs. */
+
+
 
     int army_size = 0;
 
@@ -78,14 +86,15 @@ void input(struct Battle_data data) {
 
     load_struct(army_pow_val_atk, army_pow_val_def, army_size, data, 0);
 
+    printf("number of armies: %d\n", data->no_armies);
 }
 
-void load_struct(int atk[], int def[], int size, struct Battle_data data, int i) {
-
+void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i) {
+    
     if(i < size) {
-        data.army_power_atk[i] = atk[i];
-        data.army_power_def[i] = def[i];
-        data.no_armies = size;
+        data->army_power_atk[i] = atk[i];
+        data->army_power_def[i] = def[i];
+        data->no_armies = size;
         load_struct(atk, def, size, data, i + 1);
     }
 }
