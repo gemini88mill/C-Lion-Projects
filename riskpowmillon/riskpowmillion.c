@@ -27,15 +27,20 @@ struct Battle_data{
 
 //top level functions-----------------
 void input(struct Battle_data *data);
-void logic();
+void logic(struct Battle_data data);
 void output();
 //------------------------------------
 
+//input level functions-------------------------------------------------------------
 void get_int(int *i);
-
 void load_array(int arr[], int size);
-
 void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i);
+//----------------------------------------------------------------------------------
+
+
+int *sort_arr(int *pInt);
+
+int compare_remaining_values(struct Battle_data data);
 
 int main() {
 
@@ -55,7 +60,9 @@ int main() {
 
 
 
-    logic();
+    //struct filled, send to logic.
+
+    logic(data);
     output();
     return 0;
 }
@@ -63,34 +70,35 @@ int main() {
 void input(struct Battle_data *data) {
     /*input() - collect all input from *.in file. and organize according to program needs. */
 
-
-
+    //init army size
     int army_size = 0;
 
-    int i;
-
+    //gets army_size from stdin
     get_int(&army_size);
 
+    //init army power values for attack and defense
     int army_pow_val_atk[army_size];
     int army_pow_val_def[army_size];
 
+    //loads array with stdin
     load_array(army_pow_val_atk, army_size);
     load_array(army_pow_val_def, army_size);
 
-    printf("army_size: %d", army_size); //good
-
-    for(i = 0; i < army_size; i++){
-        printf("arr atk %d: %d\n", i, army_pow_val_atk[i]); //good
-        printf("arr def %d: %d\n", i, army_pow_val_def[i]); //good
-    }
-
+    //loads struct with values collected from load_array()
     load_struct(army_pow_val_atk, army_pow_val_def, army_size, data, 0);
 
-    printf("number of armies: %d\n", data->no_armies);
+    //debug tester
+    //int i;
+//    printf("army_size: %d", army_size); //good
+
+//    for(i = 0; i < army_size; i++){
+//        printf("arr atk %d: %d\n", i, army_pow_val_atk[i]); //good
+//        printf("arr def %d: %d\n", i, army_pow_val_def[i]); //good
+//    }
 }
 
 void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i) {
-    
+
     if(i < size) {
         data->army_power_atk[i] = atk[i];
         data->army_power_def[i] = def[i];
@@ -111,10 +119,29 @@ void get_int(int *i) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void logic() {
+void logic(struct Battle_data data) {
+
+    //sorts the array's
+    sort_arr(data.army_power_atk);
+    sort_arr(data.army_power_def);
+
+    compare_remaining_values(data);
 
 }
 
+int compare_remaining_values(struct Battle_data data) {
+
+    return 0;
+}
+
+int *sort_arr(int *pInt) {
+
+    return 0;
+
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------
 void output() {
 
 }
