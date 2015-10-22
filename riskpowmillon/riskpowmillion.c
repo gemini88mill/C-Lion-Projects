@@ -27,7 +27,7 @@ struct Battle_data{
 
 //top level functions-----------------
 void input(struct Battle_data *data);
-void logic(struct Battle_data data);
+void logic(struct Battle_data *data);
 void output();
 //------------------------------------
 
@@ -38,9 +38,13 @@ void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i
 //----------------------------------------------------------------------------------
 
 
-int *sort_arr(int *pInt);
+int *sort_arr(int *pInt, int first_index, int last_index);
 
-int compare_remaining_values(struct Battle_data data);
+int compare_remaining_values(struct Battle_data *data);
+
+int partition(int *pInt, int first_index, int last_index);
+
+void swap(int i, int j);
 
 int main() {
 
@@ -62,7 +66,7 @@ int main() {
 
     //struct filled, send to logic.
 
-    logic(data);
+    logic(&data);
     output();
     return 0;
 }
@@ -119,25 +123,61 @@ void get_int(int *i) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void logic(struct Battle_data data) {
+void logic(struct Battle_data *data) {
+
+    int first_index = 0;
+    int last_index = data->no_armies - 1;
 
     //sorts the array's
-    sort_arr(data.army_power_atk);
-    sort_arr(data.army_power_def);
+    sort_arr(data->army_power_atk, data->army_power_atk[first_index], data->army_power_atk[last_index]);
+    //sort_arr(data->army_power_def, 0, 0);
 
+    for(int i = 0; i < data->no_armies; i++)
+
+    //sort remaining arrays
     compare_remaining_values(data);
 
 }
 
-int compare_remaining_values(struct Battle_data data) {
+int compare_remaining_values(struct Battle_data *data) {
+
 
     return 0;
 }
 
-int *sort_arr(int *pInt) {
+int *sort_arr(int *pInt, int first_index, int last_index) {
+    int midish = 0;
 
+    if (first_index < last_index){
+        //select partition.
+        midish = partition(pInt, first_index, last_index);
+        sort_arr(pInt, first_index, midish);
+        sort_arr(pInt, midish, last_index);
+    }
     return 0;
 
+}
+
+int partition(int *pInt, int first_index, int last_index) {
+    int midish = pInt[first_index];
+    int left = first_index;
+    int i;
+
+    for (i = first_index; i < last_index; i++) {
+        if(pInt[i] < midish){
+            left = left + 1;
+            swap(pInt[i], pInt[left]);
+        }
+    }
+    swap(pInt[first_index], pInt[left]);
+
+    return 0;
+}
+
+void swap(int i, int j) {
+    int temp = i;
+    i = j;
+    j = temp;
 }
 
 
