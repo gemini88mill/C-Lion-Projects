@@ -124,7 +124,7 @@ void get_int(int *i) {
 
 //----------------------------------------------------------------------------------------------------------------------
 void logic(struct Battle_data *data) {
-
+    int i;
     int first_index = 0;
     int last_index = data->no_armies - 1;
 
@@ -132,7 +132,9 @@ void logic(struct Battle_data *data) {
     sort_arr(data->army_power_atk, data->army_power_atk[first_index], data->army_power_atk[last_index]);
     //sort_arr(data->army_power_def, 0, 0);
 
-    for(int i = 0; i < data->no_armies; i++)
+    for(i = 0; i < data->no_armies; i++){
+        printf("%d\t", data->army_power_atk[i]);
+    }
 
     //sort remaining arrays
     compare_remaining_values(data);
