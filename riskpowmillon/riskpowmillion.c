@@ -134,10 +134,18 @@ void logic(struct Battle_data *data) {
 
     //sorts the array's
     //sort_arr(data->army_power_atk, data->army_power_atk[first_index], data->army_power_atk[last_index]);
-    //sort_arr(data->army_power_def, 0, 0);
+    //sort_arr(data->army_power_def, low, data->no_armies - 1);
 
     for(i = 0; i < 8; i++){
         printf("%d\t", arr[i]);
+    }
+    //sorted arrays
+    for(i = 0; i < data->no_armies; i++) {
+        printf("%d\t", data->army_power_atk[i]);
+    }
+    printf("\n");
+    for(i = 0; i < data->no_armies; i++) {
+        printf("%d\t", data->army_power_def[i]);
     }
 
     //sort remaining arrays
@@ -167,7 +175,7 @@ int partition(int *pInt, int first_index, int last_index) {
     int left = first_index;
     int i;
 
-    for (i = first_index; i < last_index; i++) {
+    for (i = first_index; i <= last_index; i++) {
         if(pInt[i] < pivot){
             left = left + 1;
             swap(&pInt[i], &pInt[left]);
