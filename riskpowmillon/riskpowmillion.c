@@ -39,12 +39,9 @@ void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i
 
 
 int *sort_arr(int *pInt, int first_index, int last_index);
-
 int compare_remaining_values(struct Battle_data *data);
-
 int partition(int *pInt, int first_index, int last_index);
-
-void swap(int i, int j);
+void swap(int *i, int *j);
 
 int main() {
 
@@ -60,7 +57,7 @@ int main() {
     int i;
 
     //for loop here for test_cases
-    input(&data);
+    //input(&data);
 
 
 
@@ -128,12 +125,19 @@ void logic(struct Battle_data *data) {
     int first_index = 0;
     int last_index = data->no_armies - 1;
 
+    //tester vars
+    int arr[] = {23, 45, 22, 11, 3, 78, 90, 4000, 50};
+    int high = 8;
+    int low = 0;
+
+    sort_arr(arr, low, high);
+
     //sorts the array's
-    sort_arr(data->army_power_atk, data->army_power_atk[first_index], data->army_power_atk[last_index]);
+    //sort_arr(data->army_power_atk, data->army_power_atk[first_index], data->army_power_atk[last_index]);
     //sort_arr(data->army_power_def, 0, 0);
 
-    for(i = 0; i < data->no_armies; i++){
-        printf("%d\t", data->army_power_atk[i]);
+    for(i = 0; i < 8; i++){
+        printf("%d\t", arr[i]);
     }
 
     //sort remaining arrays
@@ -148,38 +152,36 @@ int compare_remaining_values(struct Battle_data *data) {
 }
 
 int *sort_arr(int *pInt, int first_index, int last_index) {
-    int midish = 0;
+    int pivot_locale;
 
     if (first_index < last_index){
         //select partition.
-        midish = partition(pInt, first_index, last_index);
-        sort_arr(pInt, first_index, midish);
-        sort_arr(pInt, midish, last_index);
+        pivot_locale = partition(pInt, first_index, last_index);
+        sort_arr(pInt, first_index, pivot_locale);
+        sort_arr(pInt, pivot_locale + 1, last_index);
     }
-    return 0;
-
 }
 
 int partition(int *pInt, int first_index, int last_index) {
-    int midish = pInt[first_index];
+    int pivot = pInt[first_index];
     int left = first_index;
     int i;
 
     for (i = first_index; i < last_index; i++) {
-        if(pInt[i] < midish){
+        if(pInt[i] < pivot){
             left = left + 1;
-            swap(pInt[i], pInt[left]);
+            swap(&pInt[i], &pInt[left]);
         }
     }
-    swap(pInt[first_index], pInt[left]);
+    swap(&pInt[first_index], &pInt[left]);
 
-    return 0;
+    return left;
 }
 
-void swap(int i, int j) {
-    int temp = i;
-    i = j;
-    j = temp;
+void swap(int *i, int *j) {
+    int temp = *i;
+    *i = *j;
+    *j = temp;
 }
 
 
