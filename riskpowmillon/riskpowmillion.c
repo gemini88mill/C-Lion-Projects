@@ -57,7 +57,7 @@ int main() {
     int i;
 
     //for loop here for test_cases
-    //input(&data);
+    input(&data);
 
 
 
@@ -126,26 +126,35 @@ void logic(struct Battle_data *data) {
     int last_index = data->no_armies - 1;
 
     //tester vars
-    int arr[] = {23, 45, 22, 11, 3, 78, 90, 4000, 50};
+    int arr[] = {23, 45, 22, 11, 3, 78, 90, 12, 50};
     int high = 8;
     int low = 0;
 
+    //collect data from struct
+    int *atk;
+    int *def;
+
+    atk = data->army_power_atk;
+    def = data->army_power_def;
+
     sort_arr(arr, low, high);
+    sort_arr(atk, low, data->no_armies - 1);
+    sort_arr(def, low, data->no_armies - 1);
+    
 
-    //sorts the array's
-    //sort_arr(data->army_power_atk, data->army_power_atk[first_index], data->army_power_atk[last_index]);
-    //sort_arr(data->army_power_def, low, data->no_armies - 1);
 
+    //debug for struct
     for(i = 0; i < 8; i++){
         printf("%d\t", arr[i]);
     }
+    printf("\n");
     //sorted arrays
     for(i = 0; i < data->no_armies; i++) {
-        printf("%d\t", data->army_power_atk[i]);
+        printf("%d\t", atk[i]);
     }
     printf("\n");
     for(i = 0; i < data->no_armies; i++) {
-        printf("%d\t", data->army_power_def[i]);
+        printf("%d\t", def[i]);
     }
 
     //sort remaining arrays
