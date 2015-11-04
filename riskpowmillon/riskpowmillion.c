@@ -43,7 +43,7 @@ int compare_remaining_values(struct Battle_data *data);
 int partition(int *pInt, int first_index, int last_index);
 void swap(int *i, int *j);
 
-struct Battle_data compare_values(int *atk, int *def, int armies, struct Battle_data data);
+struct Battle_data compare_values(int *atk, int *def, int armies, struct Battle_data data, int i);
 
 void shift_down(int *power, int armies);
 
@@ -137,6 +137,7 @@ void logic(struct Battle_data *data) {
     //collect data from struct
     int *atk;
     int *def;
+    int iteration_count = 0;
 
     atk = data->army_power_atk;
     def = data->army_power_def;
@@ -149,7 +150,8 @@ void logic(struct Battle_data *data) {
     atk_win_data.army_power_atk = malloc(sizeof(int) * ARMY_POW_MAX);
     atk_win_data.army_power_def = malloc(sizeof(int) * ARMY_POW_MAX);
     atk_win_data.no_armies = 0;
-    atk_win_data = compare_values(atk, def, data->no_armies, atk_win_data);
+
+    atk_win_data = compare_values(atk, def, data->no_armies, atk_win_data, iteration_count);
 
     //debug for struct
 //    for(i = 0; i < 8; i++){
@@ -171,7 +173,7 @@ void logic(struct Battle_data *data) {
 
 }
 
-struct Battle_data compare_values(int *atk, int *def, int armies, struct Battle_data data) {
+struct Battle_data compare_values(int *atk, int *def, int armies, struct Battle_data data, int iter_count) {
 
     int i = 0, j, k = 0; //counter
 
@@ -191,13 +193,14 @@ struct Battle_data compare_values(int *atk, int *def, int armies, struct Battle_
         shift_down(data.army_power_def, data.no_armies);
         printf("%d", data.no_armies);
         getchar();
-        compare_values(data.army_power_atk, data.army_power_def, data.no_armies - 1, data);
+
+        compare_values(data.army_power_atk, data.army_power_def, data.no_armies - 1, data, iter_count + 1);
 
     }else{
         for(j = 0; j < 10; j++){
             printf("%d\t", data.army_power_atk[j]);
         }
-
+        printf("number of iterations: %d\t", iter_count);
         printf("%d", data.no_armies);
     }
 
