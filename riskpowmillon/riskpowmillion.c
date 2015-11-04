@@ -174,38 +174,32 @@ void logic(struct Battle_data *data) {
 struct Battle_data compare_values(int *atk, int *def, int armies, struct Battle_data data) {
 
     int i = 0, j, k = 0; //counter
-    while(i < armies){
 
-        if(atk[i] > def[i]){
-            data.army_power_atk[k] = atk[i];
-            data.army_power_def[k] = def[i];
-            data.no_armies++;
-            k++;
+    if(i < armies) {
+        data.no_armies = 0;
+        while (i < armies) {
+
+            if (atk[i] > def[i]) {
+                data.army_power_atk[k] = atk[i];
+                data.army_power_def[k] = def[i];
+                data.no_armies++;
+                k++;
+            }
+            i++;
+
         }
-        i++;
+        shift_down(data.army_power_def, data.no_armies);
+        printf("%d", data.no_armies);
+        getchar();
+        compare_values(data.army_power_atk, data.army_power_def, data.no_armies - 1, data);
 
+    }else{
+        for(j = 0; j < 10; j++){
+            printf("%d\t", data.army_power_atk[j]);
+        }
+
+        printf("%d", data.no_armies);
     }
-    for(j = 0; j < data.no_armies; j++){
-        printf("%d\t", data.army_power_def[j]);
-    }
-    printf("\n");
-    shift_down(data.army_power_def, data.no_armies);
-
-    for(j = 0; j < data.no_armies; j++){
-        printf("%d\t", data.army_power_def[j]);
-    }
-
-
-    //debug
-//    for (j = 0; j < data.no_armies; j++){
-//        printf("%d\t", data.army_power_atk[j]);
-//        printf("atk no_armies: %d\n", data.no_armies);
-//    }
-//    printf("\n");
-//    for(j = 0; j < data.no_armies; j++){
-//        printf("%d\t", data.army_power_def[j]);
-//        printf("def no_armies: %d\n", data.no_armies);
-//    }
 
     return data;
 }
