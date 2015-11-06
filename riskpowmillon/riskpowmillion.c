@@ -27,8 +27,8 @@ struct Battle_data{
 
 //top level functions-----------------
 void input(struct Battle_data *data);
-void logic(struct Battle_data *data);
-void output();
+int logic(struct Battle_data *data);
+void output(int i);
 //------------------------------------
 
 //input level functions-------------------------------------------------------------
@@ -58,19 +58,26 @@ int main() {
 
     int input_cases = 0;
     int i;
+    int score;
 
-    //for loop here for test_cases
-    input(&data);
+    scanf("%d", &input_cases);
 
+    for (i = 0; i < input_cases; i++) {
+        input(&data);
 
+        //struct filled, send to logic.
 
-    //struct filled, send to logic.
+        //collect score from logic
+        score = logic(&data);
 
-    logic(&data);
-    output();
+        //printf("%d", score);
+
+        //printf to screen
+        output(score);
+    }
     return 0;
 }
-
+//----------------------------------------------------------------------------------------------------------------------
 void input(struct Battle_data *data) {
     /*input() - collect all input from *.in file. and organize according to program needs. */
 
@@ -123,7 +130,7 @@ void get_int(int *i) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void logic(struct Battle_data *data) {
+int logic(struct Battle_data *data) {
     int i;
     int first_index = 0;
     int last_index = data->no_armies - 1;
@@ -154,13 +161,13 @@ void logic(struct Battle_data *data) {
 
     iteration_count = compare(data->army_power_atk, data->army_power_def, data->no_armies - 1, data->no_armies - 1, iteration_count);
 
-    printf("out of compare: %d", iteration_count);
+    //printf("out of compare: %d", iteration_count);
     //int remaining_atk = compare_values(atk, def, data->no_armies, atk_win_data, iteration_count, armies);
 
 
     //sort remaining arrays
 
-
+    return iteration_count;
 }
 
 int compare_values(int *atk, int *def, int armies, struct Battle_data data, int iter_count, int starting_armies) {
@@ -243,20 +250,20 @@ void shift_down(int *power, int armies) {
 }
 
 int  compare(int *atk, int *def, int top_atk, int top_def, int i) {
-    printf("atk: %d\n", atk[top_atk]);
-    printf("def: %d\n", def[top_def]);
+    //printf("atk: %d\n", atk[top_atk]);
+    //printf("def: %d\n", def[top_def]);
 
     if(top_atk >= 0 && top_def >= 0) {
         if (atk[top_atk] <= def[top_def]) {
-            printf("def wins\n");
+            //printf("def wins\n");
             return compare(atk, def, top_atk - 1, top_def - 1, i + 1);
         } else if (atk[top_atk] > def[top_def]) {
-            printf("atk wins\n");
+            //printf("atk wins\n");
             return compare(atk, def, top_atk - 1, top_def, i);
         }
     }
 
-    printf("in compare: %d\n", i);
+    //printf("in compare: %d\n", i);
     return i;
 }
 
@@ -295,6 +302,6 @@ void swap(int *i, int *j) {
 
 
 //----------------------------------------------------------------------------------------------------------------------
-void output() {
-
+void output(int i) {
+    printf("%i\n", i);
 }
