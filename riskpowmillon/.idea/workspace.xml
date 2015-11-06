@@ -44,14 +44,11 @@
       <file leaf-file-name="riskpowmillion.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/riskpowmillion.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6269841">
-              <caret line="252" column="63" selection-start-line="252" selection-start-column="63" selection-end-line="252" selection-end-column="63" />
+            <state vertical-scroll-proportion="0.6002099">
+              <caret line="245" column="22" selection-start-line="245" selection-start-column="22" selection-end-line="245" selection-end-column="22" />
               <folding>
                 <element signature="e#749#767#0" expanded="true" />
-                <element signature="e#4954#6779#0" expanded="false" />
-                <element signature="e#7632#7955#0" expanded="false" />
-                <element signature="e#7957#8319#0" expanded="false" />
-                <element signature="e#8321#8397#0" expanded="false" />
+                <element signature="e#4952#6777#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -200,7 +197,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32858595" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32858595" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -227,7 +224,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="17" />
+      <option name="time" value="18" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -246,10 +243,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#4954#6779#0" expanded="false" />
-            <element signature="e#7632#7955#0" expanded="false" />
-            <element signature="e#7957#8319#0" expanded="false" />
-            <element signature="e#8321#8397#0" expanded="false" />
+            <element signature="e#4952#6777#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -276,10 +270,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#4954#6779#0" expanded="false" />
-            <element signature="e#7632#7955#0" expanded="false" />
-            <element signature="e#7957#8319#0" expanded="false" />
-            <element signature="e#8321#8397#0" expanded="false" />
+            <element signature="e#4952#6777#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -298,10 +289,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#4954#6779#0" expanded="false" />
-            <element signature="e#7632#7955#0" expanded="false" />
-            <element signature="e#7957#8319#0" expanded="false" />
-            <element signature="e#8321#8397#0" expanded="false" />
+            <element signature="e#4952#6777#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -320,10 +308,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#4954#6779#0" expanded="false" />
-            <element signature="e#7632#7955#0" expanded="false" />
-            <element signature="e#7957#8319#0" expanded="false" />
-            <element signature="e#8321#8397#0" expanded="false" />
+            <element signature="e#4952#6777#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -342,10 +327,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#4954#6779#0" expanded="false" />
-            <element signature="e#7632#7955#0" expanded="false" />
-            <element signature="e#7957#8319#0" expanded="false" />
-            <element signature="e#8321#8397#0" expanded="false" />
+            <element signature="e#4952#6777#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -368,14 +350,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/riskpowmillion.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6269841">
-          <caret line="252" column="63" selection-start-line="252" selection-start-column="63" selection-end-line="252" selection-end-column="63" />
+        <state vertical-scroll-proportion="0.6002099">
+          <caret line="245" column="22" selection-start-line="245" selection-start-column="22" selection-end-line="245" selection-end-column="22" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#4954#6779#0" expanded="false" />
-            <element signature="e#7632#7955#0" expanded="false" />
-            <element signature="e#7957#8319#0" expanded="false" />
-            <element signature="e#8321#8397#0" expanded="false" />
+            <element signature="e#4952#6777#0" expanded="false" />
           </folding>
         </state>
       </provider>

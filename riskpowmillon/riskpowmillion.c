@@ -39,7 +39,7 @@ void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i
 
 //logic level functions--------------------------------------------------------------------------------
 int *sort_arr(int *pInt, int first_index, int last_index);
-int compare(struct Battle_data *battle_data, int *atk, int *def, int size);
+int compare(int atk, int def, struct Battle_data *pData);
 int partition(int *pInt, int first_index, int last_index);
 void swap(int *i, int *j);
 int compare_values(int *atk, int *def, int armies, struct Battle_data data, int iter_count, int starting_armies);
@@ -152,7 +152,7 @@ void logic(struct Battle_data *data) {
     atk_win_data.no_armies = 0;
 
 
-    compare(&atk_win_data, data->army_power_atk, data->army_power_def, data->no_armies);
+    compare(data->army_power_atk[data->no_armies - 1], data->army_power_def[data->no_armies - 1], data);
     //int remaining_atk = compare_values(atk, def, data->no_armies, atk_win_data, iteration_count, armies);
 
 
@@ -240,28 +240,15 @@ void shift_down(int *power, int armies) {
 
 }
 
-int compare(struct Battle_data *battle_data, int *atk, int *def, int size) {
-    printf("armies: %d\n", size);
-    int i = 0, k = 0, j;
-    while(i < size){
-        if(atk[i] > def[i]){
-            battle_data->army_power_atk[k] = atk[i];
-            battle_data->army_power_def[k] = def[i];
-            battle_data->no_armies++;
-            k++;
-            for(j = 0; j < size; j++){
-                printf("%d\t", battle_data->army_power_atk[j]);
-            }
+int compare(int atk, int def, struct Battle_data *pData) {
+    int i = pData->no_armies;
 
-
-            //shift_down(battle_data->army_power_def, battle_data->no_armies);
-
-
-            //compare(battle_data, battle_data->army_power_atk, battle_data->army_power_def, battle_data->no_armies);
-        }
-        i++;
-
-
+    if(atk <= def && i >= 0){
+        printf("def wins");
+        compare(pData->army_power_atk[i - 1], pData->army_power_def[i - 1], pData);
+    }else if(atk > def && i >= 0){
+        printf("atk wins");
+        compare(pData->army_power_atk[i], pData->army_power_def[i - 1], pData);
     }
 
     return 0;
