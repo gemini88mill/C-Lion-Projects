@@ -64,9 +64,7 @@ int main() {
 
     for (i = 0; i < input_cases; i++) {
         input(&data);
-
         //struct filled, send to logic.
-
         //collect score from logic
         score = logic(&data);
 
@@ -97,15 +95,6 @@ void input(struct Battle_data *data) {
 
     //loads struct with values collected from load_array()
     load_struct(army_pow_val_atk, army_pow_val_def, army_size, data, 0);
-
-    //debug tester
-    //int i;
-//    printf("army_size: %d", army_size); //good
-
-//    for(i = 0; i < army_size; i++){
-//        printf("arr atk %d: %d\n", i, army_pow_val_atk[i]); //good
-//        printf("arr def %d: %d\n", i, army_pow_val_def[i]); //good
-//    }
 }
 
 void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i) {
@@ -136,9 +125,6 @@ int logic(struct Battle_data *data) {
     int last_index = data->no_armies - 1;
     int armies = data->no_armies;
 
-    //tester vars
-    int arr[] = {23, 45, 22, 11, 3, 78, 90, 12, 50};
-    int high = 8;
     int low = 0;
 
     //collect data from struct
@@ -149,23 +135,10 @@ int logic(struct Battle_data *data) {
     atk = data->army_power_atk;
     def = data->army_power_def;
 
-    sort_arr(arr, low, high);
     sort_arr(atk, low, data->no_armies - 1);
     sort_arr(def, low, data->no_armies - 1);
 
-    struct Battle_data atk_win_data;
-    atk_win_data.army_power_atk = malloc(sizeof(int) * ARMY_POW_MAX);
-    atk_win_data.army_power_def = malloc(sizeof(int) * ARMY_POW_MAX);
-    atk_win_data.no_armies = 0;
-
-
-    iteration_count = compare(data->army_power_atk, data->army_power_def, data->no_armies - 1, data->no_armies - 1, iteration_count);
-
-    //printf("out of compare: %d", iteration_count);
-    //int remaining_atk = compare_values(atk, def, data->no_armies, atk_win_data, iteration_count, armies);
-
-
-    //sort remaining arrays
+    iteration_count = compare(data->army_power_atk, data->army_power_def, last_index, last_index, iteration_count);
 
     return iteration_count;
 }
