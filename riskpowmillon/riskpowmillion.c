@@ -39,7 +39,7 @@ void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i
 
 //logic level functions--------------------------------------------------------------------------------
 int *sort_arr(int *pInt, int first_index, int last_index);
-int compare(int atk, int def, struct Battle_data *pData);
+int compare(int *atk, int *def, int top_atk, int top_def, int i);
 int partition(int *pInt, int first_index, int last_index);
 void swap(int *i, int *j);
 int compare_values(int *atk, int *def, int armies, struct Battle_data data, int iter_count, int starting_armies);
@@ -152,7 +152,9 @@ void logic(struct Battle_data *data) {
     atk_win_data.no_armies = 0;
 
 
-    compare(data->army_power_atk[data->no_armies - 1], data->army_power_def[data->no_armies - 1], data);
+    iteration_count = compare(data->army_power_atk, data->army_power_def, data->no_armies - 1, data->no_armies - 1, iteration_count);
+
+    printf("out of compare: %d", iteration_count);
     //int remaining_atk = compare_values(atk, def, data->no_armies, atk_win_data, iteration_count, armies);
 
 
@@ -240,18 +242,22 @@ void shift_down(int *power, int armies) {
 
 }
 
-int compare(int atk, int def, struct Battle_data *pData) {
-    int i = pData->no_armies;
+int  compare(int *atk, int *def, int top_atk, int top_def, int i) {
+    printf("atk: %d\n", atk[top_atk]);
+    printf("def: %d\n", def[top_def]);
 
-    if(atk <= def && i >= 0){
-        printf("def wins");
-        compare(pData->army_power_atk[i - 1], pData->army_power_def[i - 1], pData);
-    }else if(atk > def && i >= 0){
-        printf("atk wins");
-        compare(pData->army_power_atk[i], pData->army_power_def[i - 1], pData);
+    if(top_atk >= 0 && top_def >= 0) {
+        if (atk[top_atk] <= def[top_def]) {
+            printf("def wins\n");
+            return compare(atk, def, top_atk - 1, top_def - 1, i + 1);
+        } else if (atk[top_atk] > def[top_def]) {
+            printf("atk wins\n");
+            return compare(atk, def, top_atk - 1, top_def, i);
+        }
     }
 
-    return 0;
+    printf("in compare: %d\n", i);
+    return i;
 }
 
 int *sort_arr(int *pInt, int first_index, int last_index) {
