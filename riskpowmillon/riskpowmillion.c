@@ -52,21 +52,30 @@ int main() {
     data.army_power_def = malloc(sizeof(int) * ARMY_POW_MAX);
     data.no_armies = 0;
 
+    //main variables
     int input_cases = 0;
     int i;
     int score;
 
+    //scans in input cases (first value)
     scanf("%d", &input_cases);
 
+    //loads input cases and proceeds with input.
     for (i = 0; i < input_cases; i++) {
+
+        //to input
         input(&data);
-        //struct filled, send to logic.
+
         //collect score from logic
         score = logic(&data);
 
         //printf to screen
         output(score);
+
+
     }
+    free(data.army_power_atk);
+    free(data.army_power_def);
     return 0;
 }
 //----------------------------------------------------------------------------------------------------------------------
