@@ -121,25 +121,29 @@ void load_array(int arr[], int size) {
 }
 
 void get_int(int *i) {
-    //get_int() - gets an integer value from scanf [input] and loads into value specified. 
+    //get_int() - gets an integer value from scanf [input] and loads into value specified.
     scanf("%i", i);
 }
 
 //logic functions-------------------------------------------------------------------------------------------------------
 int logic(struct Battle_data *data) {
+    /*logic() - logic level functions deal with all logic functions in the program.
+     *  1. set local variables: mainly to deal with sorting
+     *  2. sort struct arrays(placed in local arrays)
+     *  3. compare values inside arrays.
+     *  4. return solution to main.*/
+
+    //local variables
     int first_index = 0;
     int last_index = data->no_armies - 1;
     int iteration_count = 0;
 
     //collect data from struct
-    int *atk;
-    int *def;
+    int *atk = data->army_power_atk;
+    int *def = data->army_power_def;
 
 
-    atk = data->army_power_atk;
-    def = data->army_power_def;
-
-    //sorts the arrays inside structs for both atk and def
+    //sorts the arrays inside arrays(taken from structs) for both atk and def
     sort_arr(atk, first_index, data->no_armies - 1);
     sort_arr(def, first_index, data->no_armies - 1);
 
@@ -151,6 +155,12 @@ int logic(struct Battle_data *data) {
 }
 
 int compare(int *atk, int *def, int top_atk, int top_def, int i) {
+    /*compare() - function compares two values from arrays. If value def is greater than or equal to value atk; return
+     *            compare(with both indices of atk and def - 1. i is increased by 1). If value atk is greater then
+     *            value def; return compare(atk - 1). this is all wrapped in a conditional clause stating that the
+     *            index of either array cannot be less than 0
+     *
+     *            return i.(iteration counter)*/
 
     if(top_atk >= 0 && top_def >= 0) {
         if (atk[top_atk] <= def[top_def]) {

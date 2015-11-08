@@ -44,10 +44,12 @@
       <file leaf-file-name="riskpowmillion.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/riskpowmillion.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37040922">
-              <caret line="123" column="91" selection-start-line="123" selection-start-column="91" selection-end-line="123" selection-end-column="91" />
+            <state vertical-scroll-proportion="0.8300105">
+              <caret line="169" column="9" selection-start-line="169" selection-start-column="9" selection-end-line="169" selection-end-column="9" />
               <folding>
                 <element signature="e#749#767#0" expanded="true" />
+                <element signature="e#6342#6704#0" expanded="false" />
+                <element signature="e#6706#6782#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -56,8 +58,8 @@
       <file leaf-file-name="input.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/input.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.258064">
-              <caret line="1078" column="2" selection-start-line="0" selection-start-column="0" selection-end-line="1113" selection-end-column="2" />
+            <state vertical-scroll-proportion="-7.677419">
+              <caret line="1077" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="1113" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -242,6 +244,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
+            <element signature="e#6342#6704#0" expanded="false" />
+            <element signature="e#6706#6782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -268,6 +272,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
+            <element signature="e#6342#6704#0" expanded="false" />
+            <element signature="e#6706#6782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -286,6 +292,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
+            <element signature="e#6342#6704#0" expanded="false" />
+            <element signature="e#6706#6782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -304,6 +312,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
+            <element signature="e#6342#6704#0" expanded="false" />
+            <element signature="e#6706#6782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -322,6 +332,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
+            <element signature="e#6342#6704#0" expanded="false" />
+            <element signature="e#6706#6782#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -336,18 +348,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/input.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.258064">
-          <caret line="1078" column="2" selection-start-line="0" selection-start-column="0" selection-end-line="1113" selection-end-column="2" />
+        <state vertical-scroll-proportion="-7.677419">
+          <caret line="1077" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="1113" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/riskpowmillion.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37040922">
-          <caret line="123" column="91" selection-start-line="123" selection-start-column="91" selection-end-line="123" selection-end-column="91" />
+        <state vertical-scroll-proportion="0.8300105">
+          <caret line="169" column="9" selection-start-line="169" selection-start-column="9" selection-end-line="169" selection-end-column="9" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
+            <element signature="e#6342#6704#0" expanded="false" />
+            <element signature="e#6706#6782#0" expanded="false" />
           </folding>
         </state>
       </provider>
