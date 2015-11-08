@@ -101,7 +101,8 @@ void input(struct Battle_data *data) {
 }
 
 void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i) {
-
+    /*load_struct() - function load_struct() takes values from array and places them inside struct for better management
+     * and readability*/
     if(i < size) {
         data->army_power_atk[i] = atk[i];
         data->army_power_def[i] = def[i];
@@ -111,6 +112,8 @@ void load_struct(int atk[], int def[], int size, struct Battle_data *data, int i
 }
 
 void load_array(int arr[], int size) {
+    /*load_array() - loads array with values collected from scanf() [input] and placed into array specified*/
+
     int i;
     for(i = 0; i < size; i++) {
         scanf("%d", &arr[i]);
@@ -118,6 +121,7 @@ void load_array(int arr[], int size) {
 }
 
 void get_int(int *i) {
+    //get_int() - gets an integer value from scanf [input] and loads into value specified. 
     scanf("%i", i);
 }
 
