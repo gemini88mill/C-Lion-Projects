@@ -162,10 +162,15 @@ int compare(int *atk, int *def, int top_atk, int top_def, int i) {
      *
      *            return i.(iteration counter)*/
 
+    //condition: indices of both atk anbd def must be greater then 0
     if(top_atk >= 0 && top_def >= 0) {
+
+        //if atk <= def
         if (atk[top_atk] <= def[top_def]) {
             return compare(atk, def, top_atk - 1, top_def - 1, i + 1);
-        } else if (atk[top_atk] > def[top_def]) {
+        }
+        //if atk > def
+        else if (atk[top_atk] > def[top_def]) {
             return compare(atk, def, top_atk - 1, top_def, i);
         }
     }
@@ -173,6 +178,7 @@ int compare(int *atk, int *def, int top_atk, int top_def, int i) {
 }
 
 int *sort_arr(int *pInt, int first_index, int last_index) {
+    /*sort_arr() - quick sort variant. This qsort was adapted from resources online and guha's */
     int pivot_locale;
 
     if (first_index < last_index){
