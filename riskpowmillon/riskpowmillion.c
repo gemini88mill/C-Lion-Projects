@@ -178,7 +178,8 @@ int compare(int *atk, int *def, int top_atk, int top_def, int i) {
 }
 
 int *sort_arr(int *pInt, int first_index, int last_index) {
-    /*sort_arr() - quick sort variant. This qsort was adapted from resources online and guha's */
+    /*sort_arr() - quick sort variant. This qsort was adapted from resources online and guha's examples.
+     *  the function uses the pivot_locale variable to act as the partition and split through the sort. */
     int pivot_locale;
 
     if (first_index < last_index){
@@ -190,22 +191,33 @@ int *sort_arr(int *pInt, int first_index, int last_index) {
 }
 
 int partition(int *pInt, int first_index, int last_index) {
+    /*parition() function - function uses the perameters given and swaps all integers in order from least to greatest*/
+
+    //local variables
     int pivot = pInt[first_index];
     int left = first_index;
     int i;
 
+    //for loop that is ditated by how big the partition in question is
     for (i = first_index; i <= last_index; i++) {
+
+        //if out of place in partition, swap with current(pointed to) index.
         if(pInt[i] < pivot){
             left = left + 1;
+
+            //swap
             swap(&pInt[i], &pInt[left]);
         }
     }
+    //else swap
     swap(&pInt[first_index], &pInt[left]);
 
+    //return lower left bound for partition.
     return left;
 }
 
 void swap(int *i, int *j) {
+    //swap() - swap function, swaps pointer locale
     int temp = *i;
     *i = *j;
     *j = temp;
@@ -213,5 +225,6 @@ void swap(int *i, int *j) {
 //----------------------------------------------------------------------------------------------------------------------
 
 void output(int i) {
+    //output "level" - prints to screen. 
     printf("%i\n", i);
 }

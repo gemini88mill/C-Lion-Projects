@@ -44,12 +44,10 @@
       <file leaf-file-name="riskpowmillion.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/riskpowmillion.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71668416">
-              <caret line="180" column="95" selection-start-line="180" selection-start-column="95" selection-end-line="180" selection-end-column="95" />
+            <state vertical-scroll-proportion="0.8300105">
+              <caret line="227" column="41" selection-start-line="227" selection-start-column="41" selection-end-line="227" selection-end-column="41" />
               <folding>
                 <element signature="e#749#767#0" expanded="true" />
-                <element signature="e#6565#6927#0" expanded="false" />
-                <element signature="e#6929#7005#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -244,8 +242,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#6565#6927#0" expanded="false" />
-            <element signature="e#6929#7005#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -272,8 +268,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#6565#6927#0" expanded="false" />
-            <element signature="e#6929#7005#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -292,8 +286,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#6565#6927#0" expanded="false" />
-            <element signature="e#6929#7005#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -312,8 +304,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#6565#6927#0" expanded="false" />
-            <element signature="e#6929#7005#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -332,8 +322,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#6565#6927#0" expanded="false" />
-            <element signature="e#6929#7005#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -356,12 +344,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/riskpowmillion.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71668416">
-          <caret line="180" column="95" selection-start-line="180" selection-start-column="95" selection-end-line="180" selection-end-column="95" />
+        <state vertical-scroll-proportion="0.8300105">
+          <caret line="227" column="41" selection-start-line="227" selection-start-column="41" selection-end-line="227" selection-end-column="41" />
           <folding>
             <element signature="e#749#767#0" expanded="true" />
-            <element signature="e#6565#6927#0" expanded="false" />
-            <element signature="e#6929#7005#0" expanded="false" />
           </folding>
         </state>
       </provider>
