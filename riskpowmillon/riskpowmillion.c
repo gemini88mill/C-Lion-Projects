@@ -225,6 +225,6 @@ void swap(int *i, int *j) {
 //----------------------------------------------------------------------------------------------------------------------
 
 void output(int i) {
-    //output "level" - prints to screen. 
+    //output "level" - prints to screen.
     printf("%i\n", i);
 }
