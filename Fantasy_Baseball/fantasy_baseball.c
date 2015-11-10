@@ -75,12 +75,21 @@ struct Player_stats load_struct(struct Player_stats stats) {
         int i;
         for(i = 0; *(tokens + i); i++){
             printf("%s\n", *(tokens + i));
-            free(*(tokens + i));
+
         }
         printf("\n");
-        free(tokens);
+
     }
 
+    stats.last_name = tokens[0];
+    stats.first_name = tokens[1];
+    stats.at_bat = tokens[2];
+    printf("stats.last_name = %s\n", stats.last_name);
+    printf("stats.first_name = %s\n", stats.first_name);
+    printf("stats.at_bat = %s\n", stats.at_bat);
+
+
+    free(tokens);
     return result;
 }
 
