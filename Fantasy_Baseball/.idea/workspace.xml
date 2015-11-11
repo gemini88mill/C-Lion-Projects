@@ -44,8 +44,8 @@
       <file leaf-file-name="fantasy_baseball.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fantasy_baseball.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8688353">
-              <caret line="104" column="25" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.7922351">
+              <caret line="116" column="33" selection-start-line="116" selection-start-column="33" selection-end-line="116" selection-end-column="33" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -57,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/Sample input">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="47" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="40" />
+              <caret line="10" column="45" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -237,15 +237,15 @@
     <entry file="file://$PROJECT_DIR$/Sample input">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="47" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="40" />
+          <caret line="10" column="45" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fantasy_baseball.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8688353">
-          <caret line="104" column="25" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.7922351">
+          <caret line="116" column="33" selection-start-line="116" selection-start-column="33" selection-end-line="116" selection-end-column="33" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

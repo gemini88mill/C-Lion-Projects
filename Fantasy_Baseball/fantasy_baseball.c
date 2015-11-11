@@ -91,19 +91,28 @@ int get_player_val(char *first_name, char *last_name, int at_bat, char *stats) {
         printf("current: %s\n", inspect);
         if(strstr(inspect, "1B")){
             printf("+1\n");
+            result = result + 1;
         }
         if(strstr(inspect, "2B")){
             printf("+2");
+            result = result + 2;
         }
         if(strstr(inspect, "3B")){
             printf("+3");
+            result = result + 3;
         }
         if(strstr(inspect, "HR")){
             printf("+4");
+            result = result + 4;
         }
         if(strstr(inspect, "BB")){
             printf("+1");
+            at_bat = at_bat - 1;
         }
+        if(strstr(inspect, "SAC")){
+            at_bat = at_bat - 1;
+        }
+
         stats = strstr(stats, inspect);
         stats += strlen(inspect);
     }
