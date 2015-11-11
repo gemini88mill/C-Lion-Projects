@@ -22,6 +22,8 @@ int get_int(int *pInt);
 struct Player_stats load_struct(struct Player_stats stats);
 char ** str_split(char *buff, const char delim);
 
+int get_player_val(char *first_name, char *last_name, int at_bat, char *stats);
+
 int main() {
     struct Player_stats *player = malloc((sizeof(struct Player_stats) * MAX_PLAYERS) * MAX_SEASONS);
 
@@ -57,10 +59,11 @@ void input(struct Player_stats *pStats) {
 
     }
 
+    printf("%s", pStats->last_name);
+
 }
 
 struct Player_stats load_struct(struct Player_stats stats) {
-    struct Player_stats result;
 
     int i = 0;
     char *buff = malloc(sizeof(char) * 1024);
@@ -68,36 +71,47 @@ struct Player_stats load_struct(struct Player_stats stats) {
     char last_name[20], first_name[20];
     int at_bat;
     char **tokens;
+    int player_val;
 
 
-    buff = fgets(buff, 1024, stdin);
+    fgets(buff, 1024, stdin);
     sscanf(buff, "%s %s %d %[^\n]s", last_name, first_name, &at_bat, player_stats);
-    printf("%s %s %d -- %s\n", first_name, last_name, at_bat, player_stats);
+    //printf("%s %s %d -- %s\n", first_name, last_name, at_bat, player_stats);
+
+    player_val = get_player_val(first_name, last_name, at_bat, player_stats);
+
+    return stats;
+}
+
+int get_player_val(char *first_name, char *last_name, int at_bat, char *stats) {
+    int result = 0, i = 0;
+    char inspect[5];
+    printf("%s\n", stats);
+    while((sscanf(stats, "%s", inspect)) == 1){
+        printf("current: %s\n", inspect);
+        if(strstr(inspect, "1B")){
+            printf("+1\n");
+        }
+        if(strstr(inspect, "2B")){
+            printf("+2");
+        }
+        if(strstr(inspect, "3B")){
+            printf("+3");
+        }
+        if(strstr(inspect, "HR")){
+            printf("+4");
+        }
+        if(strstr(inspect, "BB")){
+            printf("+1");
+        }
+        stats = strstr(stats, inspect);
+        stats += strlen(inspect);
+    }
 
 
 
-
-//    printf("%s", buff); // at this point we have one line for the struct
-//
-//    tokens = str_split(buff, ' ');
-//
-//    if(tokens){
-//        int i;
-//        for(i = 0; *(tokens + i); i++){
-//            printf("%s\n", *(tokens + i));
-//
-//        }
-//        printf("\n");
-//
-//    }
-
-    //stats.last_name = tokens[0];
-    //stats.first_name = tokens[1];
-
-
-
-    //free(tokens);
-    return result;
+    //printf("%d", result);
+    return 0;
 }
 
 char ** str_split(char *buff, const char delim) {
