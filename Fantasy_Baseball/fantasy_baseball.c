@@ -62,34 +62,41 @@ void input(struct Player_stats *pStats) {
 struct Player_stats load_struct(struct Player_stats stats) {
     struct Player_stats result;
 
+    int i = 0;
     char *buff = malloc(sizeof(char) * 1024);
+    char *player_stats = malloc(sizeof(char) * 20);
+    char last_name[20], first_name[20];
+    int at_bat;
     char **tokens;
 
+
     buff = fgets(buff, 1024, stdin);
-
-    printf("%s", buff); // at this point we have one line for the struct
-
-    tokens = str_split(buff, ' ');
-
-    if(tokens){
-        int i;
-        for(i = 0; *(tokens + i); i++){
-            printf("%s\n", *(tokens + i));
-
-        }
-        printf("\n");
-
-    }
-
-    stats.last_name = tokens[0];
-    stats.first_name = tokens[1];
-    stats.at_bat = tokens[2];
-    printf("stats.last_name = %s\n", stats.last_name);
-    printf("stats.first_name = %s\n", stats.first_name);
-    printf("stats.at_bat = %s\n", stats.at_bat);
+    sscanf(buff, "%s %s %d %[^\n]s", last_name, first_name, &at_bat, player_stats);
+    printf("%s %s %d -- %s\n", first_name, last_name, at_bat, player_stats);
 
 
-    free(tokens);
+
+
+//    printf("%s", buff); // at this point we have one line for the struct
+//
+//    tokens = str_split(buff, ' ');
+//
+//    if(tokens){
+//        int i;
+//        for(i = 0; *(tokens + i); i++){
+//            printf("%s\n", *(tokens + i));
+//
+//        }
+//        printf("\n");
+//
+//    }
+
+    //stats.last_name = tokens[0];
+    //stats.first_name = tokens[1];
+
+
+
+    //free(tokens);
     return result;
 }
 
