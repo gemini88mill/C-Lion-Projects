@@ -22,7 +22,7 @@ int get_int(int *pInt);
 struct Player_stats load_struct(struct Player_stats stats);
 char ** str_split(char *buff, const char delim);
 
-int get_player_val(char *first_name, char *last_name, int at_bat, char *stats);
+double get_player_val(char *first_name, char *last_name, int at_bat, char *stats);
 
 int main() {
     struct Player_stats *player = malloc((sizeof(struct Player_stats) * MAX_PLAYERS) * MAX_SEASONS);
@@ -51,9 +51,12 @@ void input(struct Player_stats *pStats) {
     seasons = get_int(&seasons);
 
     for(i = 0; i < seasons; i++){
+        printf("Season #%d\n", i + 1);
         //for loop to rotate through the seasons
+
         players = get_int(&players);
         for(j = 0; j <= players; j++){
+
             pStats[j] = load_struct(pStats[j]);
         }
 
@@ -71,7 +74,7 @@ struct Player_stats load_struct(struct Player_stats stats) {
     char last_name[20], first_name[20];
     int at_bat;
     char **tokens;
-    int player_val;
+    double player_val;
 
 
     fgets(buff, 1024, stdin);
@@ -80,47 +83,67 @@ struct Player_stats load_struct(struct Player_stats stats) {
 
     player_val = get_player_val(first_name, last_name, at_bat, player_stats);
 
+    printf("%s %s: %0.2f\n", first_name, last_name, player_val);
+
     return stats;
 }
 
-int get_player_val(char *first_name, char *last_name, int at_bat, char *stats) {
-    int result = 0, i = 0;
+double get_player_val(char *first_name, char *last_name, int at_bat, char *stats) {
+    int result = 1;
+    double tally = 0;
     char inspect[5];
-    printf("%s\n", stats);
+    int bats = 0;
+    //printf("%s\n", stats);
     while((sscanf(stats, "%s", inspect)) == 1){
-        printf("current: %s\n", inspect);
+        //printf("current: %s\n", inspect);
         if(strstr(inspect, "1B")){
-            printf("+1\n");
-            result = result + 1;
+            //printf("+1\n");
+            result++;
+            bats++;
         }
         if(strstr(inspect, "2B")){
-            printf("+2");
+            //printf("+2");
             result = result + 2;
         }
         if(strstr(inspect, "3B")){
-            printf("+3");
+            //printf("+3");
             result = result + 3;
         }
         if(strstr(inspect, "HR")){
-            printf("+4");
+            //printf("+4");
             result = result + 4;
         }
-        if(strstr(inspect, "BB")){
-            printf("+1");
+        if(strstr(inspect, "K")){
             at_bat = at_bat - 1;
+        }
+        if(strstr(inspect, "GO")){
+            at_bat = at_bat - 1;
+        }
+        if(strstr(inspect, "FO")){
+            at_bat = at_bat - 1;
+        }
+        if(strstr(inspect, "BB")){
+            at_bat = at_bat - 1;
+            result = result + 1;
         }
         if(strstr(inspect, "SAC")){
             at_bat = at_bat - 1;
         }
 
+
+
         stats = strstr(stats, inspect);
         stats += strlen(inspect);
     }
+    //printf("total points: %d\n", result);
+    //printf("at_bat: %d\n", at_bat);
 
+    if(at_bat != 0) {
+        tally = (float) result / at_bat;
+    }
 
-
-    //printf("%d", result);
-    return 0;
+    //printf("tally: %0.2f", tally);
+    return tally;
 }
 
 char ** str_split(char *buff, const char delim) {
