@@ -4,6 +4,7 @@
  * NID: ra677877
  * 11/15/2015
  *
+ * i love samosas
  * boggle.c*/
 
 #include <stdlib.h>
@@ -12,6 +13,7 @@
 
 #define LETTERS 26
 #define MAX_WORD_SIZE 10
+#define DICTIONARY "/home/raphael/ClionProjects/boogle/dictonary.txt"
 
 
 //data structure init
@@ -29,23 +31,39 @@ int search_word(char string[], struct trie *pTrie, int i);
 struct trie * init();
 
 int main() {
-    
 
-    int i;
-    char *word = malloc(sizeof(char) * MAX_WORD_SIZE);
+
+    int i, n;
+    char *buff = malloc(sizeof(char) * MAX_WORD_SIZE);
     //init struct root
     struct trie *root = init();
     //end of struct root init, ready to use
 
-    word = "book";
+    FILE *fp = fopen(DICTIONARY, "r");
+    if(!fp){
+        return 1;
+    }
 
-    insert_word(word, root, 0);
+    //works now from fscanf, but not fgets, im not sure why :( 
+    fscanf(fp, "%d", &i);
+    for(n = 0; n < i; n++) {
+        char word[100];
+        fscanf(fp, "%s", word);
+        insert_word(word, root, 0); //seg faults when implemented in while
+    }
 
-    int check = search_word("book", root, 0);
+
+    int check = search_word("yellow", root, 0);
+    printf("%d", check);//searches for complete buff.
+    check = search_word("redddd", root, 0); //searches for complete buff.
+    printf("%d", check);
+    check = search_word("green", root, 0); //searches for complete buff.
+    printf("%d", check);
+    check = search_word("samosa", root, 0); //searches for complete buff.
     printf("%d", check);
 
-    int is_in_dictionary = check_word(word, root);
-    int check_prefix = check_word_prefix(word, root);
+    int is_in_dictionary = check_word(buff, root);
+    int check_prefix = check_word_prefix(buff, root);
 
     return 0;
 }
