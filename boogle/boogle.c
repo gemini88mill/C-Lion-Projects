@@ -20,16 +20,16 @@ typedef struct trie{
     struct trie* next_letter[LETTERS];
 };
 
-int insert_word(char word[], struct trie *node, int i);
+void insert_word(char *word, struct trie *node, int i);
+
 int check_word(char *word, struct trie *pTrie);
 int check_word_prefix(char *word, struct trie *pTrie);
+int search_word(char string[], struct trie *pTrie, int i);
 
 struct trie * init();
 
-int search_word(char string[], struct trie *pTrie, int i);
-
 int main() {
-    printf("hello world");
+    
 
     int i;
     char *word = malloc(sizeof(char) * MAX_WORD_SIZE);
@@ -39,7 +39,7 @@ int main() {
 
     word = "book";
 
-    int check_word_entry = insert_word(word, root, 0);
+    insert_word(word, root, 0);
 
     int check = search_word("book", root, 0);
     printf("%d", check);
@@ -87,12 +87,12 @@ int check_word(char *word, struct trie *pTrie) {
     return 0;
 }
 
-int insert_word(char word[], struct trie *node, int i) {
+void insert_word(char *word, struct trie *node, int i) {
 
     //checks if complete word is inserted, if so return 1 and is_word = 1
     if(i == strlen(word)){
         node->is_word = 1;
-        return 1;
+        return;
     }
 
     //next letter create the word.
@@ -102,5 +102,5 @@ int insert_word(char word[], struct trie *node, int i) {
 
     //run for all words down the list.
     insert_word(word, node->next_letter[index], i + 1);
-    return 0;
+
 }
