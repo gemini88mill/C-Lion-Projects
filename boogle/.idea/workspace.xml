@@ -44,13 +44,14 @@
       <file leaf-file-name="boogle.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/boogle.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28121722">
-              <caret line="101" column="6" selection-start-line="101" selection-start-column="6" selection-end-line="101" selection-end-column="6" />
+            <state vertical-scroll-proportion="0.60440713">
+              <caret line="74" column="32" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
               <folding>
                 <element signature="e#0#100#0" expanded="false" />
-                <element signature="e#1757#2225#0" expanded="false" />
-                <element signature="e#2642#2915#0" expanded="false" />
-                <element signature="e#2917#3366#0" expanded="false" />
+                <element signature="e#2583#2995#0" expanded="false" />
+                <element signature="e#2997#3270#0" expanded="false" />
+                <element signature="e#3272#3721#0" expanded="false" />
+                <element signature="e#3789#4248#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -249,13 +250,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boogle.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28121722">
-          <caret line="101" column="6" selection-start-line="101" selection-start-column="6" selection-end-line="101" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.60440713">
+          <caret line="74" column="32" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
           <folding>
             <element signature="e#0#100#0" expanded="false" />
-            <element signature="e#1757#2225#0" expanded="false" />
-            <element signature="e#2642#2915#0" expanded="false" />
-            <element signature="e#2917#3366#0" expanded="false" />
+            <element signature="e#2583#2995#0" expanded="false" />
+            <element signature="e#2997#3270#0" expanded="false" />
+            <element signature="e#3272#3721#0" expanded="false" />
+            <element signature="e#3789#4248#0" expanded="false" />
           </folding>
         </state>
       </provider>

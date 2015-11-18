@@ -34,7 +34,7 @@ int search_word(char string[], struct trie *pTrie, int i);
 struct trie * init();
 
 
-char ** grid_init(char **pString);
+char ** grid_init(char **grid);
 
 int main() {
 
@@ -61,8 +61,20 @@ int main() {
     }
 
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
-    grid = grid_init(grid);
-    printf("%s\n", grid[0]);
+    FILE *grid_file = fopen(GRID, "r");
+    int grid_count = 0, k = 0;
+
+    fscanf(grid_file, "%d", &grid_count);
+    if(grid_count > 1){
+        grid = realloc(grid, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
+    }
+    for(k = 0; (grid_count * GRID_ROWS) > k; k++){
+        char buffer[5];
+        fscanf(grid_file, "%s", buff);
+        grid[i] = buff;
+        printf("%s\n", grid[i]);
+    }
+
 
     //char *store = malloc(sizeof(char) * 10);
     int check = search_word("yellow", root, count);
@@ -75,21 +87,21 @@ int main() {
     return 0;
 }
 
-char ** grid_init(char **pString) {
-    FILE *grid = fopen(GRID, "r");
+char ** grid_init(char **grid) {
+    FILE *grid_file = fopen(GRID, "r");
     int grid_count = 0, i = 0;
 
-    fscanf(grid, "%d", &grid_count);
+    fscanf(grid_file, "%d", &grid_count);
     if(grid_count > 1){
-        pString = realloc(pString, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
+        grid = realloc(grid, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
     }
     for(i = 0; (grid_count * GRID_ROWS) > i; i++){
         char buff[5];
-        fscanf(grid, "%s", buff);
-        pString[i] = buff;
+        fscanf(grid_file, "%s", buff);
+        grid[i] = buff;
         //printf("%s\n", pString[i]);
     }
-    return pString;
+    return grid;
 }
 
 
