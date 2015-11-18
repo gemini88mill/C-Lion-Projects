@@ -14,6 +14,9 @@
 #define LETTERS 26
 #define MAX_WORD_SIZE 10
 #define DICTIONARY "/home/raphael/ClionProjects/boogle/dictonary.txt"
+#define GRID "/home/raphael/ClionProjects/boogle/boogle.txt"
+#define GRID_ROWS 4
+#define GRID_COL 4
 
 
 //data structure init
@@ -25,56 +28,81 @@ typedef struct trie{
 void insert_word(char *word, struct trie *node, int i);
 
 int check_word(char *word, struct trie *pTrie);
-int check_word_prefix(char *word, struct trie *pTrie);
+int check_word_prefix(char *prefix, struct trie *pTrie, int i);
 int search_word(char string[], struct trie *pTrie, int i);
 
 struct trie * init();
 
+
+char ** grid_init(char **pString);
+
 int main() {
 
 
-    int i, n;
+    int i, n, count = 0, input_case = 0;
     char *buff = malloc(sizeof(char) * MAX_WORD_SIZE);
     //init struct root
     struct trie *root = init();
     //end of struct root init, ready to use
+
+    scanf("%d", &input_case);
 
     FILE *fp = fopen(DICTIONARY, "r");
     if(!fp){
         return 1;
     }
 
-    //works now from fscanf, but not fgets, im not sure why :( 
+    //works now from fscanf, but not fgets, im not sure why :(
     fscanf(fp, "%d", &i);
     for(n = 0; n < i; n++) {
         char word[100];
         fscanf(fp, "%s", word);
-        insert_word(word, root, 0); //seg faults when implemented in while
+        insert_word(word, root, count); //seg faults when implemented in while
     }
 
+//    char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
+//    grid = grid_init(grid);
+//    printf("%s\n", grid[0]);
 
-    int check = search_word("yellow", root, 0);
-    printf("%d", check);//searches for complete buff.
-    check = search_word("redddd", root, 0); //searches for complete buff.
-    printf("%d", check);
-    check = search_word("green", root, 0); //searches for complete buff.
-    printf("%d", check);
-    check = search_word("samosa", root, 0); //searches for complete buff.
+    //char *store = malloc(sizeof(char) * 10);
+    int check = search_word("yellow", root, count);
     printf("%d", check);
 
     int is_in_dictionary = check_word(buff, root);
-    int check_prefix = check_word_prefix(buff, root);
+    int check_prefix = check_word_prefix("yell", root, count);
+    printf("%d", check_prefix);
 
     return 0;
 }
 
+char ** grid_init(char **pString) {
+    FILE *grid = fopen(GRID, "r");
+    int grid_count = 0, i = 0;
+
+    fscanf(grid, "%d", &grid_count);
+    if(grid_count > 1){
+        pString = realloc(pString, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
+    }
+    for(i = 0; (grid_count * GRID_ROWS) > i; i++){
+        char buff[5];
+        fscanf(grid, "%s", buff);
+        pString[i] = buff;
+        //printf("%s\n", pString[i]);
+    }
+    return pString;
+}
+
+
 //returns 1 for entire word...
 int search_word(char string[], struct trie *pTrie, int i) {
+    //returns one if word matches in trie struct
     if (i == strlen(string))
         return pTrie->is_word;
 
+    printf("string: %c\n", string[i]);
     int index = string[i] - 'a';
     if(pTrie->next_letter[index] == NULL) {
+
         return 0;
     }
 
@@ -97,8 +125,23 @@ struct trie * init(){
     return tree;
 }
 
-int check_word_prefix(char *word, struct trie *pTrie) {
-    return 0;
+//not working correctly
+int check_word_prefix(char *prefix, struct trie *pTrie, int i) {
+    int index = prefix[i] - 'a';
+    int k;
+
+    if(i < strlen(prefix)){
+        return check_word_prefix(prefix, pTrie->next_letter[index], i + 1);
+    }
+    for(k = 0; k < 26; k++){
+        if(pTrie->next_letter[k] != NULL){
+            printf("node here[%d]\n", k);
+            return check_word_prefix(prefix, pTrie->next_letter[k], i + 1);
+        }
+    }
+
+
+    //return search_word(prefix, pTrie->next_letter[index], i + 1);
 }
 
 int check_word(char *word, struct trie *pTrie) {
@@ -109,6 +152,7 @@ void insert_word(char *word, struct trie *node, int i) {
 
     //checks if complete word is inserted, if so return 1 and is_word = 1
     if(i == strlen(word)){
+
         node->is_word = 1;
         return;
     }
