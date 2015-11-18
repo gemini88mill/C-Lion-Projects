@@ -60,16 +60,16 @@ int main() {
         insert_word(word, root, count); //seg faults when implemented in while
     }
 
-//    char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
-//    grid = grid_init(grid);
-//    printf("%s\n", grid[0]);
+    char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
+    grid = grid_init(grid);
+    printf("%s\n", grid[0]);
 
     //char *store = malloc(sizeof(char) * 10);
     int check = search_word("yellow", root, count);
     printf("%d", check);
 
     int is_in_dictionary = check_word(buff, root);
-    int check_prefix = check_word_prefix("yell", root, count);
+    int check_prefix = check_word_prefix("a", root, count);
     printf("%d", check_prefix);
 
     return 0;
@@ -99,7 +99,7 @@ int search_word(char string[], struct trie *pTrie, int i) {
     if (i == strlen(string))
         return pTrie->is_word;
 
-    printf("string: %c\n", string[i]);
+    //printf("string: %c\n", string[i]);
     int index = string[i] - 'a';
     if(pTrie->next_letter[index] == NULL) {
 
@@ -135,13 +135,13 @@ int check_word_prefix(char *prefix, struct trie *pTrie, int i) {
     }
     for(k = 0; k < 26; k++){
         if(pTrie->next_letter[k] != NULL){
-            printf("node here[%d]\n", k);
-            return check_word_prefix(prefix, pTrie->next_letter[k], i + 1);
+            //printf("node here[%d]\n", k);
+            check_word_prefix(prefix, pTrie->next_letter[k], i + 1);
         }
     }
 
 
-    //return search_word(prefix, pTrie->next_letter[index], i + 1);
+
 }
 
 int check_word(char *word, struct trie *pTrie) {
