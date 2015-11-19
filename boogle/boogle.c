@@ -89,7 +89,7 @@ int main() {
     //printf("grid_ptr: %s", grid_ptr[0]);
     //printf("grid: %s", grid[2]);
     int grid_marker[4][4] = {0};
-    int word_found = search_word_in_grid(grid, "mopie", 0, 0, 0, grid_marker);
+    int word_found = search_word_in_grid(grid, "mopi", 0, 0, 0, grid_marker);
     printf("%i", word_found);
 
     //char *store = malloc(sizeof(char) * 10);
@@ -98,7 +98,7 @@ int main() {
 
     int is_in_dictionary = check_word(buff, root);
     int check_prefix = check_word_prefix("a", root, count);
-    //printf("%d", check_prefix);
+    printf("%d", check_prefix);
 
     return 0;
 }
@@ -136,7 +136,7 @@ int search_word_in_grid(char **grid, char *word, int word_index, int x_index, in
             search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index - 1, pInt);
             search_word_in_grid(grid, word, word_index + 1, x_index - 1, y_index + 1, pInt);
         }
-        else{
+        else if (pInt[x_index][y_index] != 1){
             pInt[x_index][y_index] = 1;
             search_word_in_grid(grid, word, word_index, x_index + 1, y_index, pInt);
             search_word_in_grid(grid, word, word_index, x_index, y_index + 1, pInt);
@@ -149,36 +149,6 @@ int search_word_in_grid(char **grid, char *word, int word_index, int x_index, in
         }
 
     }
-    return 0;
-
-//    if(word[word_index] == grid[x_index][y_index]) {
-//        printf("grid: %i,%i: %c\n",x_index, y_index, grid[x_index][y_index]);
-//
-//
-//        if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL) {
-//            //check right
-//            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index, NULL);
-//            //check diagonal
-//            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index + 1, NULL);
-//            //check down
-//            search_word_in_grid(grid, word, word_index + 1, x_index, y_index + 1, NULL);
-//        }else {
-//            return 2;
-//        }
-//    }
-//    //if statement for failed cases
-//    else{
-//        if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL) {
-//            //check right
-//            search_word_in_grid(grid, word, word_index, x_index + 1, y_index, NULL);
-//            //check diagonal
-//            search_word_in_grid(grid, word, word_index, x_index + 1, y_index + 1, NULL);
-//            //check down
-//            search_word_in_grid(grid, word, word_index, x_index, y_index + 1, NULL);
-//        }else {
-//            return 2;
-//        }
-//    }
 
 
 
@@ -233,6 +203,8 @@ int check_word_prefix(char *prefix, struct trie *pTrie, int i) {
     for(k = 0; k < 26; k++){
         if(pTrie->next_letter[k] != NULL){
             //printf("node here[%d]\n", k);
+            char letter = (char) (k + 'a');
+            printf("%c:%i\n", letter, i); //displays next letter and position from the prefix!!!
             check_word_prefix(prefix, pTrie->next_letter[k], i + 1);
         }
     }
