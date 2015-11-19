@@ -26,15 +26,25 @@ typedef struct trie{
     struct trie* next_letter[LETTERS];
 };
 
+struct Coordinates{
+    char letter;
+    int coordinates[2];
+    int bool;
+};
+
 void insert_word(char *word, struct trie *node, int i);
 
 int check_word(char *word, struct trie *pTrie);
-int check_word_prefix(char *prefix, struct trie *pTrie, int i);
+char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root);
 int search_word(char string[], struct trie *pTrie, int i);
 struct trie * init();
 char ** grid_init(char **grid);
 int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]);
 char *enter_grid(char *string, int i);
+
+struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates);
+
+char **get_grid();
 
 int main() {
 
@@ -73,6 +83,51 @@ int main() {
     //block dealing with the grid to be played, idea here is that all test cases are loaded at once (from example) and
     //placed chopped up later in code. should be fixed later to separate before actual logic, this method is error
     //prone
+   char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
+//    FILE *grid_file = fopen(GRID, "r");
+//    int grid_count = 0, k = 0;
+//
+//    //same as above, collect data using fscanf and drop in 2d char array.
+//    fscanf(grid_file, "%d", &grid_count);
+//    if(grid_count > 1){
+//        grid = realloc(grid, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
+//    } //realloc in case there are more then one test case
+//    for(k = 0; (grid_count * GRID_ROWS) > k; k++){
+//        char buffer[5];
+//        fscanf(grid_file, "%s", buffer);
+//        grid[k] = strdup(buffer);
+//        //printf("%s\n", grid[k]);
+//
+//    }
+
+  // grid = get_grid();
+
+    //---------------------------------------------------------------------------------------------
+
+    //char **grid_ptr = grid;
+    //printf("grid_ptr: %s", grid_ptr[0]);
+    //printf("grid: %s", grid[2]);
+//    int grid_marker[4][4] = {0}; //marker for grid, used to check if tracer has already been there
+//    int word_found = search_word_in_grid(grid, "mopi", 0, 0, 0, grid_marker);
+//    printf("%i", word_found);
+
+    //char *store = malloc(sizeof(char) * 10);
+    int check = search_word("case", root, count);
+    printf("%d  ", check);
+
+
+    struct Coordinates start;
+    start.coordinates[0] = 0;
+    start.coordinates[1] = 0;
+
+    int is_in_dictionary = check_word(buff, root);
+    char* check_prefix = check_word_prefix("c", root, count, start, root);
+    printf("returned: %s", check_prefix);
+
+    return 0;
+}
+
+char **get_grid() {
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
     FILE *grid_file = fopen(GRID, "r");
     int grid_count = 0, k = 0;
@@ -89,25 +144,9 @@ int main() {
         //printf("%s\n", grid[k]);
 
     }
-    //---------------------------------------------------------------------------------------------
-
-    //char **grid_ptr = grid;
-    //printf("grid_ptr: %s", grid_ptr[0]);
-    //printf("grid: %s", grid[2]);
-    int grid_marker[4][4] = {0}; //marker for grid, used to check if tracer has already been there
-    int word_found = search_word_in_grid(grid, "mopi", 0, 0, 0, grid_marker);
-    printf("%i", word_found);
-
-    //char *store = malloc(sizeof(char) * 10);
-    int check = search_word("yellow", root, count);
-    //printf("%d", check);
-
-    int is_in_dictionary = check_word(buff, root);
-    int check_prefix = check_word_prefix("b", root, count);
-    printf("%d", check_prefix);
-
-    return 0;
+    return grid;
 }
+
 
 char *strdup (const char *s) { //my best friend
     char *d = malloc (strlen (s) + 1);   // Space for length plus nul
@@ -201,25 +240,79 @@ struct trie * init(){
 }
 
 //not working correctly
-int check_word_prefix(char *prefix, struct trie *pTrie, int i) {
+char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root) {
     int index = prefix[i] - 'a';
     char letter;
-    int k;
+    char *prefix_arr = malloc(sizeof(char) * strlen(prefix + 1));
+    int k, l;
+
+    start.bool = 0;
+
+    //load prefix_arr
+    for (l = 0; l < strlen(prefix); l++){
+        prefix_arr[l] = prefix[l];
+        //printf("%c\n", prefix_arr[l]);
+    }
 
     if(i < strlen(prefix)){
-        return check_word_prefix(prefix, pTrie->next_letter[index], i + 1);
+        return check_word_prefix(prefix, pTrie->next_letter[index], i + 1, (start), root);
     }
     for(k = 0; k < 26; k++){
         if(pTrie->next_letter[k] != NULL){
             //printf("node here[%d]\n", k);
             letter = (char) (k + 'a');
+            start.letter = letter;
             printf("%c:%i\n", letter, i); //displays next letter and position from the prefix!!!
-            //look in grid can go here...
-            check_word_prefix(prefix, pTrie->next_letter[k], i + 1);
+            prefix_arr[l] = letter;
+            printf("prefix: %s\n", prefix_arr);
+            //printf("send me to grid\n");
+            printf("entering information: %i, %i\n", start.coordinates[0], start.coordinates[1]);
+            start = search_grid(start.letter, start.coordinates[0], start.coordinates[1], start);
+            printf("entering letter: %c\n", letter);
+            if(start.bool == 1) {
+                printf("found %c at %i, %i\n", letter, start.coordinates[0], start.coordinates[1]);
+
+                check_word_prefix(prefix_arr, pTrie->next_letter[k], i + 1, (start), root);
+                int win = search_word(prefix_arr, root, 0);
+                printf("prefix_arr: %s", prefix_arr);
+                printf("i am the winner %d\n\n", win);
+            }
             //give all possible words from prefix
         }
     }
 
+    return prefix_arr;
+
+}
+
+struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates) {
+    //get grid from boggle game :)
+    //printf("%c\t", letter);
+    char **grid = get_grid(); //grid collected...
+    //does grid[x][y] == letter?
+    if(letter == grid[x][y + 1]) {
+        coordinates.coordinates[1] = y + 1;
+        coordinates.bool = 1;
+        return coordinates;
+    }
+    if(letter == grid[x + 1][y + 1]){
+        coordinates.coordinates[1] = y + 1;
+        coordinates.coordinates[0] = x + 1;
+        coordinates.bool = 1;
+        return coordinates;
+    }
+
+    if(letter == grid[x + 1][y]){
+        coordinates.coordinates[0] = x + 1;
+        coordinates.bool = 1;
+        return coordinates;
+    }
+    else{
+        coordinates.bool = 0;
+        return coordinates;
+    }
+
+    getchar();
 
 
 }

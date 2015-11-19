@@ -44,15 +44,13 @@
       <file leaf-file-name="boogle.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/boogle.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.73557186">
-              <caret line="216" column="41" selection-start-line="216" selection-start-column="41" selection-end-line="216" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.799682">
+              <caret line="277" column="40" selection-start-line="277" selection-start-column="40" selection-end-line="277" selection-end-column="40" />
               <folding>
                 <element signature="e#0#100#0" expanded="false" />
-                <element signature="e#4174#6450#0" expanded="false" />
-                <element signature="e#6452#6504#0" expanded="false" />
-                <element signature="e#6507#6950#0" expanded="false" />
-                <element signature="e#6952#7254#0" expanded="false" />
-                <element signature="e#8018#8477#0" expanded="false" />
+                <element signature="e#5248#7524#0" expanded="false" />
+                <element signature="e#7526#7578#0" expanded="false" />
+                <element signature="e#8026#8328#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -195,7 +193,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1920" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -203,7 +201,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32960325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -233,18 +231,35 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/boogle.c</url>
-          <line>132</line>
+          <line>171</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/boogle.c</url>
-          <line>145</line>
+          <line>184</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/boogle.c</url>
+          <line>292</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/boogle.c</url>
+          <line>270</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="12" />
+      <option name="time" value="21" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="(((struct Coordinates)(start)).coordinates)[0]" />
+        <watch expression="(((struct Coordinates)(start)).coordinates)[1]" />
+        <watch expression="(((struct Coordinates)(coordinates)).coordinates)[1]" />
+        <watch expression="(((struct Coordinates)(coordinates)).coordinates)[0]" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
@@ -273,15 +288,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boogle.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73557186">
-          <caret line="216" column="41" selection-start-line="216" selection-start-column="41" selection-end-line="216" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.799682">
+          <caret line="277" column="40" selection-start-line="277" selection-start-column="40" selection-end-line="277" selection-end-column="40" />
           <folding>
             <element signature="e#0#100#0" expanded="false" />
-            <element signature="e#4174#6450#0" expanded="false" />
-            <element signature="e#6452#6504#0" expanded="false" />
-            <element signature="e#6507#6950#0" expanded="false" />
-            <element signature="e#6952#7254#0" expanded="false" />
-            <element signature="e#8018#8477#0" expanded="false" />
+            <element signature="e#5248#7524#0" expanded="false" />
+            <element signature="e#7526#7578#0" expanded="false" />
+            <element signature="e#8026#8328#0" expanded="false" />
           </folding>
         </state>
       </provider>
