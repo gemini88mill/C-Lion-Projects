@@ -17,6 +17,7 @@
 #define GRID "/home/raphael/ClionProjects/boogle/boogle.txt"
 #define GRID_ROWS 4
 #define GRID_COL 4
+#define START 0
 
 
 //data structure init
@@ -36,6 +37,10 @@ struct trie * init();
 
 char ** grid_init(char **grid);
 
+int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index);
+
+char *enter_grid(char *string, int i);
+
 int main() {
 
 
@@ -47,6 +52,7 @@ int main() {
 
     scanf("%d", &input_case);
 
+    //-----------------------pulls from dictionary file-------------------------------------------
     FILE *fp = fopen(DICTIONARY, "r");
     if(!fp){
         return 1;
@@ -59,7 +65,9 @@ int main() {
         fscanf(fp, "%s", word);
         insert_word(word, root, count); //seg faults when implemented in while
     }
+    //--------------------------------------------------------------------------------------------
 
+    //--------------------------------------------------------------------------------------------
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
     FILE *grid_file = fopen(GRID, "r");
     int grid_count = 0, k = 0;
@@ -70,37 +78,85 @@ int main() {
     }
     for(k = 0; (grid_count * GRID_ROWS) > k; k++){
         char buffer[5];
-        fscanf(grid_file, "%s", buff);
-        grid[i] = buff;
-        printf("%s\n", grid[i]);
-    }
+        fscanf(grid_file, "%s", buffer);
+        grid[k] = strdup(buffer);
+        //printf("%s\n", grid[k]);
 
+    }
+    //---------------------------------------------------------------------------------------------
+
+    //char **grid_ptr = grid;
+    //printf("grid_ptr: %s", grid_ptr[0]);
+    //printf("grid: %s", grid[2]);
+    int word_found = search_word_in_grid(grid, "mopi", 0, 0, 0);
+    printf("%i", word_found);
 
     //char *store = malloc(sizeof(char) * 10);
     int check = search_word("yellow", root, count);
-    printf("%d", check);
+    //printf("%d", check);
 
     int is_in_dictionary = check_word(buff, root);
     int check_prefix = check_word_prefix("a", root, count);
-    printf("%d", check_prefix);
+    //printf("%d", check_prefix);
 
     return 0;
 }
 
-char ** grid_init(char **grid) {
-    FILE *grid_file = fopen(GRID, "r");
-    int grid_count = 0, i = 0;
+char *strdup (const char *s) { //my best friend
+    char *d = malloc (strlen (s) + 1);   // Space for length plus nul
+    if (d == NULL) return NULL;          // No memory
+    strcpy (d,s);                        // Copy the characters
+    return d;                            // Return the new string
+}
 
-    fscanf(grid_file, "%d", &grid_count);
-    if(grid_count > 1){
-        grid = realloc(grid, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
+char *enter_grid(char *string, int i) {
+    return string;
+}
+
+int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index) {
+    //printf("word: %s\n", word);
+    //printf("grid: %s\n", grid[1]);
+
+    if(word_index == strlen(word)){
+        printf("found");
+        return 1;
     }
-    for(i = 0; (grid_count * GRID_ROWS) > i; i++){
-        char buff[5];
-        fscanf(grid_file, "%s", buff);
-        grid[i] = buff;
-        //printf("%s\n", pString[i]);
+    //start at pos 0,0 (top left corner of grid)
+    if(word[word_index] == grid[x_index][y_index]) {
+        printf("grid: %i,%i: %c\n",x_index, y_index, grid[x_index][y_index]);
+
+
+        if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL) {
+            //check right
+            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index);
+            //check diagonal
+            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index + 1);
+            //check down
+            search_word_in_grid(grid, word, word_index + 1, x_index, y_index + 1);
+        }else {
+            return 2;
+        }
     }
+    //if statement for failed cases
+    else{
+        if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL) {
+            //check right
+            search_word_in_grid(grid, word, word_index, x_index + 1, y_index);
+            //check diagonal
+            search_word_in_grid(grid, word, word_index, x_index + 1, y_index + 1);
+            //check down
+            search_word_in_grid(grid, word, word_index, x_index, y_index + 1);
+        }else {
+            return 2;
+        }
+    }
+
+
+
+}
+
+char ** grid_init(char **grid) {
+
     return grid;
 }
 

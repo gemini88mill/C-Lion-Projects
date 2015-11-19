@@ -44,14 +44,10 @@
       <file leaf-file-name="boogle.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/boogle.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.60440713">
-              <caret line="74" column="32" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.86778593">
+              <caret line="150" column="9" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="9" />
               <folding>
                 <element signature="e#0#100#0" expanded="false" />
-                <element signature="e#2583#2995#0" expanded="false" />
-                <element signature="e#2997#3270#0" expanded="false" />
-                <element signature="e#3272#3721#0" expanded="false" />
-                <element signature="e#3789#4248#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -62,6 +58,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="38" column="6" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="boogle.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/boogle.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -219,7 +225,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -250,14 +256,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boogle.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60440713">
-          <caret line="74" column="32" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.86778593">
+          <caret line="150" column="9" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="9" />
           <folding>
             <element signature="e#0#100#0" expanded="false" />
-            <element signature="e#2583#2995#0" expanded="false" />
-            <element signature="e#2997#3270#0" expanded="false" />
-            <element signature="e#3272#3721#0" expanded="false" />
-            <element signature="e#3789#4248#0" expanded="false" />
           </folding>
         </state>
       </provider>
