@@ -37,7 +37,7 @@ struct trie * init();
 
 char ** grid_init(char **grid);
 
-int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index);
+int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]);
 
 char *enter_grid(char *string, int i);
 
@@ -88,7 +88,8 @@ int main() {
     //char **grid_ptr = grid;
     //printf("grid_ptr: %s", grid_ptr[0]);
     //printf("grid: %s", grid[2]);
-    int word_found = search_word_in_grid(grid, "mopi", 0, 0, 0);
+    int grid_marker[4][4] = {0};
+    int word_found = search_word_in_grid(grid, "mopie", 0, 0, 0, grid_marker);
     printf("%i", word_found);
 
     //char *store = malloc(sizeof(char) * 10);
@@ -113,43 +114,71 @@ char *enter_grid(char *string, int i) {
     return string;
 }
 
-int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index) {
+int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]) {
     //printf("word: %s\n", word);
     //printf("grid: %s\n", grid[1]);
-
     if(word_index == strlen(word)){
         printf("found");
         return 1;
     }
     //start at pos 0,0 (top left corner of grid)
-    if(word[word_index] == grid[x_index][y_index]) {
-        printf("grid: %i,%i: %c\n",x_index, y_index, grid[x_index][y_index]);
-
-
-        if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL) {
-            //check right
-            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index);
-            //check diagonal
-            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index + 1);
-            //check down
-            search_word_in_grid(grid, word, word_index + 1, x_index, y_index + 1);
-        }else {
-            return 2;
+    //if within bounds
+    if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL){
+        if(word[word_index] == grid[x_index][y_index] && pInt[x_index][y_index] != 1 ){
+            printf("grid: %i,%i: %c\n",x_index, y_index, grid[x_index][y_index]);
+            pInt[x_index][y_index] = 1;
+            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index, pInt);
+            search_word_in_grid(grid, word, word_index + 1, x_index, y_index + 1, pInt);
+            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index + 1, pInt);
+            search_word_in_grid(grid, word, word_index + 1, x_index - 1, y_index, pInt);
+            search_word_in_grid(grid, word, word_index + 1, x_index, y_index - 1, pInt);
+            search_word_in_grid(grid, word, word_index + 1, x_index - 1, y_index - 1, pInt);
+            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index - 1, pInt);
+            search_word_in_grid(grid, word, word_index + 1, x_index - 1, y_index + 1, pInt);
         }
-    }
-    //if statement for failed cases
-    else{
-        if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL) {
-            //check right
-            search_word_in_grid(grid, word, word_index, x_index + 1, y_index);
-            //check diagonal
-            search_word_in_grid(grid, word, word_index, x_index + 1, y_index + 1);
-            //check down
-            search_word_in_grid(grid, word, word_index, x_index, y_index + 1);
-        }else {
-            return 2;
+        else{
+            pInt[x_index][y_index] = 1;
+            search_word_in_grid(grid, word, word_index, x_index + 1, y_index, pInt);
+            search_word_in_grid(grid, word, word_index, x_index, y_index + 1, pInt);
+            search_word_in_grid(grid, word, word_index, x_index + 1, y_index + 1, pInt);
+            search_word_in_grid(grid, word, word_index, x_index - 1, y_index, pInt);
+            search_word_in_grid(grid, word, word_index, x_index, y_index - 1, pInt);
+            search_word_in_grid(grid, word, word_index, x_index - 1, y_index - 1, pInt);
+            search_word_in_grid(grid, word, word_index, x_index + 1, y_index - 1, pInt);
+            search_word_in_grid(grid, word, word_index, x_index - 1, y_index + 1, pInt);
         }
+
     }
+    return 0;
+
+//    if(word[word_index] == grid[x_index][y_index]) {
+//        printf("grid: %i,%i: %c\n",x_index, y_index, grid[x_index][y_index]);
+//
+//
+//        if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL) {
+//            //check right
+//            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index, NULL);
+//            //check diagonal
+//            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index + 1, NULL);
+//            //check down
+//            search_word_in_grid(grid, word, word_index + 1, x_index, y_index + 1, NULL);
+//        }else {
+//            return 2;
+//        }
+//    }
+//    //if statement for failed cases
+//    else{
+//        if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL) {
+//            //check right
+//            search_word_in_grid(grid, word, word_index, x_index + 1, y_index, NULL);
+//            //check diagonal
+//            search_word_in_grid(grid, word, word_index, x_index + 1, y_index + 1, NULL);
+//            //check down
+//            search_word_in_grid(grid, word, word_index, x_index, y_index + 1, NULL);
+//        }else {
+//            return 2;
+//        }
+//    }
 
 
 
