@@ -103,7 +103,7 @@ int main() {
     //printf("%d", check);
 
     int is_in_dictionary = check_word(buff, root);
-    int check_prefix = check_word_prefix("a", root, count);
+    int check_prefix = check_word_prefix("b", root, count);
     printf("%d", check_prefix);
 
     return 0;
@@ -203,6 +203,7 @@ struct trie * init(){
 //not working correctly
 int check_word_prefix(char *prefix, struct trie *pTrie, int i) {
     int index = prefix[i] - 'a';
+    char letter;
     int k;
 
     if(i < strlen(prefix)){
@@ -211,9 +212,11 @@ int check_word_prefix(char *prefix, struct trie *pTrie, int i) {
     for(k = 0; k < 26; k++){
         if(pTrie->next_letter[k] != NULL){
             //printf("node here[%d]\n", k);
-            char letter = (char) (k + 'a');
+            letter = (char) (k + 'a');
             printf("%c:%i\n", letter, i); //displays next letter and position from the prefix!!!
+            //look in grid can go here...
             check_word_prefix(prefix, pTrie->next_letter[k], i + 1);
+            //give all possible words from prefix
         }
     }
 
