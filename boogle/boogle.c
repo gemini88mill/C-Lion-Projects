@@ -31,29 +31,30 @@ void insert_word(char *word, struct trie *node, int i);
 int check_word(char *word, struct trie *pTrie);
 int check_word_prefix(char *prefix, struct trie *pTrie, int i);
 int search_word(char string[], struct trie *pTrie, int i);
-
 struct trie * init();
-
-
 char ** grid_init(char **grid);
-
 int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]);
-
 char *enter_grid(char *string, int i);
 
 int main() {
 
 
+    //iteration variables
     int i, n, count = 0, input_case = 0;
+    //buffer
     char *buff = malloc(sizeof(char) * MAX_WORD_SIZE);
     //init struct root
     struct trie *root = init();
     //end of struct root init, ready to use
 
+    //scans the number of input cases
     scanf("%d", &input_case);
 
     //-----------------------pulls from dictionary file-------------------------------------------
+    //collect information from dictionary file, houses all possible dictionary entries, additionally; dictionary values
+    //should be between 3 and 10 characters, so thats nice
     FILE *fp = fopen(DICTIONARY, "r");
+    //catch in case of failure.
     if(!fp){
         return 1;
     }
@@ -64,18 +65,23 @@ int main() {
         char word[100];
         fscanf(fp, "%s", word);
         insert_word(word, root, count); //seg faults when implemented in while
-    }
+    } //after this point, all values from dictionary minus the first entry (which is the number of values) is in a trie
+    //named trie root in main()
     //--------------------------------------------------------------------------------------------
 
     //--------------------------------------------------------------------------------------------
+    //block dealing with the grid to be played, idea here is that all test cases are loaded at once (from example) and
+    //placed chopped up later in code. should be fixed later to separate before actual logic, this method is error
+    //prone
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
     FILE *grid_file = fopen(GRID, "r");
     int grid_count = 0, k = 0;
 
+    //same as above, collect data using fscanf and drop in 2d char array.
     fscanf(grid_file, "%d", &grid_count);
     if(grid_count > 1){
         grid = realloc(grid, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
-    }
+    } //realloc in case there are more then one test case
     for(k = 0; (grid_count * GRID_ROWS) > k; k++){
         char buffer[5];
         fscanf(grid_file, "%s", buffer);
@@ -88,7 +94,7 @@ int main() {
     //char **grid_ptr = grid;
     //printf("grid_ptr: %s", grid_ptr[0]);
     //printf("grid: %s", grid[2]);
-    int grid_marker[4][4] = {0};
+    int grid_marker[4][4] = {0}; //marker for grid, used to check if tracer has already been there
     int word_found = search_word_in_grid(grid, "mopi", 0, 0, 0, grid_marker);
     printf("%i", word_found);
 
@@ -114,6 +120,7 @@ char *enter_grid(char *string, int i) {
     return string;
 }
 
+//not working properly, i dont think my logic is right in this one, using new one. instant deprecation.
 int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]) {
     //printf("word: %s\n", word);
     //printf("grid: %s\n", grid[1]);
@@ -160,7 +167,7 @@ char ** grid_init(char **grid) {
 }
 
 
-//returns 1 for entire word...
+//returns 1 for entire word... can be used for final check...
 int search_word(char string[], struct trie *pTrie, int i) {
     //returns one if word matches in trie struct
     if (i == strlen(string))
@@ -176,6 +183,7 @@ int search_word(char string[], struct trie *pTrie, int i) {
     return search_word(string, pTrie->next_letter[index], i + 1);
 }
 
+//works do not touch ever!!!
 struct trie * init(){
     //counter var
     int i;
