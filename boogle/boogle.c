@@ -46,6 +46,8 @@ struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coo
 
 char **get_grid();
 
+char set_element(int width, int height, char i);
+
 int main() {
 
 
@@ -65,13 +67,13 @@ int main() {
     //should be between 3 and 10 characters, so thats nice
     FILE *fp = fopen(DICTIONARY, "r");
     //catch in case of failure.
-    if(!fp){
+    if (!fp) {
         return 1;
     }
 
     //works now from fscanf, but not fgets, im not sure why :(
     fscanf(fp, "%d", &i);
-    for(n = 0; n < i; n++) {
+    for (n = 0; n < i; n++) {
         char word[100];
         fscanf(fp, "%s", word);
         insert_word(word, root, count); //seg faults when implemented in while
@@ -83,7 +85,7 @@ int main() {
     //block dealing with the grid to be played, idea here is that all test cases are loaded at once (from example) and
     //placed chopped up later in code. should be fixed later to separate before actual logic, this method is error
     //prone
-   char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
+    char **grid = malloc(sizeof(char *) * GRID_ROWS * GRID_COL);
 //    FILE *grid_file = fopen(GRID, "r");
 //    int grid_count = 0, k = 0;
 //
@@ -100,7 +102,13 @@ int main() {
 //
 //    }
 
-  // grid = get_grid();
+    grid = get_grid();
+    char c = grid[0][0];
+    char str[2] = "\0";
+    str[0] = c;
+
+
+
 
     //---------------------------------------------------------------------------------------------
 
@@ -121,10 +129,14 @@ int main() {
     start.coordinates[1] = 0;
 
     int is_in_dictionary = check_word(buff, root);
-    char* check_prefix = check_word_prefix("c", root, count, start, root);
+    char* check_prefix = check_word_prefix(str, root, count, start, root);
     printf("returned: %s", check_prefix);
 
     return 0;
+}
+
+char set_element(int width, int height, char i) {
+    return i;
 }
 
 char **get_grid() {
@@ -262,26 +274,30 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
             //printf("node here[%d]\n", k);
             letter = (char) (k + 'a');
             start.letter = letter;
-            printf("%c:%i\n", letter, i); //displays next letter and position from the prefix!!!
+            //printf("%c:%i\n", letter, i); //displays next letter and position from the prefix!!!
             prefix_arr[l] = letter;
-            printf("prefix: %s\n", prefix_arr);
+            //printf("prefix: %s\n", prefix_arr);
             //printf("send me to grid\n");
-            printf("entering information: %i, %i\n", start.coordinates[0], start.coordinates[1]);
+            //printf("entering information: %i, %i with %c\n", start.coordinates[0], start.coordinates[1], letter);
             start = search_grid(start.letter, start.coordinates[0], start.coordinates[1], start);
-            printf("entering letter: %c\n", letter);
+            //printf("entering letter: %c\n", letter);
             if(start.bool == 1) {
-                printf("found %c at %i, %i\n", letter, start.coordinates[0], start.coordinates[1]);
-
-                check_word_prefix(prefix_arr, pTrie->next_letter[k], i + 1, (start), root);
+                //printf("found %c at %i, %i\n", letter, start.coordinates[0], start.coordinates[1]);
+                printf("prefix_arr: %s\n", prefix_arr);
                 int win = search_word(prefix_arr, root, 0);
-                printf("prefix_arr: %s", prefix_arr);
-                printf("i am the winner %d\n\n", win);
+                if(win == 1) {
+                    printf("prefix_arr: %s\n", prefix_arr);
+                   // printf("\ni am the winner %d\n\n", win);
+                    return prefix_arr;
+                }
+
             }
+            check_word_prefix(prefix_arr, pTrie->next_letter[k], i + 1, (start), root);
             //give all possible words from prefix
         }
     }
 
-    return prefix_arr;
+
 
 }
 
@@ -290,27 +306,76 @@ struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coo
     //printf("%c\t", letter);
     char **grid = get_grid(); //grid collected...
     //does grid[x][y] == letter?
-    if(letter == grid[x][y + 1]) {
-        coordinates.coordinates[1] = y + 1;
-        coordinates.bool = 1;
-        return coordinates;
-    }
-    if(letter == grid[x + 1][y + 1]){
-        coordinates.coordinates[1] = y + 1;
-        coordinates.coordinates[0] = x + 1;
-        coordinates.bool = 1;
-        return coordinates;
-    }
 
-    if(letter == grid[x + 1][y]){
-        coordinates.coordinates[0] = x + 1;
-        coordinates.bool = 1;
-        return coordinates;
-    }
-    else{
-        coordinates.bool = 0;
-        return coordinates;
-    }
+        if(x >= 0  && y >= 0) {
+            if (letter == grid[x][y + 1]) {
+                coordinates.coordinates[1] = y + 1;
+                coordinates.bool = 1;
+                return coordinates;
+            }
+            if (letter == grid[x + 1][y + 1]) {
+                coordinates.coordinates[1] = y + 1;
+                coordinates.coordinates[0] = x + 1;
+                coordinates.bool = 1;
+                return coordinates;
+            }
+
+            if (letter == grid[x + 1][y]) {
+                coordinates.coordinates[0] = x + 1;
+                coordinates.bool = 1;
+                return coordinates;
+            }
+            if (x > 0) {
+                if (letter == grid[x - 1][y]) {
+                    coordinates.coordinates[0] = x - 1;
+                    coordinates.bool = 1;
+                    return coordinates;
+                }
+                if (letter == grid[x - 1][y + 1]) {
+                    coordinates.coordinates[1] = y + 1;
+                    coordinates.coordinates[0] = x - 1;
+                    coordinates.bool = 1;
+                    return coordinates;
+                }
+//                else {
+//                    coordinates.bool = 0;
+//                    return coordinates;
+//                }
+            }
+            if (y > 0) {
+                if (letter == grid[x + 1][y - 1]) {
+                    coordinates.coordinates[1] = y + 1;
+                    coordinates.coordinates[0] = x + 1;
+                    coordinates.bool = 1;
+                    return coordinates;
+                }
+                if (letter == grid[x][y - 1]) {
+                    coordinates.coordinates[1] = y - 1;
+                    coordinates.bool = 1;
+                    return coordinates;
+                }
+//                else {
+//                    coordinates.bool = 0;
+//                    return coordinates;
+//                }
+            }
+            if (x > 0 && y > 0) {
+                if (letter == grid[x - 1][y - 1]) {
+                    coordinates.coordinates[1] = y - 1;
+                    coordinates.coordinates[0] = x - 1;
+                    coordinates.bool = 1;
+                    return coordinates;
+                }
+//                else {
+//                    coordinates.bool = 0;
+//                    return coordinates;
+//                }
+            }
+            else {
+                coordinates.bool = 0;
+                return coordinates;
+            }
+        }
 
     getchar();
 
