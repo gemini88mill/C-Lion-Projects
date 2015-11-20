@@ -102,10 +102,7 @@ int main() {
 //
 //    }
 
-    grid = get_grid();
-    char c = grid[0][0];
-    char str[2] = "\0";
-    str[0] = c;
+
 
 
 
@@ -121,7 +118,7 @@ int main() {
 
     //char *store = malloc(sizeof(char) * 10);
     int check = search_word("case", root, count);
-    printf("%d  ", check);
+    //printf("%d  ", check);
 
 
     struct Coordinates start;
@@ -129,8 +126,19 @@ int main() {
     start.coordinates[1] = 0;
 
     int is_in_dictionary = check_word(buff, root);
-    char* check_prefix = check_word_prefix(str, root, count, start, root);
-    printf("returned: %s", check_prefix);
+
+
+    grid = get_grid();
+    int j, k;
+    for (j = 0; j < GRID_ROWS; j++) {
+        for (k = 0; k < GRID_COL; k++) {
+            char c = grid[j][k];
+            char str[2] = "\0";
+            str[0] = c;
+            char *check_prefix = check_word_prefix(str, root, count, start, root);
+            //printf("returned: %s", check_prefix);
+        }
+    }
 
     return 0;
 }
@@ -283,7 +291,7 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
             //printf("entering letter: %c\n", letter);
             if(start.bool == 1) {
                 //printf("found %c at %i, %i\n", letter, start.coordinates[0], start.coordinates[1]);
-                printf("prefix_arr: %s\n", prefix_arr);
+                //printf("prefix_arr: %s\n", prefix_arr);
                 int win = search_word(prefix_arr, root, 0);
                 if(win == 1) {
                     printf("prefix_arr: %s\n", prefix_arr);
@@ -377,7 +385,7 @@ struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coo
             }
         }
 
-    getchar();
+    return coordinates;
 
 
 }
