@@ -44,13 +44,12 @@
       <file leaf-file-name="boogle.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/boogle.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6295707">
-              <caret line="142" column="67" selection-start-line="142" selection-start-column="67" selection-end-line="142" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.50682056">
+              <caret line="215" column="40" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
               <folding>
                 <element signature="e#0#100#0" expanded="false" />
-                <element signature="e#4840#7116#0" expanded="false" />
-                <element signature="e#9179#11925#0" expanded="false" />
-                <element signature="e#11993#12452#0" expanded="false" />
+                <element signature="e#6829#9576#0" expanded="false" />
+                <element signature="e#9644#10103#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -201,7 +200,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32960325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -259,13 +258,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boogle.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6295707">
-          <caret line="142" column="67" selection-start-line="142" selection-start-column="67" selection-end-line="142" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.50682056">
+          <caret line="215" column="40" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
           <folding>
             <element signature="e#0#100#0" expanded="false" />
-            <element signature="e#4840#7116#0" expanded="false" />
-            <element signature="e#9179#11925#0" expanded="false" />
-            <element signature="e#11993#12452#0" expanded="false" />
+            <element signature="e#6829#9576#0" expanded="false" />
+            <element signature="e#9644#10103#0" expanded="false" />
           </folding>
         </state>
       </provider>

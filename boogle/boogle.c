@@ -33,7 +33,9 @@ struct Coordinates{
 };
 
 struct Grids{
+    int number_of_games;
     char** grid;
+
 };
 
 void insert_word(char *word, struct trie *node, int i);
@@ -43,12 +45,11 @@ struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coo
 
 int check_word(char *word, struct trie *pTrie);
 int search_word(char string[], struct trie *pTrie, int i);
-int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]);
 
 char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root);
 char ** grid_init(char **grid);
 char *enter_grid(char *string, int i);
-char **get_grid();
+char **get_grids();
 
 int main() {
 
@@ -87,7 +88,7 @@ int main() {
     //block dealing with the grid to be played, idea here is that all test cases are loaded at once (from example) and
     //placed chopped up later in code. should be fixed later to separate before actual logic, this method is error
     //prone
-    char **grid = malloc(sizeof(char *) * GRID_ROWS * GRID_COL);
+    char **grid;
 
     //---------------------------------------------------------------------------------------------
 
@@ -103,7 +104,8 @@ int main() {
     int is_in_dictionary = check_word(buff, root);
 
 
-    grid = get_grid();
+    grid = get_grids();
+
 
     //logic area ----------------------------------------
 //    int j, k;
@@ -117,13 +119,15 @@ int main() {
 //        }
 //    }
 
+    char *check_prefix = check_word_prefix("c", root, count, start, root);
+
     return 0;
 }
 
-char **get_grid() {
+char **get_grids() {
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
     FILE *grid_file = fopen(GRID, "r");
-    int grid_count = 0, k = 0, i;
+    int grid_count = 0, k = 0, i, num_catch;
 
     //same as above, collect data using fscanf and drop in 2d char array.
 
@@ -136,14 +140,11 @@ char **get_grid() {
         char buffer[5];
         fscanf(grid_file, "%s", buffer);
         grid[k] = strdup(buffer);
-        printf("%s\n", grid[k]);
+        //printf("%s\n", grid[k]);
 
     }
-    struct Grids acting_grid;
-    acting_grid.grid = malloc(sizeof(char) * GRID_ROWS * GRID_COL);
 
-
-
+    //returns all grids, must be separated to individual games
     return grid;
 }
 
@@ -159,46 +160,7 @@ char *enter_grid(char *string, int i) {
     return string;
 }
 
-//not working properly, i dont think my logic is right in this one, using new one. instant deprecation.
-int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]) {
-    //printf("word: %s\n", word);
-    //printf("grid: %s\n", grid[1]);
-    if(word_index == strlen(word)){
-        printf("found");
-        return 1;
-    }
-    //start at pos 0,0 (top left corner of grid)
-    //if within bounds
-    if(x_index > -1 && y_index > -1 && x_index < GRID_ROWS && y_index < GRID_COL){
-        if(word[word_index] == grid[x_index][y_index] && pInt[x_index][y_index] != 1 ){
-            printf("grid: %i,%i: %c\n",x_index, y_index, grid[x_index][y_index]);
-            pInt[x_index][y_index] = 1;
-            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index, pInt);
-            search_word_in_grid(grid, word, word_index + 1, x_index, y_index + 1, pInt);
-            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index + 1, pInt);
-            search_word_in_grid(grid, word, word_index + 1, x_index - 1, y_index, pInt);
-            search_word_in_grid(grid, word, word_index + 1, x_index, y_index - 1, pInt);
-            search_word_in_grid(grid, word, word_index + 1, x_index - 1, y_index - 1, pInt);
-            search_word_in_grid(grid, word, word_index + 1, x_index + 1, y_index - 1, pInt);
-            search_word_in_grid(grid, word, word_index + 1, x_index - 1, y_index + 1, pInt);
-        }
-        else if (pInt[x_index][y_index] != 1){
-            pInt[x_index][y_index] = 1;
-            search_word_in_grid(grid, word, word_index, x_index + 1, y_index, pInt);
-            search_word_in_grid(grid, word, word_index, x_index, y_index + 1, pInt);
-            search_word_in_grid(grid, word, word_index, x_index + 1, y_index + 1, pInt);
-            search_word_in_grid(grid, word, word_index, x_index - 1, y_index, pInt);
-            search_word_in_grid(grid, word, word_index, x_index, y_index - 1, pInt);
-            search_word_in_grid(grid, word, word_index, x_index - 1, y_index - 1, pInt);
-            search_word_in_grid(grid, word, word_index, x_index + 1, y_index - 1, pInt);
-            search_word_in_grid(grid, word, word_index, x_index - 1, y_index + 1, pInt);
-        }
 
-    }
-
-
-
-}
 
 char ** grid_init(char **grid) {
 
@@ -283,7 +245,7 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
 struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates) {
     //get grid from boggle game :)
     //printf("%c\t", letter);
-    char **grid = get_grid(); //grid collected...
+    char **grid = get_grids(); //grid collected...
     //does grid[x][y] == letter?
 
         if(x >= 0  && y >= 0) {
