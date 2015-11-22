@@ -44,12 +44,10 @@
       <file leaf-file-name="boogle.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/boogle.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.50682056">
-              <caret line="215" column="40" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
+            <state vertical-scroll-proportion="2.3987408">
+              <caret line="202" column="32" selection-start-line="202" selection-start-column="32" selection-end-line="202" selection-end-column="32" />
               <folding>
                 <element signature="e#0#100#0" expanded="false" />
-                <element signature="e#6829#9576#0" expanded="false" />
-                <element signature="e#9644#10103#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -227,7 +225,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="31" />
+      <option name="time" value="33" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -258,12 +256,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boogle.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50682056">
-          <caret line="215" column="40" selection-start-line="215" selection-start-column="40" selection-end-line="215" selection-end-column="40" />
+        <state vertical-scroll-proportion="2.3987408">
+          <caret line="202" column="32" selection-start-line="202" selection-start-column="32" selection-end-line="202" selection-end-column="32" />
           <folding>
             <element signature="e#0#100#0" expanded="false" />
-            <element signature="e#6829#9576#0" expanded="false" />
-            <element signature="e#9644#10103#0" expanded="false" />
           </folding>
         </state>
       </provider>

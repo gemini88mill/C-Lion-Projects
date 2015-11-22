@@ -29,6 +29,7 @@ typedef struct trie{
 struct Coordinates{
     char letter;
     int coordinates[2];
+    int grid_map[4][4];
     int bool;
 };
 
@@ -41,14 +42,12 @@ struct Grids{
 void insert_word(char *word, struct trie *node, int i);
 
 struct trie * init();
-struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates);
+struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates, char **grid);
 
-int check_word(char *word, struct trie *pTrie);
 int search_word(char string[], struct trie *pTrie, int i);
 
-char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root);
-char ** grid_init(char **grid);
-char *enter_grid(char *string, int i);
+char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root,
+                        char **grid);
 char **get_grids();
 
 int main() {
@@ -101,29 +100,34 @@ int main() {
     start.coordinates[0] = 0;
     start.coordinates[1] = 0;
 
-    int is_in_dictionary = check_word(buff, root);
+
 
 
     grid = get_grids();
 
 
     //logic area ----------------------------------------
-//    int j, k;
-//    for (j = 0; j < GRID_ROWS; j++) {
-//        for (k = 0; k < GRID_COL; k++) {
-//            char c = grid[j][k];
-//            char str[2] = "\0";
-//            str[0] = c;
-//            char *check_prefix = check_word_prefix(str, root, count, start, root);
-//            //printf("returned: %s", check_prefix);
-//        }
-//    }
+    int j, k;
+    for (j = 0; j < GRID_ROWS; j++) {
+        for (k = 0; k < GRID_COL; k++) {
+            char c = grid[j][k];
+            char str[2] = "\0";
+            str[0] = c;
+            start.coordinates[0] = j;
+            start.coordinates[1] = k;
+            char *check_prefix = check_word_prefix(str, root, count, start, root, grid);
+            //printf("returned: %s", check_prefix);
+        }
+    }
 
-    char *check_prefix = check_word_prefix("c", root, count, start, root);
+    check_word_prefix("c", root, count, start, root, grid);
+
+
 
     return 0;
 }
 
+/*get_grids() - takes information from boggle.txt and places information in 2d char array.*/
 char **get_grids() {
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
     FILE *grid_file = fopen(GRID, "r");
@@ -148,7 +152,7 @@ char **get_grids() {
     return grid;
 }
 
-
+//taken from POSIX standard lib.
 char *strdup (const char *s) { //my best friend
     char *d = malloc (strlen (s) + 1);   // Space for length plus nul
     if (d == NULL) return NULL;          // No memory
@@ -156,19 +160,7 @@ char *strdup (const char *s) { //my best friend
     return d;                            // Return the new string
 }
 
-char *enter_grid(char *string, int i) {
-    return string;
-}
-
-
-
-char ** grid_init(char **grid) {
-
-    return grid;
-}
-
-
-//returns 1 for entire word... can be used for final check...
+//search_word() - searched trie to verify if word is in trie.
 int search_word(char string[], struct trie *pTrie, int i) {
     //returns one if word matches in trie struct
     if (i == strlen(string))
@@ -184,7 +176,7 @@ int search_word(char string[], struct trie *pTrie, int i) {
     return search_word(string, pTrie->next_letter[index], i + 1);
 }
 
-//works do not touch ever!!!
+/*trie* init() - initalizes the trie*/
 struct trie * init(){
     //counter var
     int i;
@@ -202,7 +194,12 @@ struct trie * init(){
 }
 
 //not working correctly
-char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root) {
+//tries each starting letter, breaks down somewhere in here.
+char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root,
+                        char **grid) {
+
+
+
     int index = prefix[i] - 'a';
     char letter;
     char *prefix_arr = malloc(sizeof(char) * strlen(prefix + 1));
@@ -217,23 +214,25 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
     }
 
     if(i < strlen(prefix)){
-        return check_word_prefix(prefix, pTrie->next_letter[index], i + 1, (start), root);
+        return check_word_prefix(prefix, pTrie->next_letter[index], i + 1, (start), root, grid);
     }
-    for(k = 0; k < 26; k++){
+    for(k = 0; k < 25; k++){
         if(pTrie->next_letter[k] != NULL){
             letter = (char) (k + 'a');
             start.letter = letter;
             prefix_arr[l] = letter;
-            start = search_grid(start.letter, start.coordinates[0], start.coordinates[1], start);
+            start.grid_map[4][4] = 0;
+            printf("letter: %c\n", letter);
+            start = search_grid(start.letter, start.coordinates[0], start.coordinates[1], start, grid);
             if(start.bool == 1) {
                 int win = search_word(prefix_arr, root, 0);
                 if(win == 1) {
-                    printf("prefix_arr: %s\n", prefix_arr);
+                    printf("%s\n", prefix_arr);
                     return prefix_arr;
                 }
 
             }
-            check_word_prefix(prefix_arr, pTrie->next_letter[k], i + 1, (start), root);
+            check_word_prefix(prefix_arr, pTrie->next_letter[k], i + 1, (start), root, grid);
             //give all possible words from prefix
         }
     }
@@ -242,13 +241,16 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
 
 }
 
-struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates) {
+struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates, char **grid) {
     //get grid from boggle game :)
     //printf("%c\t", letter);
-    char **grid = get_grids(); //grid collected...
     //does grid[x][y] == letter?
 
-        if(x >= 0  && y >= 0) {
+    printf("looking for:%c\n", coordinates.letter);
+
+
+
+        if(x >= 0  && y >= 0 && x < GRID_ROWS && y < GRID_COL) {
             if (letter == grid[x][y + 1]) {
                 coordinates.coordinates[1] = y + 1;
                 coordinates.bool = 1;
@@ -323,10 +325,10 @@ struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coo
 
 }
 
-int check_word(char *word, struct trie *pTrie) {
-    return 0;
-}
 
+
+/*insert_word() - inserts word for trie. accepts 1 word and places into trie.
+ * recursion happens to find next letter in word. */
 void insert_word(char *word, struct trie *node, int i) {
 
     //checks if complete word is inserted, if so return 1 and is_word = 1
