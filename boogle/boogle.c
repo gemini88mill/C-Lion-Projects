@@ -32,21 +32,23 @@ struct Coordinates{
     int bool;
 };
 
+struct Grids{
+    char** grid;
+};
+
 void insert_word(char *word, struct trie *node, int i);
 
-int check_word(char *word, struct trie *pTrie);
-char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root);
-int search_word(char string[], struct trie *pTrie, int i);
 struct trie * init();
-char ** grid_init(char **grid);
-int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]);
-char *enter_grid(char *string, int i);
-
 struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates);
 
-char **get_grid();
+int check_word(char *word, struct trie *pTrie);
+int search_word(char string[], struct trie *pTrie, int i);
+int search_word_in_grid(char **grid, char *word, int word_index, int x_index, int y_index, int pInt[4][4]);
 
-char set_element(int width, int height, char i);
+char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root);
+char ** grid_init(char **grid);
+char *enter_grid(char *string, int i);
+char **get_grid();
 
 int main() {
 
@@ -86,38 +88,11 @@ int main() {
     //placed chopped up later in code. should be fixed later to separate before actual logic, this method is error
     //prone
     char **grid = malloc(sizeof(char *) * GRID_ROWS * GRID_COL);
-//    FILE *grid_file = fopen(GRID, "r");
-//    int grid_count = 0, k = 0;
-//
-//    //same as above, collect data using fscanf and drop in 2d char array.
-//    fscanf(grid_file, "%d", &grid_count);
-//    if(grid_count > 1){
-//        grid = realloc(grid, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
-//    } //realloc in case there are more then one test case
-//    for(k = 0; (grid_count * GRID_ROWS) > k; k++){
-//        char buffer[5];
-//        fscanf(grid_file, "%s", buffer);
-//        grid[k] = strdup(buffer);
-//        //printf("%s\n", grid[k]);
-//
-//    }
-
-
-
-
-
 
     //---------------------------------------------------------------------------------------------
 
-    //char **grid_ptr = grid;
-    //printf("grid_ptr: %s", grid_ptr[0]);
-    //printf("grid: %s", grid[2]);
-//    int grid_marker[4][4] = {0}; //marker for grid, used to check if tracer has already been there
-//    int word_found = search_word_in_grid(grid, "mopi", 0, 0, 0, grid_marker);
-//    printf("%i", word_found);
-
     //char *store = malloc(sizeof(char) * 10);
-    int check = search_word("case", root, count);
+    //int check = search_word("case", root, count);
     //printf("%d  ", check);
 
 
@@ -129,30 +104,30 @@ int main() {
 
 
     grid = get_grid();
-    int j, k;
-    for (j = 0; j < GRID_ROWS; j++) {
-        for (k = 0; k < GRID_COL; k++) {
-            char c = grid[j][k];
-            char str[2] = "\0";
-            str[0] = c;
-            char *check_prefix = check_word_prefix(str, root, count, start, root);
-            //printf("returned: %s", check_prefix);
-        }
-    }
+
+    //logic area ----------------------------------------
+//    int j, k;
+//    for (j = 0; j < GRID_ROWS; j++) {
+//        for (k = 0; k < GRID_COL; k++) {
+//            char c = grid[j][k];
+//            char str[2] = "\0";
+//            str[0] = c;
+//            char *check_prefix = check_word_prefix(str, root, count, start, root);
+//            //printf("returned: %s", check_prefix);
+//        }
+//    }
 
     return 0;
-}
-
-char set_element(int width, int height, char i) {
-    return i;
 }
 
 char **get_grid() {
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
     FILE *grid_file = fopen(GRID, "r");
-    int grid_count = 0, k = 0;
+    int grid_count = 0, k = 0, i;
 
     //same as above, collect data using fscanf and drop in 2d char array.
+
+    //collects number of grids for particular test case.
     fscanf(grid_file, "%d", &grid_count);
     if(grid_count > 1){
         grid = realloc(grid, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
@@ -161,9 +136,14 @@ char **get_grid() {
         char buffer[5];
         fscanf(grid_file, "%s", buffer);
         grid[k] = strdup(buffer);
-        //printf("%s\n", grid[k]);
+        printf("%s\n", grid[k]);
 
     }
+    struct Grids acting_grid;
+    acting_grid.grid = malloc(sizeof(char) * GRID_ROWS * GRID_COL);
+
+
+
     return grid;
 }
 
@@ -279,23 +259,14 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
     }
     for(k = 0; k < 26; k++){
         if(pTrie->next_letter[k] != NULL){
-            //printf("node here[%d]\n", k);
             letter = (char) (k + 'a');
             start.letter = letter;
-            //printf("%c:%i\n", letter, i); //displays next letter and position from the prefix!!!
             prefix_arr[l] = letter;
-            //printf("prefix: %s\n", prefix_arr);
-            //printf("send me to grid\n");
-            //printf("entering information: %i, %i with %c\n", start.coordinates[0], start.coordinates[1], letter);
             start = search_grid(start.letter, start.coordinates[0], start.coordinates[1], start);
-            //printf("entering letter: %c\n", letter);
             if(start.bool == 1) {
-                //printf("found %c at %i, %i\n", letter, start.coordinates[0], start.coordinates[1]);
-                //printf("prefix_arr: %s\n", prefix_arr);
                 int win = search_word(prefix_arr, root, 0);
                 if(win == 1) {
                     printf("prefix_arr: %s\n", prefix_arr);
-                   // printf("\ni am the winner %d\n\n", win);
                     return prefix_arr;
                 }
 
