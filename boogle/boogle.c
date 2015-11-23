@@ -48,7 +48,7 @@ int search_word(char string[], struct trie *pTrie, int i);
 
 char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordinates start, struct trie *root,
                         char **grid);
-char **get_grids();
+char **get_grids(int *grid_count);
 
 struct Coordinates search_adjacent(char letter, char **grid, int y, int x, struct Coordinates coordinates);
 
@@ -64,7 +64,7 @@ int main() {
     //end of struct root init, ready to use
 
     //scans the number of input cases
-    scanf("%d", &input_case);
+
 
     //-----------------------pulls from dictionary file-------------------------------------------
     //collect information from dictionary file, houses all possible dictionary entries, additionally; dictionary values
@@ -105,27 +105,34 @@ int main() {
     start.coordinates[0] = 0;
     start.coordinates[1] = 0;
 
+    int game = 0;
+    int iter = 0;
+    int grid_map = GRID_ROWS;
 
-
-
-    grid = get_grids();
+    grid = get_grids(&game);
 
 
     //logic area ----------------------------------------
-    int j, k;
-//    for (j = 0; j < GRID_ROWS; j++) {
-//        for (k = 0; k < GRID_COL; k++) {
-//            char c = grid[j][k];
-//            char str[2] = "\0";
-//            str[0] = c;
-//            start.coordinates[0] = j;
-//            start.coordinates[1] = k;
-//            char *check_prefix = check_word_prefix(str, root, count, start, root, grid);
-//            //printf("returned: %s", check_prefix);
-//        }
-//    }
-    int index = 2;
-    check_word_prefix("c", root->next_letter[index], count, start, root, grid);
+    for(iter = 0; iter < game; iter++) {
+        printf("Words for Game #%i\n", iter + 1);
+        int j, k;
+        for (j = 0; j < 8; j++) {
+            for (k = 0; k < 4; k++) {
+                char c = grid[j][k];
+                char str[2] = "\0";
+                str[0] = c;
+                start.coordinates[0] = j;
+                start.coordinates[1] = k;
+                int index = c - 'a';
+                //printf("%c: %i\n", c, index);
+
+                check_word_prefix(str, root->next_letter[index], count, start, root, grid);
+
+            }
+        }
+    }
+    //int index = 2;
+    //check_word_prefix("c", root->next_letter[index], count, start, root, grid);
 
 
 
@@ -133,19 +140,19 @@ int main() {
 }
 
 /*get_grids() - takes information from boggle.txt and places information in 2d char array.*/
-char **get_grids() {
+char **get_grids(int *grid_count) {
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
     FILE *grid_file = fopen(GRID, "r");
-    int grid_count = 0, k = 0, i, num_catch;
+    int k = 0, i, num_catch;
 
     //same as above, collect data using fscanf and drop in 2d char array.
 
     //collects number of grids for particular test case.
-    fscanf(grid_file, "%d", &grid_count);
-    if(grid_count > 1){
-        grid = realloc(grid, (size_t) ((grid_count * GRID_ROWS) * (grid_count * GRID_COL)));
+    fscanf(grid_file, "%d", grid_count);
+    if(*grid_count > 1){
+        grid = realloc(grid, (size_t) ((*grid_count * GRID_ROWS) * (*grid_count * GRID_COL)));
     } //realloc in case there are more then one test case
-    for(k = 0; (grid_count * GRID_ROWS) > k; k++){
+    for(k = 0; (*grid_count * GRID_ROWS) > k; k++){
         char buffer[5];
         fscanf(grid_file, "%s", buffer);
         grid[k] = strdup(buffer);
@@ -224,20 +231,20 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
 //    }
     //printf("output");
     for(k = 0; k < 26; k++){
-        if(pTrie->next_letter[k] != NULL){
+        if(pTrie != NULL && pTrie->next_letter[k] != NULL){
             letter = (char) (k + 'a');
             start.letter = letter;
             prefix_arr[l] = letter;
             start.grid_map[4][4] = 0;
-            printf("letter: %c\n", start.letter);
+            //printf("letter: %c\n", start.letter);
             start = search_adjacent(start.letter, grid, start.coordinates[0], start.coordinates[1], start); //find if these letters are adjacent to corresponding letter.
             //printf("%i\n", start.bool);
 
             if(start.bool == 1){
                 win = search_word(prefix_arr, root, 0);
-                printf("prefix: %s\n", prefix_arr);
+                //printf("prefix: %s\n", prefix_arr);
                 if (win == 1){
-                    printf("word found %s\n", prefix_arr);
+                    printf("%s\n", prefix_arr);
                 }
 
                 if(pTrie->next_letter[k] != NULL) {
@@ -257,7 +264,7 @@ struct Coordinates search_adjacent(char letter, char **grid, int y, int x, struc
     //set starting y and x to one...
     coordinates.grid_map[y][x] = 1;
 
-    if(x < GRID_ROWS && y < GRID_COL) {
+    if(x < GRID_ROWS && y < 7) {
         if (letter == grid[y][x + 1]) { //right one
             coordinates.grid_map[y][x + 1] = 1;
             coordinates.bool = 1;
