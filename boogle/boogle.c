@@ -50,6 +50,8 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
                         char **grid);
 char **get_grids();
 
+struct Coordinates search_adjacent(char letter, char **grid, int y, int x, struct Coordinates coordinates);
+
 int main() {
 
 
@@ -79,7 +81,10 @@ int main() {
         char word[100];
         fscanf(fp, "%s", word);
         insert_word(word, root, count); //seg faults when implemented in while
-    } //after this point, all values from dictionary minus the first entry (which is the number of values) is in a trie
+    }
+//    fclose(fp);
+
+    //after this point, all values from dictionary minus the first entry (which is the number of values) is in a trie
     //named trie root in main()
     //--------------------------------------------------------------------------------------------
 
@@ -108,19 +113,19 @@ int main() {
 
     //logic area ----------------------------------------
     int j, k;
-    for (j = 0; j < GRID_ROWS; j++) {
-        for (k = 0; k < GRID_COL; k++) {
-            char c = grid[j][k];
-            char str[2] = "\0";
-            str[0] = c;
-            start.coordinates[0] = j;
-            start.coordinates[1] = k;
-            char *check_prefix = check_word_prefix(str, root, count, start, root, grid);
-            //printf("returned: %s", check_prefix);
-        }
-    }
-
-    check_word_prefix("c", root, count, start, root, grid);
+//    for (j = 0; j < GRID_ROWS; j++) {
+//        for (k = 0; k < GRID_COL; k++) {
+//            char c = grid[j][k];
+//            char str[2] = "\0";
+//            str[0] = c;
+//            start.coordinates[0] = j;
+//            start.coordinates[1] = k;
+//            char *check_prefix = check_word_prefix(str, root, count, start, root, grid);
+//            //printf("returned: %s", check_prefix);
+//        }
+//    }
+    int index = 2;
+    check_word_prefix("c", root->next_letter[index], count, start, root, grid);
 
 
 
@@ -148,6 +153,7 @@ char **get_grids() {
 
     }
 
+//    fclose(grid_file);
     //returns all grids, must be separated to individual games
     return grid;
 }
@@ -199,11 +205,10 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
                         char **grid) {
 
 
-
-    int index = prefix[i] - 'a';
+    int index = prefix[i] - 'a'; //c - a = 2 ca - a
     char letter;
     char *prefix_arr = malloc(sizeof(char) * strlen(prefix + 1));
-    int k, l;
+    int k = 0, l, win = 0;
 
     start.bool = 0;
 
@@ -213,31 +218,117 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
         //printf("%c\n", prefix_arr[l]);
     }
 
-    if(i < strlen(prefix)){
-        return check_word_prefix(prefix, pTrie->next_letter[index], i + 1, (start), root, grid);
-    }
-    for(k = 0; k < 25; k++){
+
+//    if(i < strlen(prefix)){
+//         check_word_prefix(prefix_arr, root->next_letter[index], i + 1, (start), root, grid);
+//    }
+    //printf("output");
+    for(k = 0; k < 26; k++){
         if(pTrie->next_letter[k] != NULL){
             letter = (char) (k + 'a');
             start.letter = letter;
             prefix_arr[l] = letter;
             start.grid_map[4][4] = 0;
-            printf("letter: %c\n", letter);
-            start = search_grid(start.letter, start.coordinates[0], start.coordinates[1], start, grid);
-            if(start.bool == 1) {
-                int win = search_word(prefix_arr, root, 0);
-                if(win == 1) {
-                    printf("%s\n", prefix_arr);
-                    return prefix_arr;
+            printf("letter: %c\n", start.letter);
+            start = search_adjacent(start.letter, grid, start.coordinates[0], start.coordinates[1], start); //find if these letters are adjacent to corresponding letter.
+            //printf("%i\n", start.bool);
+
+            if(start.bool == 1){
+                win = search_word(prefix_arr, root, 0);
+                printf("prefix: %s\n", prefix_arr);
+                if (win == 1){
+                    printf("word found %s\n", prefix_arr);
                 }
 
+                if(pTrie->next_letter[k] != NULL) {
+                    check_word_prefix(prefix_arr, pTrie->next_letter[k], i + 1, (start), root, grid);
+                }
             }
-            check_word_prefix(prefix_arr, pTrie->next_letter[k], i + 1, (start), root, grid);
-            //give all possible words from prefix
+        }
+    }
+    return prefix;
+
+}
+
+struct Coordinates search_adjacent(char letter, char **grid, int y, int x, struct Coordinates coordinates) {
+     //
+    //check adjacent squares
+
+    //set starting y and x to one...
+    coordinates.grid_map[y][x] = 1;
+
+    if(x < GRID_ROWS && y < GRID_COL) {
+        if (letter == grid[y][x + 1]) { //right one
+            coordinates.grid_map[y][x + 1] = 1;
+            coordinates.bool = 1;
+            coordinates.coordinates[0] = y;
+            coordinates.coordinates[1] = x + 1;
+            //printf("%c found", grid[y][x + 1]);
+            return coordinates;
+        }
+        if (letter == grid[y + 1][x]) {
+            coordinates.grid_map[y + 1][x] = 1;
+            coordinates.bool = 1;
+            coordinates.coordinates[0] = y + 1;
+            coordinates.coordinates[1] = x;
+            //printf("%c found", grid[y + 1][x]);
+            return coordinates;
+        } //down one
+        if (letter == grid[y + 1][x + 1]) {
+            coordinates.grid_map[y + 1][x + 1] = 1;
+            coordinates.bool = 1;
+            coordinates.coordinates[0] = y + 1;
+            coordinates.coordinates[1] = x + 1;
+            //printf("%c found", grid[y + 1][x + 1]);
+            return coordinates;
+        } //diagonal one
+
+        if (x > 0 && y > 0) {
+            if (letter == grid[y - 1][x]){
+                coordinates.grid_map[y - 1][x] = 1;
+                coordinates.bool = 1;
+                coordinates.coordinates[0] = y - 1;
+                coordinates.coordinates[1] = x;
+                //printf("%c found", grid[y - 1][x]);
+                return coordinates;
+            }
+            if (letter == grid[y][x - 1]){
+                coordinates.grid_map[y][x - 1] = 1;
+                coordinates.bool = 1;
+                coordinates.coordinates[0] = y;
+                coordinates.coordinates[1] = x - 1;
+                //printf("%c found", grid[y][x - 1]);
+                return coordinates;
+            }
+            if (letter == grid[y - 1][x - 1]){
+                coordinates.grid_map[y - 1][x - 1] = 1;
+                coordinates.bool = 1;
+                coordinates.coordinates[0] = y - 1;
+                coordinates.coordinates[1] = x - 1;
+                //printf("%c found", grid[y - 1][x - 1]);
+                return coordinates;
+            }
+            if (letter == grid[y - 1][x + 1]){
+                coordinates.grid_map[y - 1][x + 1] = 1;
+                coordinates.bool = 1;
+                coordinates.coordinates[0] = y - 1;
+                coordinates.coordinates[1] = x + 1;
+                //printf("%c found", grid[y - 1][x + 1]);
+                return coordinates;
+            }
+            if (letter == grid[y + 1][x - 1]){
+                coordinates.grid_map[y + 1][x - 1] = 1;
+                coordinates.bool = 1;
+                coordinates.coordinates[0] = y + 1;
+                coordinates.coordinates[1] = x - 1;
+                //printf("%c found", grid[y + 1][x - 1]);
+                return coordinates;
+            }
         }
     }
 
-
+    coordinates.bool = 0;
+    return coordinates;
 
 }
 
@@ -247,6 +338,8 @@ struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coo
     //does grid[x][y] == letter?
 
     printf("looking for:%c\n", coordinates.letter);
+    printf("%i, %i", coordinates.coordinates[0], coordinates.coordinates[1]);
+    getchar();
 
 
 
