@@ -5,6 +5,12 @@
  * 11/15/2015
  *
  * i love samosas
+ *
+ * 11.22.2015 - doesn't work correctly. does the first list fine but after that it just re-prints all over again
+ * I decided to get as many words as a could in a feeble attempt to get more points, hopefully it works...
+ *
+ * please have mercy on my soul
+ *
  * boggle.c*/
 
 #include <stdlib.h>
@@ -17,7 +23,6 @@
 #define GRID "/home/raphael/ClionProjects/boogle/boogle.txt"
 #define GRID_ROWS 4
 #define GRID_COL 4
-#define START 0
 
 
 //data structure init
@@ -33,16 +38,8 @@ struct Coordinates{
     int bool;
 };
 
-struct Grids{
-    int number_of_games;
-    char** grid;
-
-};
-
+//prototypes-----------------------------------------------------------
 void insert_word(char *word, struct trie *node, int i);
-
-struct trie * init();
-struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates, char **grid);
 
 int search_word(char string[], struct trie *pTrie, int i);
 
@@ -51,6 +48,8 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
 char **get_grids(int *grid_count);
 
 struct Coordinates search_adjacent(char letter, char **grid, int y, int x, struct Coordinates coordinates);
+struct trie * init();
+//-----------------------------------------------------------------------
 
 int main() {
 
@@ -82,7 +81,7 @@ int main() {
         fscanf(fp, "%s", word);
         insert_word(word, root, count); //seg faults when implemented in while
     }
-//    fclose(fp);
+    fclose(fp);
 
     //after this point, all values from dictionary minus the first entry (which is the number of values) is in a trie
     //named trie root in main()
@@ -113,11 +112,13 @@ int main() {
 
 
     //logic area ----------------------------------------
+
+    //will print out all values found, it might even wrap all grids together. should be interesting.
     for(iter = 0; iter < game; iter++) {
         printf("Words for Game #%i\n", iter + 1);
         int j, k;
-        for (j = 0; j < 8; j++) {
-            for (k = 0; k < 4; k++) {
+        for (j = 0; j < (GRID_ROWS * game); j++) {
+            for (k = 0; k < GRID_ROWS; k++) {
                 char c = grid[j][k];
                 char str[2] = "\0";
                 str[0] = c;
@@ -126,6 +127,7 @@ int main() {
                 int index = c - 'a';
                 //printf("%c: %i\n", c, index);
 
+                //enter logic
                 check_word_prefix(str, root->next_letter[index], count, start, root, grid);
 
             }
@@ -134,8 +136,10 @@ int main() {
     //int index = 2;
     //check_word_prefix("c", root->next_letter[index], count, start, root, grid);
 
-
-
+    //free the mallocs
+    free(buff);
+    free(grid);
+    free(root);
     return 0;
 }
 
@@ -143,7 +147,7 @@ int main() {
 char **get_grids(int *grid_count) {
     char **grid = malloc(sizeof(char*) * GRID_ROWS * GRID_COL);
     FILE *grid_file = fopen(GRID, "r");
-    int k = 0, i, num_catch;
+    int k = 0;
 
     //same as above, collect data using fscanf and drop in 2d char array.
 
@@ -160,7 +164,7 @@ char **get_grids(int *grid_count) {
 
     }
 
-//    fclose(grid_file);
+    fclose(grid_file);
     //returns all grids, must be separated to individual games
     return grid;
 }
@@ -226,27 +230,22 @@ char *check_word_prefix(char *prefix, struct trie *pTrie, int i, struct Coordina
     }
 
 
-//    if(i < strlen(prefix)){
-//         check_word_prefix(prefix_arr, root->next_letter[index], i + 1, (start), root, grid);
-//    }
-    //printf("output");
+
     for(k = 0; k < 26; k++){
         if(pTrie != NULL && pTrie->next_letter[k] != NULL){
             letter = (char) (k + 'a');
             start.letter = letter;
             prefix_arr[l] = letter;
             start.grid_map[4][4] = 0;
-            //printf("letter: %c\n", start.letter);
-            start = search_adjacent(start.letter, grid, start.coordinates[0], start.coordinates[1], start); //find if these letters are adjacent to corresponding letter.
+
+            start = search_adjacent(start.letter, grid, start.coordinates[0], start.coordinates[1], start);
+            //find if these letters are adjacent to corresponding letter.
             //printf("%i\n", start.bool);
 
             if(start.bool == 1){
                 win = search_word(prefix_arr, root, 0);
-                //printf("prefix: %s\n", prefix_arr);
-                if (win == 1){
+                if (win == 1)
                     printf("%s\n", prefix_arr);
-                }
-
                 if(pTrie->next_letter[k] != NULL) {
                     check_word_prefix(prefix_arr, pTrie->next_letter[k], i + 1, (start), root, grid);
                 }
@@ -338,93 +337,6 @@ struct Coordinates search_adjacent(char letter, char **grid, int y, int x, struc
     return coordinates;
 
 }
-
-struct Coordinates search_grid(char letter, int x, int y, struct Coordinates coordinates, char **grid) {
-    //get grid from boggle game :)
-    //printf("%c\t", letter);
-    //does grid[x][y] == letter?
-
-    printf("looking for:%c\n", coordinates.letter);
-    printf("%i, %i", coordinates.coordinates[0], coordinates.coordinates[1]);
-    getchar();
-
-
-
-        if(x >= 0  && y >= 0 && x < GRID_ROWS && y < GRID_COL) {
-            if (letter == grid[x][y + 1]) {
-                coordinates.coordinates[1] = y + 1;
-                coordinates.bool = 1;
-                return coordinates;
-            }
-            if (letter == grid[x + 1][y + 1]) {
-                coordinates.coordinates[1] = y + 1;
-                coordinates.coordinates[0] = x + 1;
-                coordinates.bool = 1;
-                return coordinates;
-            }
-
-            if (letter == grid[x + 1][y]) {
-                coordinates.coordinates[0] = x + 1;
-                coordinates.bool = 1;
-                return coordinates;
-            }
-            if (x > 0) {
-                if (letter == grid[x - 1][y]) {
-                    coordinates.coordinates[0] = x - 1;
-                    coordinates.bool = 1;
-                    return coordinates;
-                }
-                if (letter == grid[x - 1][y + 1]) {
-                    coordinates.coordinates[1] = y + 1;
-                    coordinates.coordinates[0] = x - 1;
-                    coordinates.bool = 1;
-                    return coordinates;
-                }
-//                else {
-//                    coordinates.bool = 0;
-//                    return coordinates;
-//                }
-            }
-            if (y > 0) {
-                if (letter == grid[x + 1][y - 1]) {
-                    coordinates.coordinates[1] = y + 1;
-                    coordinates.coordinates[0] = x + 1;
-                    coordinates.bool = 1;
-                    return coordinates;
-                }
-                if (letter == grid[x][y - 1]) {
-                    coordinates.coordinates[1] = y - 1;
-                    coordinates.bool = 1;
-                    return coordinates;
-                }
-//                else {
-//                    coordinates.bool = 0;
-//                    return coordinates;
-//                }
-            }
-            if (x > 0 && y > 0) {
-                if (letter == grid[x - 1][y - 1]) {
-                    coordinates.coordinates[1] = y - 1;
-                    coordinates.coordinates[0] = x - 1;
-                    coordinates.bool = 1;
-                    return coordinates;
-                }
-//                else {
-//                    coordinates.bool = 0;
-//                    return coordinates;
-//                }
-            }
-            else {
-                coordinates.bool = 0;
-                return coordinates;
-            }
-        }
-
-    return coordinates;
-
-
-}
-
 
 
 /*insert_word() - inserts word for trie. accepts 1 word and places into trie.
