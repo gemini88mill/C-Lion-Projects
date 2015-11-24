@@ -48,8 +48,19 @@ void convert_to_gen_code(char buff[15]) {
     }
 
     for(i = index; i >= 0; i--){
-        printf("%d ", base_four_num[i]);
-
+        //printf("%d ", base_four_num[i]);
+        if(base_four_num[i] == 0){
+            printf("A");
+        }
+        if(base_four_num[i] == 1){
+            printf("C");
+        }
+        if(base_four_num[i] == 2){
+            printf("G");
+        }
+        if(base_four_num[i] == 3){
+            printf("T");
+        }
     }
 
 }
