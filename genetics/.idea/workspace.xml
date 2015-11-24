@@ -44,8 +44,8 @@
       <file leaf-file-name="genetics.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/genetics.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42766297">
-              <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.799682">
+              <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -243,8 +243,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/genetics.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42766297">
-          <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.799682">
+          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
