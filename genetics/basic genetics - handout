@@ -1,0 +1,36 @@
+The biology lab at UCF has recently been having problems transmitting genetic sequences
+between computers. Unfortunately, the current system represents the genetic sequences as a
+string of the characters: 'A', 'C', 'G' and 'T'. In order to speed up the data transfers you have been
+tasked with compressing the data. Luckily for you, your professor devised an easy way to do this,
+but he gave you the task of actually implementing it. He said that if you consider each of these
+letters as a number in base-4, such that 'A' = 0, 'C' = 1, 'G' = 2, and 'T' = 3, then any genetic
+sequence has a unique base-10 representation. He needs you to implement a program that will
+convert a string describing a genetic sequence to a base-10 number, or vice-versa (given a base-
+10 number, output the corresponding genetic sequence).
+
+The Problem:
+Given a genetic sequence, output the corresponding base-10 number. Likewise, given a number
+in base-10, output the corresponding genetic sequence.
+
+The Input:
+The first line of the input will contain a positive integer, q, representing the number of sequences
+to convert. The next q lines will contain either an integer, n (1 ≤ n ≤ 230
+-1), which represents a
+base-10 number and is guaranteed to have no leading zeroes, or a genetic sequence (represented
+by a string of the characters 'A','C','G' and/or 'T', and guaranteed to have no leading A‘s), between
+1 and 15 characters in length.
+The Output:
+
+For each sequence, output the header ―Sequence #j: ‖ where j represents the sequence
+being processed (beginning with 1). Following the header, output either the corresponding
+genetic sequence for the integer given, or the corresponding base-10 number for the genetic
+sequence. The output for each sequence should each be on its own output line.
+Sample Input:
+3
+CAACAGAT
+16675
+GAGGTATAC
+Sample Output:
+Sequence #1: 16675
+Sequence #2: CAACAGAT
+Sequence #3: 142129
