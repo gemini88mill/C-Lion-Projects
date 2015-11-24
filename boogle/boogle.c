@@ -50,7 +50,7 @@ char **get_grids(int *grid_count);
 struct Coordinates search_adjacent(char letter, char **grid, int y, int x, struct Coordinates coordinates);
 struct trie * init();
 //-----------------------------------------------------------------------
-
+//----
 int main() {
 
 
