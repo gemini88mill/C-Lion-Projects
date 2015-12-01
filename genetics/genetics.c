@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #define A 0
 #define C 1
@@ -66,6 +67,33 @@ void convert_to_gen_code(char buff[15]) {
 }
 
 void convert_to_base_ten(char buff[15]) {
-    //convert to base ten number.
-    printf("hello 10");
+    //convert to base ten number from char.
+    //printf("hello 10");
+    int i, index, to_int[16];
+    double base10 = 0;
+    for(i = 0; i < strlen(buff); i++){
+        if(buff[i] == 'A'){
+            to_int[i] = 0;
+            //printf("%d ", to_int[i]);
+        }
+        if(buff[i] == 'C'){
+            to_int[i] = 1;
+            //printf("%d ", to_int[i]);
+        }
+        if(buff[i] == 'G'){
+            to_int[i] = 2;
+            //printf("%d ", to_int[i]);
+        }
+        if(buff[i] == 'T'){
+            to_int[i] = 3;
+            //printf("%d ", to_int[i]);
+        }
+    }
+    //printf("\n");
+
+    for(index = 0; index < strlen(buff); index++){
+        base10 = base10 +  (to_int[index] * pow(BASE, strlen(buff) - (index + 1)));
+        //printf("%d ", to_int[index]);
+    }
+    printf("%0.0lf", base10);
 }
