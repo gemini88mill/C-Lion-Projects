@@ -1,0 +1,30 @@
+The downtown movie theater, which serves food during their movies, is running a special for
+large groups. Any group that buys 10 or more movie tickets can buy slices of pizza for $1 each.
+Normally, slices are $2 each. Note that movie tickets cost $10 each. Since the movie theater's
+cash register is having some trouble ringing up this special, they've asked you to write a small
+program to calculate the total cost for each group buying tickets and pizza.
+
+The Problem
+Given the number of movie tickets and slices of pizza a group wants to buy, determine their total
+cost, in dollars.
+
+The Input
+The first line of the input file will contain a single positive integer, n (n ≤ 1000), representing the
+number of test cases to process. Each of the test cases will follow, one per line. Each test case
+will have two space separated positive integers, m (m ≤ 1000) and p (p ≤ 10000), representing
+the number of movie tickets and number of slices of pizza bought by the corresponding group.
+
+The Output
+Output a single integer on a line by itself for each test case indicating the cost for the
+corresponding group, in dollars.
+
+Sample Input
+3
+5 2
+10 20
+100 999
+
+Sample Output
+54
+120
+1999
