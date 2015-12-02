@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
-      <config projectName="Dinner_and_a_Movie" targetName="Dinner_and_a_Movie" />
+      <config projectName="Maximum_Stock_Return_" targetName="Maximum_Stock_Return_" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
@@ -11,8 +11,8 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef44f0fe-e051-457b-9ba6-deb205ed86f7" name="Default" comment="" />
-    <ignored path="Dinner and a Movie.iws" />
+    <list default="true" id="4a6911bf-41ce-4253-86d2-2b0536a98dcd" name="Default" comment="" />
+    <ignored path="Maximum Stock Return .iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,26 +27,28 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
-    <favorites_list name="Dinner and a Movie" />
+    <favorites_list name="Maximum Stock Return " />
   </component>
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
+            <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fantasy_baseball.c" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../Fantasy_Baseball/fantasy_baseball.c">
+      <file leaf-file-name="stock.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/stock.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.4910808">
+              <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,8 +58,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/readme" />
         <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/stock.c" />
       </list>
     </option>
   </component>
@@ -100,17 +102,17 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Dinner and a Movie" />
+              <option name="myItemId" value="Maximum Stock Return " />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Dinner and a Movie" />
+              <option name="myItemId" value="Maximum Stock Return " />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Dinner and a Movie" />
+              <option name="myItemId" value="Maximum Stock Return " />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -120,7 +122,6 @@
   </component>
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Fantasy_Baseball/fantasy_baseball.c" />
   </component>
   <component name="RunManager" selected="Application.Build All">
     <configuration default="true" type="#PerlConfigurationType" factoryName="Perl">
@@ -133,33 +134,33 @@
       <option name="ALTERNATIVE_SDK_PATH" />
       <method />
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Dinner_and_a_Movie" TARGET_NAME="Dinner_and_a_Movie" CONFIG_NAME="Debug">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Maximum_Stock_Return_" TARGET_NAME="Maximum_Stock_Return_" CONFIG_NAME="Debug">
       <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <method />
     </configuration>
-    <configuration default="false" name="Dinner_and_a_Movie" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Dinner_and_a_Movie" TARGET_NAME="Dinner_and_a_Movie" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Dinner_and_a_Movie" RUN_TARGET_NAME="Dinner_and_a_Movie">
+    <configuration default="false" name="Maximum_Stock_Return_" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Maximum_Stock_Return_" TARGET_NAME="Maximum_Stock_Return_" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Maximum_Stock_Return_" RUN_TARGET_NAME="Maximum_Stock_Return_">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Dinner_and_a_Movie" TARGET_NAME="Dinner_and_a_Movie" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Dinner_and_a_Movie" RUN_TARGET_NAME="Dinner_and_a_Movie">
+    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="Maximum_Stock_Return_" TARGET_NAME="Maximum_Stock_Return_" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Maximum_Stock_Return_" RUN_TARGET_NAME="Maximum_Stock_Return_">
       <envs />
       <method />
     </configuration>
     <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Application.Dinner_and_a_Movie" />
+      <item index="0" class="java.lang.String" itemvalue="Application.Maximum_Stock_Return_" />
       <item index="1" class="java.lang.String" itemvalue="Application.Build All" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ef44f0fe-e051-457b-9ba6-deb205ed86f7" name="Default" comment="" />
-      <created>1449006332210</created>
+      <changelist id="4a6911bf-41ce-4253-86d2-2b0536a98dcd" name="Default" comment="" />
+      <created>1449012168167</created>
       <option name="number" value="Default" />
-      <updated>1449006332210</updated>
+      <updated>1449012168167</updated>
     </task>
     <servers />
   </component>
@@ -200,24 +201,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/movie.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/readme">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39664218">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="24" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -226,11 +209,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../Fantasy_Baseball/fantasy_baseball.c">
+    <entry file="file://$PROJECT_DIR$/stock.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.4910808">
+          <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
