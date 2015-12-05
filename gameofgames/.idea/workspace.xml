@@ -44,8 +44,8 @@
       <file leaf-file-name="gameofgame.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gameofgame.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.68521464">
-              <caret line="94" column="16" selection-start-line="94" selection-start-column="16" selection-end-line="94" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.799682">
+              <caret line="118" column="99" selection-start-line="118" selection-start-column="99" selection-end-line="118" selection-end-column="99" />
               <folding>
                 <element signature="e#69#87#0" expanded="true" />
               </folding>
@@ -302,8 +302,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gameofgame.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68521464">
-          <caret line="94" column="16" selection-start-line="94" selection-start-column="16" selection-end-line="94" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.799682">
+          <caret line="118" column="99" selection-start-line="118" selection-start-column="99" selection-end-line="118" selection-end-column="99" />
           <folding>
             <element signature="e#69#87#0" expanded="true" />
           </folding>
