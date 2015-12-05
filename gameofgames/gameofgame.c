@@ -17,8 +17,8 @@ struct House_data {
 };
 
 struct Distance_Handler{
-    int *distance_from;
-    int *distance_to;
+    int distance_from;
+    int distance_to;
 };
 
 struct Game_Time_Handler{
@@ -54,8 +54,7 @@ int main() {
         house = malloc(sizeof(house) * games_to_complete + 1);
         //allocates memory for number of distances to and from houses(including home base)
         distance_handler = malloc(sizeof(distance_handler) * games_to_complete + 1);
-        distance_handler->distance_to[2] = {0};
-        distance_handler->distance_from[2] = {0};
+
 
         int **travel_times = malloc(sizeof(int*) * games_to_complete + 1);
         int n;
@@ -80,17 +79,25 @@ int main() {
         }
 //        house[0].open_time = 0;
 //        house[0].close_time = 0;
-        for(j = 0; j < games_to_complete + 1; j++){
-            printf("house[%d] open: %d\n", j, house[j].open_time);
-            printf("house[%d] close: %d\n", j, house[j].close_time);
-        }
+//        for(j = 0; j < games_to_complete + 1; j++){
+//            printf("house[%d] open: %d\n", j, house[j].open_time);
+//            printf("house[%d] close: %d\n", j, house[j].close_time);
+//        }
 
 
         //nested loop to collect travel times...
         for(l = 0; l < games_to_complete + 1; l++){
+            //distance_handler[l].distance_to = malloc(sizeof(int) * games_to_complete);
+            //distance_handler[l].distance_from = malloc(sizeof(int) * games_to_complete);
             for(m = 0; m < games_to_complete + 1; m++){
                 scanf("%d", &travel_times[m][l]);
-                printf("%d ", travel_times[m][l]);
+                //printf("%d ", travel_times[m][l]);
+                printf("%d ", travel_times[l][m]);
+
+                distance_handler[l].distance_to = travel_times[m][l];
+                distance_handler[l].distance_from = travel_times[l][m];
+                //printf("\ndis to: %d ", distance_handler[l].distance_to);
+                //printf("\ndis from: %d ", distance_handler[l].distance_from);
             }
             printf("\n");
         }
@@ -100,7 +107,7 @@ int main() {
 
     }
     free(house);
-    free(distance_handler);
+
 
 
     return 0;
