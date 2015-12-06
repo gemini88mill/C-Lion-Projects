@@ -26,7 +26,7 @@ struct Game_Time_Handler{
 };
 
 
-
+void logic();
 
 int main() {
 
@@ -91,29 +91,40 @@ int main() {
             //distance_handler[l].distance_from = malloc(sizeof(int) * games_to_complete);
             for(m = 0; m < games_to_complete + 1; m++){
                 scanf("%d", &travel_times[m][l]);
-                printf("%d ", travel_times[m][l]);
+                //printf("%d ", travel_times[m][l]);
                 //printf("%d ", travel_times[l][m]);
-                //todo collect values for distance_handler[l].distance_from. (may require additional for loop)
-                //distance_handler[l].distance_to = travel_times[m][l];
-                //distance_handler[l].distance_from = travel_times[l][m];
+                distance_handler[l].distance_to = travel_times[m][l];
+
                 //printf("\ndis to: %d ", distance_handler[l].distance_to);
-                //printf("\ndis from: %d ", distance_handler[l].distance_from);
+
             }
             printf("\n");
+        }
+        for(l = 0; l < games_to_complete + 1; l++){
+            for(m = 0; m < games_to_complete + 1; m++){
+                distance_handler[l].distance_from = travel_times[l][m];
+                //printf("dis from: %d \n", distance_handler[l].distance_from);
+            }
         }
 
 
         printf("\n");
 
         //todo place logic function here
+        logic();
 
-
-    }
+    } // end of big loop
     free(house);
 
 
 
     return 0;
+}
+
+void logic() {
+    //logic...
+
+    /**/
 }
 
 //todo logic function: requiring system for keeping track of time, distance, and visiting of houses
