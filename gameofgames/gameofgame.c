@@ -26,7 +26,10 @@ struct Game_Time_Handler{
 };
 
 
-void logic();
+void logic(struct House_data *house_data, struct Distance_Handler *distance_handler,
+           struct Game_Time_Handler time_handler);
+
+int check_if_open(int game_time, struct House_data house_data);
 
 int main() {
 
@@ -77,26 +80,21 @@ int main() {
             house[j + 1].close_time = ending_time;
 
         }
-//        house[0].open_time = 0;
-//        house[0].close_time = 0;
+        house[0].open_time = 0;
+        house[0].close_time = 0;
 //        for(j = 0; j < games_to_complete + 1; j++){
 //            printf("house[%d] open: %d\n", j, house[j].open_time);
 //            printf("house[%d] close: %d\n", j, house[j].close_time);
 //        }
 
-
+        printf("house: %d ", house[1].open_time);
+        printf("house: %d \n", house[1].close_time);
         //nested loop to collect travel times...
         for(l = 0; l < games_to_complete + 1; l++){
-            //distance_handler[l].distance_to = malloc(sizeof(int) * games_to_complete);
-            //distance_handler[l].distance_from = malloc(sizeof(int) * games_to_complete);
             for(m = 0; m < games_to_complete + 1; m++){
                 scanf("%d", &travel_times[m][l]);
-                //printf("%d ", travel_times[m][l]);
-                //printf("%d ", travel_times[l][m]);
                 distance_handler[l].distance_to = travel_times[m][l];
-
                 //printf("\ndis to: %d ", distance_handler[l].distance_to);
-
             }
             printf("\n");
         }
@@ -106,25 +104,38 @@ int main() {
                 //printf("dis from: %d \n", distance_handler[l].distance_from);
             }
         }
-
+        printf("house: %d ", house[1].open_time);
+        printf("house: %d \n", house[1].close_time);
 
         printf("\n");
 
         //todo place logic function here
-        logic();
+        logic(house, distance_handler, game_time);
 
     } // end of big loop
-    free(house);
+    //free(house);
 
 
 
     return 0;
 }
 
-void logic() {
+void logic(struct House_data *house_data, struct Distance_Handler *distance_handler,
+           struct Game_Time_Handler time_handler) {
     //logic...
 
-    /**/
+    house_data[1].is_open = check_if_open(6, house_data[1]);
+
+}
+
+int check_if_open(int game_time, struct House_data house_data) {
+    //function to return if particular house is open, if house is open, return 1, if not, return 0
+    if (game_time > house_data.open_time && game_time < house_data.close_time){
+        //printf("house is open");
+        return 1;
+    }
+    //printf("house is closed");
+    return 0;
 }
 
 //todo logic function: requiring system for keeping track of time, distance, and visiting of houses
