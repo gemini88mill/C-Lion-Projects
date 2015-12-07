@@ -39,6 +39,8 @@ void logistics(struct House_data *house_data, struct Distance_Handler *distance_
 int travel_to_houses(struct House_data *current_house, struct House_data *house_data, int house_number, int num_houses,
                      struct Game_Time_Handler *game_time, struct Distance_Handler *distances);
 
+int is_house_open(int open, int close, int current);
+
 int main() {
 
     //number of input cases for problem
@@ -160,9 +162,23 @@ int travel_to_houses(struct House_data *current_house, struct House_data *house_
     for(i = 0; i < num_houses + 1; i++) {
         current_house->is_visited = TRUE;
         game_time->current_game_time = game_time->current_game_time + distances[house_number].distance_to[i];
-        printf("game_time %d\n", game_time->current_game_time);
-        travel_to_houses(&house_data[i], house_data, i, num_houses, game_time, distances);
+        int open = is_house_open(house_data[i].open_time, house_data[i].close_time, game_time->current_game_time);
+        if(open == TRUE) {
+            //game_time->current_game_time = game_time->current_game_time + distances[house_number].distance_to[i];
+            printf("game_time %d\n", game_time->current_game_time);
+            travel_to_houses(&house_data[i], house_data, i, num_houses, game_time, distances);
+        } else{
+            game_time->current_game_time = game_time->current_game_time + house_data[i].open_time;
+            travel_to_houses(&house_data[i], house_data, i, num_houses, game_time, distances);
+        }
     }
+}
+
+int is_house_open(int open, int close, int current) {
+    if(current > open && current < close){
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
