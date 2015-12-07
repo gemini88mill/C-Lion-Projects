@@ -153,24 +153,46 @@ int travel_to_houses(struct House_data *current_house, struct House_data *house_
                      struct Game_Time_Handler *game_time, struct Distance_Handler *distances) {
     //marks the current house as being visited
     if(current_house->is_visited == TRUE){
-        printf("house num %d\n", house_number);
+        int game = game_time->current_game_time + distances[house_number].distance_to[0];
+        printf("current game time: %d\n", game);
+        printf("exit %d\n", house_number);
         return 1;
     }
-
+    printf("house %d\n", house_number);
 
     int i;
-    for(i = 0; i < num_houses + 1; i++) {
+    for(i = 1; i < num_houses + 1; i++) {
         current_house->is_visited = TRUE;
-        game_time->current_game_time = game_time->current_game_time + distances[house_number].distance_to[i];
-        int open = is_house_open(house_data[i].open_time, house_data[i].close_time, game_time->current_game_time);
-        if(open == TRUE) {
-            //game_time->current_game_time = game_time->current_game_time + distances[house_number].distance_to[i];
-            printf("game_time %d\n", game_time->current_game_time);
-            travel_to_houses(&house_data[i], house_data, i, num_houses, game_time, distances);
-        } else{
-            game_time->current_game_time = game_time->current_game_time + house_data[i].open_time;
-            travel_to_houses(&house_data[i], house_data, i, num_houses, game_time, distances);
-        }
+
+        //if statement to verify we aren't trying to re-enter house currently in. therefore, for loop will skip at the
+        //iteration that the player is currently at.
+        if(house_data[i].is_visited){printf("\t");}
+        //sets the current house to TRUE in order to mark
+
+            //increments the time for the game to progress based on the "distance traveled"
+            game_time->current_game_time = game_time->current_game_time + distances[house_number].distance_to[i];
+            //printf("time before check: %d\n", game_time->current_game_time);
+
+            //checks availibility of house, if open enters if statement under true condition
+            int open = is_house_open(house_data[i].open_time, house_data[i].close_time, game_time->current_game_time);
+            if (open == TRUE) {
+                //game_time->current_game_time = game_time->current_game_time + distances[house_number].distance_to[i];
+                printf("house open ");
+                printf("game_time %d\n", game_time->current_game_time);
+
+                //re-enter function with given perams
+                travel_to_houses(&house_data[i], house_data, i, num_houses, game_time, distances);
+
+            } else {
+                //false condition, adds the time nessesary to enter the house. essentially waiting for the challenge house to open
+                //current_house->is_visited = FALSE;
+                game_time->current_game_time = 0;
+                //printf("waiting ");
+                //printf("game_time %d\n", game_time->current_game_time);
+
+                travel_to_houses(&house_data[house_number], house_data, house_number, num_houses, game_time, distances);
+            }
+
     }
 }
 

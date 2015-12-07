@@ -44,8 +44,8 @@
       <file leaf-file-name="gameofgame.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gameofgame.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41017488">
-              <caret line="163" column="70" selection-start-line="163" selection-start-column="70" selection-end-line="163" selection-end-column="70" />
+            <state vertical-scroll-proportion="0.23847377">
+              <caret line="155" column="87" selection-start-line="155" selection-start-column="87" selection-end-line="155" selection-end-column="87" />
               <folding>
                 <element signature="e#69#87#0" expanded="true" />
               </folding>
@@ -227,9 +227,26 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="22" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/gameofgame.c</url>
+          <line>199</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/gameofgame.c</url>
+          <line>173</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="30" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="((struct Game_Time_Handler *)(game_time))-&gt;current_game_time" />
+        <watch expression="(house_data)[1]" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
@@ -354,8 +371,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gameofgame.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41017488">
-          <caret line="163" column="70" selection-start-line="163" selection-start-column="70" selection-end-line="163" selection-end-column="70" />
+        <state vertical-scroll-proportion="0.23847377">
+          <caret line="155" column="87" selection-start-line="155" selection-start-column="87" selection-end-line="155" selection-end-column="87" />
           <folding>
             <element signature="e#69#87#0" expanded="true" />
           </folding>
