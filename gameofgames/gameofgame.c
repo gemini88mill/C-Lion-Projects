@@ -28,10 +28,15 @@ struct Game_Time_Handler{
 };
 
 
-void logic(struct House_data *house_data, struct Distance_Handler *distance_handler,
-           struct Game_Time_Handler time_handler, int location);
+int logic(struct House_data *house_data, struct Distance_Handler *distance_handler,
+          struct Game_Time_Handler time_handler, int location, int i);
 
 int check_if_open(int game_time, struct House_data house_data, int current_time);
+
+void logistics(struct House_data *house_data, struct Distance_Handler *distance_handler,
+               struct Game_Time_Handler game_time);
+
+int travel_to_houses(struct House_data current_house, struct House_data *house_data, int house_number, int num_houses);
 
 int main() {
 
@@ -114,10 +119,11 @@ int main() {
         int current_location = 0;
         game_time.houses_visited = 0;
         game_time.current_game_time = 0;
-        //todo place logic function here
-        logic(house, distance_handler, game_time, current_location);
-        if(game_time.houses_visited == game_time.number_of_houses)
-            printf("all houses visited");
+
+        logistics(house, distance_handler, game_time);
+//        int last_house_time_marker = logic(house, distance_handler, game_time, current_location,
+//                                           game_time.current_game_time);
+       // printf("visited last house at: %d\n", last_house_time_marker);
 
         printf("\n");
 
@@ -129,10 +135,33 @@ int main() {
     return 0;
 }
 
-void logic(struct House_data *house_data, struct Distance_Handler *distance_handler,
-           struct Game_Time_Handler time_handler, int location) {
-    if(time_handler.houses_visited == time_handler.number_of_houses)
-        return;
+void logistics(struct House_data *house_data, struct Distance_Handler *distance_handler,
+struct Game_Time_Handler game_time) {
+    /*function starts from starting house, house_data[0] and gets into every house in every possible way, returns the
+     * shortest distance. */
+
+    int num_visited = travel_to_houses(house_data[0], house_data, 0, game_time.number_of_houses);
+    printf("num_visited: %d", num_visited);
+
+}
+
+int travel_to_houses(struct House_data current_house, struct House_data *house_data, int house_number, int num_houses) {
+    //marks the current house as being visited
+    current_house.is_visited = TRUE;
+
+    while(house_number < num_houses){
+        house_number++;
+        printf("house num %d\n", house_number);
+        return travel_to_houses(house_data[house_number], house_data, house_number, num_houses);
+    }
+
+    return house_number;
+}
+
+
+int logic(struct House_data *house_data, struct Distance_Handler *distance_handler,
+          struct Game_Time_Handler time_handler, int location, int game_time) {
+
 
     //logic...
     int i = 2;
@@ -144,27 +173,30 @@ void logic(struct House_data *house_data, struct Distance_Handler *distance_hand
     for(i = 0; i < time_handler.number_of_houses + 1; i++) {
         if(house_data[i].is_visited != TRUE) {
             if (check_if_open(distance_handler[location].distance_to[i], house_data[i],
-                              time_handler.current_game_time) ==
-                TRUE) {
+                              time_handler.current_game_time) == TRUE) {
 
                 //mark for house visited, therefore gametime must be updated
                 house_data[i].is_visited = TRUE;
-                time_handler.current_game_time =
-                        time_handler.current_game_time + distance_handler[location].distance_to[i];
+                game_time = game_time + distance_handler[location].distance_to[i];
                 printf("gametime: %d", time_handler.current_game_time);
 
                 //re-enter logic using new perameters
                 //current song: Adventure Time(Original Mix) - SirensCeol
-                logic(house_data, distance_handler, time_handler, i);
+                logic(house_data, distance_handler, time_handler, i, game_time);
+            }
+        }
+        //check house visitation
+        int k;
+        for(k = 1; k < time_handler.number_of_houses + 1; k++){
+            if(house_data[k].is_visited == TRUE) {
+                time_handler.houses_visited++;
+                if(time_handler.houses_visited == time_handler.number_of_houses){
+                    return game_time;
+                }
             }
         }
     }
-
-
-
-
-
-
+    return 0;
 }
 
 int check_if_open(int game_time, struct House_data house_data, int current_time) {
@@ -172,10 +204,10 @@ int check_if_open(int game_time, struct House_data house_data, int current_time)
     game_time += current_time;
 
     if (game_time > house_data.open_time && game_time < house_data.close_time){
-        printf("house is open\n");
+        //printf("house is open\n");
         return TRUE;
     }
-    printf("house is closed\n");
+    //printf("house is closed\n");
     return FALSE;
 }
 
