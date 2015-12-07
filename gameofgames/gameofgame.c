@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define TRUE 1
+#define FALSE 0
+
 struct House_data {
     int house_name;
     int is_visited;
@@ -28,7 +31,7 @@ struct Game_Time_Handler{
 void logic(struct House_data *house_data, struct Distance_Handler *distance_handler,
            struct Game_Time_Handler time_handler, int location);
 
-int check_if_open(int game_time, struct House_data house_data);
+int check_if_open(int game_time, struct House_data house_data, int current_time);
 
 int main() {
 
@@ -110,6 +113,7 @@ int main() {
 
         int current_location = 0;
         game_time.houses_visited = 0;
+        game_time.current_game_time = 0;
         //todo place logic function here
         logic(house, distance_handler, game_time, current_location);
         if(game_time.houses_visited == game_time.number_of_houses)
@@ -131,31 +135,51 @@ void logic(struct House_data *house_data, struct Distance_Handler *distance_hand
         return;
 
     //logic...
-    int i;
+    int i = 2;
 
+    //from location 0(homebase) to challenge house number.
 
-    /*for loop to check houses for opening, if open do more stuff...*/
+    //for loop cycles through houses、明日仕事やすみじゃない
+
     for(i = 0; i < time_handler.number_of_houses + 1; i++) {
-            house_data[i].is_open = check_if_open(distance_handler[location].distance_to[i], house_data[i]);
-        if(house_data[i].is_open == 1){
-            house_data->is_visited = 1; //marks house for visited
-            location = i;
-            time_handler.houses_visited++;
-            logic(house_data, distance_handler, time_handler, location);
+        if(house_data[i].is_visited != TRUE) {
+            if (check_if_open(distance_handler[location].distance_to[i], house_data[i],
+                              time_handler.current_game_time) ==
+                TRUE) {
+
+                //mark for house visited, therefore gametime must be updated
+                house_data[i].is_visited = TRUE;
+                time_handler.current_game_time =
+                        time_handler.current_game_time + distance_handler[location].distance_to[i];
+                printf("gametime: %d", time_handler.current_game_time);
+
+                //re-enter logic using new perameters
+                //current song: Adventure Time(Original Mix) - SirensCeol
+                logic(house_data, distance_handler, time_handler, i);
+            }
         }
     }
 
+
+
+
+
+
 }
 
-int check_if_open(int game_time, struct House_data house_data) {
+int check_if_open(int game_time, struct House_data house_data, int current_time) {
     //function to return if particular house is open, if house is open, return 1, if not, return 0
+    game_time += current_time;
+
     if (game_time > house_data.open_time && game_time < house_data.close_time){
         printf("house is open\n");
-        return 1;
+        return TRUE;
     }
     printf("house is closed\n");
-    return 0;
+    return FALSE;
 }
+
+
 
 
 
