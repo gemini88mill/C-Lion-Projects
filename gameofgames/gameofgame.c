@@ -36,7 +36,8 @@ int check_if_open(int game_time, struct House_data house_data, int current_time)
 void logistics(struct House_data *house_data, struct Distance_Handler *distance_handler,
                struct Game_Time_Handler game_time);
 
-int travel_to_houses(struct House_data *current_house, struct House_data *house_data, int house_number, int num_houses);
+int travel_to_houses(struct House_data *current_house, struct House_data *house_data, int house_number, int num_houses,
+                     struct Game_Time_Handler *game_time, struct Distance_Handler *distances);
 
 int main() {
 
@@ -140,12 +141,14 @@ struct Game_Time_Handler game_time) {
     /*function starts from starting house, house_data[0] and gets into every house in every possible way, returns the
      * shortest distance. */
 
-    int num_visited = travel_to_houses(&house_data[0], house_data, 0, game_time.number_of_houses);
+    int num_visited = travel_to_houses(&house_data[0], house_data, 0, game_time.number_of_houses, &game_time,
+                                       distance_handler);
     printf("num_visited: %d", num_visited);
 
 }
 
-int travel_to_houses(struct House_data *current_house, struct House_data *house_data, int house_number, int num_houses) {
+int travel_to_houses(struct House_data *current_house, struct House_data *house_data, int house_number, int num_houses,
+                     struct Game_Time_Handler *game_time, struct Distance_Handler *distances) {
     //marks the current house as being visited
     if(current_house->is_visited == TRUE){
         printf("house num %d\n", house_number);
@@ -156,7 +159,9 @@ int travel_to_houses(struct House_data *current_house, struct House_data *house_
     int i;
     for(i = 0; i < num_houses + 1; i++) {
         current_house->is_visited = TRUE;
-        travel_to_houses(&house_data[i], house_data, i, num_houses);
+        game_time->current_game_time = game_time->current_game_time + distances[house_number].distance_to[i];
+        printf("game_time %d\n", game_time->current_game_time);
+        travel_to_houses(&house_data[i], house_data, i, num_houses, game_time, distances);
     }
 }
 
