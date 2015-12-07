@@ -36,7 +36,7 @@ int check_if_open(int game_time, struct House_data house_data, int current_time)
 void logistics(struct House_data *house_data, struct Distance_Handler *distance_handler,
                struct Game_Time_Handler game_time);
 
-int travel_to_houses(struct House_data current_house, struct House_data *house_data, int house_number, int num_houses);
+int travel_to_houses(struct House_data *current_house, struct House_data *house_data, int house_number, int num_houses);
 
 int main() {
 
@@ -140,22 +140,24 @@ struct Game_Time_Handler game_time) {
     /*function starts from starting house, house_data[0] and gets into every house in every possible way, returns the
      * shortest distance. */
 
-    int num_visited = travel_to_houses(house_data[0], house_data, 0, game_time.number_of_houses);
+    int num_visited = travel_to_houses(&house_data[0], house_data, 0, game_time.number_of_houses);
     printf("num_visited: %d", num_visited);
 
 }
 
-int travel_to_houses(struct House_data current_house, struct House_data *house_data, int house_number, int num_houses) {
+int travel_to_houses(struct House_data *current_house, struct House_data *house_data, int house_number, int num_houses) {
     //marks the current house as being visited
-    current_house.is_visited = TRUE;
-
-    while(house_number < num_houses){
-        house_number++;
+    if(current_house->is_visited == TRUE){
         printf("house num %d\n", house_number);
-        return travel_to_houses(house_data[house_number], house_data, house_number, num_houses);
+        return 1;
     }
 
-    return house_number;
+
+    int i;
+    for(i = 0; i < num_houses + 1; i++) {
+        current_house->is_visited = TRUE;
+        travel_to_houses(&house_data[i], house_data, i, num_houses);
+    }
 }
 
 
