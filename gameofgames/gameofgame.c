@@ -9,9 +9,7 @@
 #define FALSE 0
 
 struct House_data {
-    int house_name;
     int is_visited;
-    int is_open;
     int open_time;
     int close_time;
 };
@@ -51,18 +49,18 @@ int main() {
 
     //number of games to complete, second value collected
     int games_to_complete, j = 0;
-    int starting_time, ending_time, k;
 
-
+    //structs for collection of data
     struct House_data *house;
     struct Distance_Handler *distance_handler;
     struct Game_Time_Handler game_time;
 
 
 
-
+    //take input cases
     scanf("%d", &input_cases);
 
+    //start for loop for number of input cases
     for(i = 0; i < input_cases; i++){
         scanf("%d", &games_to_complete); //number of games to complete
         game_time.number_of_houses = games_to_complete;
@@ -88,17 +86,10 @@ int main() {
             /*sets house variables within the struct, designates the start and end times for each house. sets them to
              * j + 1 because there is no start or end time for home_base house. So start and end times are in house 1
              * ans house 2*/
-//            house[j + 1].open_time = starting_time;
-//            house[j + 1].close_time = ending_time;
 
         }
         house[0].open_time = 0;
         house[0].close_time = 0;
-//        for(j = 0; j < games_to_complete + 1; j++){
-//            printf("house[%d] open: %d\n", j, house[j].open_time);
-//            printf("house[%d] close: %d\n", j, house[j].close_time);
-//        }
-
 
         //nested loop to collect travel times...
         for(l = 0; l < games_to_complete + 1; l++){
@@ -106,7 +97,6 @@ int main() {
             for(m = 0; m < games_to_complete + 1; m++){
                 scanf("%d", &travel_times[m][l]);
                 distance_handler[l].distance_to[m] = travel_times[m][l];
-                //printf("\ndis to: %d ", distance_handler[l].distance_to);
             }
             //printf("\n");
         }
@@ -115,28 +105,19 @@ int main() {
             distance_handler[l].distance_from = malloc(sizeof(int) * games_to_complete + 1);
             for(m = 0; m < games_to_complete + 1; m++){
                 distance_handler[l].distance_from[l] = travel_times[l][m];
-                //printf("dis from: %d \n", distance_handler[l].distance_from);
             }
         }
 
 
         printf("\n");
 
-        int current_location = 0;
+
         game_time.houses_visited = 0;
         game_time.travel_time = 0;
 
         logistics(house, distance_handler, game_time);
-//        int last_house_time_marker = logic(house, distance_handler, game_time, current_location,
-//                                           game_time.travel_time);
-       // printf("visited last house at: %d\n", last_house_time_marker);
-
-        printf("\n");
 
     } // end of big loop
-    //free(house);
-
-
 
     return 0;
 }
@@ -145,10 +126,11 @@ void logistics(struct House_data *house_data, struct Distance_Handler *distance_
 struct Game_Time_Handler game_time) {
     /*function starts from starting house, house_data[0] and gets into every house in every possible way, returns the
      * shortest distance. */
+    int house_number = 0;
 
-    int num_visited = travel_to_houses(&house_data[0], house_data, 0, game_time.number_of_houses, &game_time,
+    travel_to_houses(&house_data[0], house_data, house_number, game_time.number_of_houses, &game_time,
                                        distance_handler);
-    printf("num_visited: %d", num_visited);
+    printf("%d", game_time.accu_game_time + distance_handler[1].distance_to[0]);
 
 }
 
@@ -157,15 +139,15 @@ int travel_to_houses(struct House_data *current_house, struct House_data *house_
     int maximum_game_time = get_max(house_data, game_time->number_of_houses);
     //marks the current house as being visited
     if(current_house->is_visited == TRUE){
-        int game = maximum_game_time - game_time->travel_time;
+        int game = game_time->accu_game_time + distances[house_number].distance_to[0];
         //how long can i stay
         //int stay = current_house->close_time - game;
 
-        printf("current game time: %d\n", game);
-        printf("exit %d\n", house_number);
+        //printf("current game time: %d\n", game);
+        //printf("exit %d\n", house_number);
         return game;
     }
-    printf("house %d\n", house_number);
+    //printf("house %d\n", house_number);
 
     int i;
     for(i = 1; i < num_houses + 1; i++) {
@@ -173,7 +155,7 @@ int travel_to_houses(struct House_data *current_house, struct House_data *house_
 
         //if statement to verify we aren't trying to re-enter house currently in. therefore, for loop will skip at the
         //iteration that the player is currently at.
-        if(house_data[i].is_visited){printf("\t");}
+
         //sets the current house to TRUE in order to mark
 
             //increments the time for the game to progress based on the "distance traveled"
@@ -184,9 +166,11 @@ int travel_to_houses(struct House_data *current_house, struct House_data *house_
             int open = is_house_open(house_data[i].open_time, house_data[i].close_time, game_time->travel_time);
             if (open == TRUE) {
                 //game_time->travel_time = game_time->travel_time + distances[house_number].distance_to[i];
-                printf("house open ");
-                printf("game_time %d\n", game_time->travel_time);
-                //game_time->travel_time = game_time->travel_time + (house_data[i].close_time - distances[house_number].distance_to[i] + 1);
+                //printf("house open ");
+                //printf("game_time %d\n", game_time->travel_time);
+                game_time->travel_time++;
+                game_time->accu_game_time += (game_time->travel_time - house_data[i].open_time);
+                //printf("accu_time %d\n", game_time->accu_game_time);
                 //re-enter function with given perams
                 travel_to_houses(&house_data[i], house_data, i, num_houses, game_time, distances);
 
@@ -194,11 +178,12 @@ int travel_to_houses(struct House_data *current_house, struct House_data *house_
                 //false condition, adds the time nessesary to enter the house. essentially waiting for the challenge house to open
                 //current_house->is_visited = FALSE;
                 game_time->travel_time = 0;
+
                 //printf("waiting ");
                 //printf("game_time %d\n", game_time->travel_time);
 
-                //travel_to_houses(&house_data[house_number], house_data, house_number, num_houses, game_time, distances);
             }
+        //travel_to_houses(&house_data[house_number], house_data, house_number, num_houses, game_time, distances);
 
     }
 }
@@ -211,7 +196,7 @@ int get_max(struct House_data *house_data, int num_houses) {
         open_add += house_data[i].open_time;
     }
 
-    return close_add - open_add;
+    return 30;
 }
 
 int is_house_open(int open, int close, int current) {
@@ -222,63 +207,13 @@ int is_house_open(int open, int close, int current) {
 }
 
 
-int logic(struct House_data *house_data, struct Distance_Handler *distance_handler,
-          struct Game_Time_Handler time_handler, int location, int game_time) {
-
-
-    //logic...
-    int i = 2;
-
-    //from location 0(homebase) to challenge house number.
-
-    //for loop cycles through houses、明日仕事やすみじゃない
-
-    for(i = 0; i < time_handler.number_of_houses + 1; i++) {
-        if(house_data[i].is_visited != TRUE) {
-            if (check_if_open(distance_handler[location].distance_to[i], house_data[i],
-                              time_handler.travel_time) == TRUE) {
-
-                //mark for house visited, therefore gametime must be updated
-                house_data[i].is_visited = TRUE;
-                game_time = game_time + distance_handler[location].distance_to[i];
-                printf("gametime: %d", time_handler.travel_time);
-
-                //re-enter logic using new perameters
-                //current song: Adventure Time(Original Mix) - SirensCeol
-                logic(house_data, distance_handler, time_handler, i, game_time);
-            }
-        }
-        //check house visitation
-        int k;
-        for(k = 1; k < time_handler.number_of_houses + 1; k++){
-            if(house_data[k].is_visited == TRUE) {
-                time_handler.houses_visited++;
-                if(time_handler.houses_visited == time_handler.number_of_houses){
-                    return game_time;
-                }
-            }
-        }
-    }
-    return 0;
-}
-
-int check_if_open(int game_time, struct House_data house_data, int current_time) {
-    //function to return if particular house is open, if house is open, return 1, if not, return 0
-    game_time += current_time;
-
-    if (game_time > house_data.open_time && game_time < house_data.close_time){
-        //printf("house is open\n");
-        return TRUE;
-    }
-    //printf("house is closed\n");
-    return FALSE;
-}
 
 
 
 
 
-//todo logic function: requiring system for keeping track of time, distance, and visiting of houses
+
+
 
 
 
